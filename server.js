@@ -1,53 +1,62 @@
 const express = require('express');
 const mysql = require('mysql2');
-const bcrypt = require('bcryptjs');
-const cors = require('cors');
 const bodyParser = require('body-parser');
-
-// Configuração do servidor
+const cors = require('cors');
 const app = express();
-app.use(cors());
-app.use(bodyParser.json());
 
-// Conexão com o banco de dados
+app.use(bodyParser.json());
+app.use(cors());
+
+// Conexão com o banco de dados MySQL
 const db = mysql.createConnection({
   host: 'localhost',
-  user: 'root', // Seu usuário do MySQL
-  password: '07151128220tT@', // Sua senha do MySQL
-  database: 'app_db'
+  user: 'root',
+  password: '',
+  database: 'app_db',
 });
 
-// Verificação de login
+db.connect((err) => {
+  if (err) {
+    console.error('Erro na conexão com o banco de dados:', err);
+    return;
+  }
+  console.log('Conectado ao banco de dados MySQL!');
+});
+
+// Rota de Login
 app.post('/login', (req, res) => {
   const { email, password } = req.body;
+  console.log('Requisição recebida:', { email, password });
 
   if (!email || !password) {
-    return res.status(400).json({ message: 'Campos obrigatórios não informados.' });
+    console.log('Campos obrigatórios faltando:', { email, password });
+    return res.status(400).json({ message: 'E-mail e senha são obrigatórios' });
   }
 
-  db.query('SELECT * FROM users WHERE email = ?', [email], (err, results) => {
-    if (err) return res.status(500).json({ message: 'Erro no servidor.' });
+  const query = 'SELECT * FROM users WHERE email = ? AND password = ?';
+  console.log('Executando consulta:', query, [email, password]);
+
+  db.execute(query, [email, password], (err, results) => {
+    if (err) {
+      console.error('Erro ao consultar o banco de dados:', err);
+      return res.status(500).json({ message: 'Erro interno do servidor' });
+    }
+
+    console.log('Resultados da consulta:', results);
 
     if (results.length === 0) {
-      return res.status(404).json({ message: 'Usuário não encontrado.' });
+      console.log('Credenciais inválidas para:', { email });
+      return res.status(401).json({ message: 'Credenciais inválidas' });
     }
 
     const user = results[0];
+    console.log('Usuário encontrado:', user);
 
-    // Verificando a senha
-    bcrypt.compare(password, user.password, (err, isMatch) => {
-      if (err) return res.status(500).json({ message: 'Erro ao comparar senha.' });
-
-      if (!isMatch) {
-        return res.status(401).json({ message: 'Senha incorreta.' });
-      }
-
-      res.status(200).json({ message: 'Login bem-sucedido!', role: user.role });
-    });
+    res.status(200).json({ role: user.role });
   });
 });
 
-// Iniciar o servidor
+// Inicia o servidor
 app.listen(3000, () => {
-  console.log('Servidor rodando na porta 3000');
+  console.log('Servidor rodando em http://localhost:3000/Login');
 });

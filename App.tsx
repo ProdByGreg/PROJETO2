@@ -1,14 +1,7 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import Login from './src/pages/login';
+import React from 'react';
+import Navigator from './Navigator';
 
 export default function App() {
-  return (
-
-      <Login />
-
-  );
+  console.log('Aplicativo iniciado.');
+  return <Navigator />;
 }
-
-const styles = StyleSheet.create({
-});

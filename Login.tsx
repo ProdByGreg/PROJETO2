@@ -1,27 +1,31 @@
 import React, { useState } from 'react';
-import { Text, View, Image, TextInput, TouchableOpacity, Alert } from 'react-native';
+import { Text, View, TextInput, TouchableOpacity, Alert, StyleSheet } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import axios, { AxiosError } from 'axios'; // Import AxiosError
+import axios from 'axios';
+import { useNavigation } from '@react-navigation/native';
 import { style } from './styles';
-import Logo from '../../assets/steve2.jpg';
-import { themas } from '../../global/themes';
+import { themas } from './src/global/themes';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigation = useNavigation();
 
-  // Função para fazer o login
   async function getLogin() {
     if (!email || !password) {
+      console.log('Campos obrigatórios não preenchidos:', { email, password });
       return Alert.alert('Atenção', 'Informe os campos obrigatórios!');
     }
 
-    try {
-      const response = await axios.post('http://192.168.0.235:3000/login', { email, password });
+    console.log('Tentando fazer login com:', { email, password });
 
-      // Verifica o retorno do servidor
+    try {
+      const response = await axios.post('http://localhost:3000/Login', { email, password });
+      console.log('Resposta do servidor:', response.data);
+
       if (response.status === 200) {
         const { role } = response.data;
+        console.log('Papel do usuário:', role);
 
         if (role === 'admin') {
           Alert.alert('Acesso como Administrador');
@@ -29,18 +33,22 @@ export default function Login() {
           Alert.alert('Acesso como Usuário');
         }
 
+        navigation.navigate('Home');
         Alert.alert('Logado com sucesso!');
       }
     } catch (error) {
+      console.error('Erro durante o login:', error);
+
       if (axios.isAxiosError(error)) {
-        // Handle Axios-specific errors
         if (error.response) {
+          console.log('Erro na resposta do servidor:', error.response.data);
           Alert.alert('Erro', error.response.data.message);
         } else {
+          console.log('Erro de conexão com o servidor:', error.message);
           Alert.alert('Erro', 'Erro na conexão com o servidor.');
         }
       } else {
-        // Handle non-Axios errors
+        console.log('Erro inesperado:', error);
         Alert.alert('Erro', 'Ocorreu um erro inesperado.');
       }
     }
@@ -49,7 +57,6 @@ export default function Login() {
   return (
     <View style={style.container}>
       <View style={style.boxTop}>
-        <Image source={Logo} style={style.logo} resizeMode="contain" />
         <Text style={style.text}>Bem-vindo de volta!</Text>
       </View>
 
@@ -81,10 +88,46 @@ export default function Login() {
           <Text style={style.textButton}>Entrar</Text>
         </TouchableOpacity>
       </View>
-      <Text style={style.textBottom}>
-        Não tem conta?
-        <Text style={{ color: themas.Colors.primary }}> Crie agora!</Text>
-      </Text>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    padding: 20,
+  },
+  boxTop: {
+    alignItems: 'center',
+  },
+  boxMid: {
+    marginVertical: 20,
+  },
+  titleInput: {
+    fontSize: 14,
+    marginBottom: 5,
+  },
+  boxInput: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  input: {
+    flex: 1,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+  },
+  button: {
+    backgroundColor: '#4CAF50',
+    padding: 15,
+    borderRadius: 5,
+    alignItems: 'center',
+  },
+  textButton: {
+    color: '#fff',
+    fontSize: 16,
+  },
+});

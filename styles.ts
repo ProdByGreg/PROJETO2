@@ -1,5 +1,5 @@
 import { Dimensions, StyleSheet } from "react-native";
-import { themas } from "../../global/themes";
+import { themas } from "./src/global/themes";
 
 export const style = StyleSheet.create({
     container:{
@@ -26,6 +26,7 @@ export const style = StyleSheet.create({
         //backgroundColor:'blue',
         alignItems:'center',
         justifyContent:'center',
+        
 
     },
     logo:{
@@ -37,17 +38,20 @@ export const style = StyleSheet.create({
         fontWeight:'bold',
         marginTop:40,
         fontSize:18,
+        
     },
     titleInput:{
-        marginLeft:5,
+        marginLeft:450,
         color:themas.Colors.gray,
         marginTop:20,
+
     },
     boxInput:{
-        width:'100%',
+        width:'50%',
         height:40,
         borderWidth:1,
         marginTop:10,
+        marginLeft:450,
         flexDirection:'row',
         borderRadius:20,
         alignItems:'center',
@@ -58,7 +62,7 @@ export const style = StyleSheet.create({
     },
     input:{
         height:'100%',
-        width:'90%',
+        width:'95%',
         borderRadius:20,
         paddingLeft:10
     },
