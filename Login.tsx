@@ -20,7 +20,7 @@ export default function Login() {
     console.log('Tentando fazer login com:', { email, password });
 
     try {
-      const response = await axios.post('http://localhost:3000/Login', { email, password });
+      const response = await axios.post('http://localhost:5009/api/Auth/login', { email, password });
       console.log('Resposta do servidor:', response.data);
 
       if (response.status === 200) {

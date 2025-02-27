@@ -1,4 +1,3 @@
-// src/pages/home/Home.tsx
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
