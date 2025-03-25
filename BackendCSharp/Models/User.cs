@@ -1,7 +1,12 @@
-public class User
+namespace BackendCSharp.Models
 {
-    public int Id { get; set; }
-    public string Email { get; set; } = string.Empty; 
-    public string Password { get; set; } = string.Empty;
-    public string Role { get; set; } = string.Empty;
+    public class User
+    {
+        public int Id { get; set; }
+        public string Email { get; set; } = string.Empty;
+        public string Password { get; set; } = string.Empty;
+        public string Role { get; set; } = string.Empty;
+        public string Telefone { get; set; } = string.Empty;
+        public string CPF { get; set; } = string.Empty;
+    }
 }

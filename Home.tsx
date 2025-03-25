@@ -1,38 +1,118 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Alert } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
+import axios from 'axios';
+
+const logo = require('./src/assets/steve2.jpg');
+
+// Defina o tipo para o objeto imagens
+type ImagensType = {
+  Calabresa: any;
+  Margherita: any;
+  'Quatro Queijos': any;
+  'Frango com Catupiry': any;
+  Portuguesa: any;
+  'Coca-Cola': any;
+  Guaraná: any;
+  'Fanta Laranja': any;
+  Sprite: any;
+};
+
+// Mapeamento das imagens locais
+const imagens: ImagensType = {
+  Calabresa: require('./src/assets/calabresa.jpg'),
+  Margherita: require('./src/assets/margherita.jpeg'),
+  'Quatro Queijos': require('./src/assets/quatro_queijos.jpeg'),
+  'Frango com Catupiry': require('./src/assets/frango_catupiry.jpg'),
+  Portuguesa: require('./src/assets/portuguesa.jpg'),
+  'Coca-Cola': require('./src/assets/coca.jpg'),
+  Guaraná: require('./src/assets/guarana.jpg'),
+  'Fanta Laranja': require('./src/assets/fanta.jpg'),
+  Sprite: require('./src/assets/sprite.jpg'),
+};
+
+interface Sabor {
+  id: number;
+  nome: string;
+}
+
+interface Refrigerante {
+  id: number;
+  nome: string;
+}
 
 const Home = () => {
+  const [selectedSabores, setSelectedSabores] = useState<string[]>([]);
+  const [sabores, setSabores] = useState<Sabor[]>([]);
+  const [refrigerantes, setRefrigerantes] = useState<Refrigerante[]>([]);
+
+  useEffect(() => {
+    // Carrega os sabores de pizza
+    axios.get('http://localhost:5009/api/sabores')
+      .then(response => setSabores(response.data))
+      .catch(error => console.error('Erro ao carregar sabores:', error));
+
+    // Carrega os refrigerantes
+    axios.get('http://localhost:5009/api/refrigerantes')
+      .then(response => setRefrigerantes(response.data))
+      .catch(error => console.error('Erro ao carregar refrigerantes:', error));
+  }, []);
+
+  const handleSaborSelection = (sabor: string) => {
+    if (selectedSabores.includes(sabor)) {
+      setSelectedSabores(selectedSabores.filter((item) => item !== sabor));
+    } else if (selectedSabores.length < 3) {
+      setSelectedSabores([...selectedSabores, sabor]);
+    } else {
+      Alert.alert('Atenção', 'Você pode escolher no máximo 3 sabores.');
+    }
+  };
+
   return (
     <View style={styles.container}>
-      {/* Container Horizontal para Box Left e Box Right */}
-      <View style={styles.horizontalContainer}>
-        {/* Box Left */}
-        <View style={styles.boxLeft}>
-          <Text>Box Left</Text>
+      {/* Box Top */}
+      <View style={styles.boxTop}>
+        <View style={styles.iconContainer}>
+          <MaterialIcons name="remove-red-eye" size={40} color={'gray'} />
         </View>
 
-        {/* Caixa Central (Top, Mid e Bottom) */}
-        <View style={styles.centerContainer}>
-          {/* Box Top */}
-          <View style={styles.boxTop}>
-            <Text>Box Top</Text>
-          </View>
+        <Image source={logo} style={styles.logo} resizeMode="contain" />
+        <Text style={styles.textLogo}>Steve Pizzaria</Text>
+      </View>
 
-          {/* Box Mid */}
-          <View style={styles.boxMid}>
-            <Text>Box Mid</Text>
-          </View>
+      {/* Box Mid */}
+      <View style={styles.boxMid}>
+        <ScrollView>
+          <Text style={styles.sectionTitle}>Escolha até 3 sabores de pizza:</Text>
+          {sabores.map((sabor) => (
+            <TouchableOpacity
+              key={sabor.id}
+              style={[
+                styles.itemContainer,
+                selectedSabores.includes(sabor.nome) && styles.selectedItem,
+              ]}
+              onPress={() => handleSaborSelection(sabor.nome)}
+            >
+              <Image source={imagens[sabor.nome as keyof ImagensType]} style={styles.itemImage} />
+              <Text style={styles.itemText}>{sabor.nome}</Text>
+            </TouchableOpacity>
+          ))}
 
-          {/* Box Bottom */}
-          <View style={styles.boxBottom}>
-            <Text>Box Bottom</Text>
-          </View>
-        </View>
+          <Text style={styles.sectionTitle}>Escolha seu refrigerante:</Text>
+          {refrigerantes.map((refri) => (
+            <View key={refri.id} style={styles.itemContainer}>
+              <Image source={imagens[refri.nome as keyof ImagensType]} style={styles.itemImage} />
+              <Text style={styles.itemText}>{refri.nome}</Text>
+            </View>
+          ))}
+        </ScrollView>
+      </View>
 
-        {/* Box Right */}
-        <View style={styles.boxRight}>
-          <Text>Box Right</Text>
-        </View>
+      {/* Box Bottom */}
+      <View style={styles.boxBottom}>
+        <Text style={styles.selectedText}>
+          Sabores selecionados: {selectedSabores.join(', ')}
+        </Text>
       </View>
     </View>
   );
@@ -41,56 +121,70 @@ const Home = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center', // Centraliza as caixas verticalmente
-    alignItems: 'center',     // Centraliza as caixas horizontalmente
-  },
-  horizontalContainer: {
-    flexDirection: 'row',     // Organiza as caixas em linha (horizontal)
-    width: '100%',            // Toda a largura da tela
-    height: '100%',           // Toda a altura da tela
-  },
-  boxLeft: {
-    height: '100%',           // Box Left ocupa 100% da altura
-    width: '15%',             // Box Left ocupa 15% da largura
-    backgroundColor: '#D4F1F4', // Cor de fundo da Box Left
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  centerContainer: {
-    width: '70%',             // Caixa central ocupa 70% da largura
-    justifyContent: 'flex-start', // Organiza as caixas dentro da caixa central de forma vertical
-    alignItems: 'center',      // Alinha as caixas no centro horizontalmente
   },
   boxTop: {
-    height: '15%',  
-    width: '100%',           // Box Top ocupa 33% da altura da caixa central
+    height: '22%',
+    width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#FFDDC1', // Cor de fundo da Box Top
-    marginBottom: 10,
+    backgroundColor: '#FFDDC1',
+    position: 'relative',
   },
   boxMid: {
-    height: '50%',             // Box Mid ocupa 34% da altura da caixa central
-    width: '70%', 
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'green',  // Cor de fundo da Box Mid
-    marginTop: 80,
+    height: '68%',
+    width: '100%',
+    backgroundColor: 'green',
   },
   boxBottom: {
-    height: '10%',             // Box Bottom ocupa 33% da altura da caixa central
-    width: '100%', 
+    height: '10%',
+    width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#D8F8D8', // Cor de fundo da Box Bottom
-    marginTop: 132,
+    backgroundColor: '#D8F8D8',
   },
-  boxRight: {
-    height: '100%',            // Box Right ocupa 100% da altura
-    width: '15%',              // Box Right ocupa 15% da largura
-    backgroundColor: '#FFEB3B', // Cor de fundo da Box Right
-    justifyContent: 'center',
+  logo: {
+    width: 100,
+    height: 100,
+    marginBottom: 10,
+    borderRadius: 60,
+  },
+  textLogo: {
+    fontSize: 24,
+    fontWeight: 'bold',
+  },
+  iconContainer: {
+    position: 'absolute',
+    top: 10,
+    left: 10,
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginTop: 10,
+    marginLeft: 10,
+  },
+  itemContainer: {
+    flexDirection: 'row',
     alignItems: 'center',
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+  },
+  selectedItem: {
+    backgroundColor: '#e0f7fa',
+  },
+  itemImage: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    marginRight: 10,
+  },
+  itemText: {
+    fontSize: 16,
+  },
+  selectedText: {
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
 
