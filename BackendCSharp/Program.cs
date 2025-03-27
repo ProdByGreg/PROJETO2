@@ -28,11 +28,6 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
         new MySqlServerVersion(new Version(8, 0, 26))));
 
-// Configuração do banco de dados MySQL para o PizzariaContext.
-builder.Services.AddDbContext<PizzariaContext>(options =>
-    options.UseMySql(builder.Configuration.GetConnectionString("PizzariaConnection"),
-        new MySqlServerVersion(new Version(8, 0, 26))));
-
 var app = builder.Build();
 
 // Configuração do pipeline de requisições HTTP.

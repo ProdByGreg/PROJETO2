@@ -10,14 +10,15 @@ import { themas } from "./src/global/themes";
 
 
 
-const logo = require('./src/assets/steve2.jpg');
+const logo = require('./src/assets/DripOrDrown.jpg');
 
 
 
 
 
 
-export default function CriarConta() {
+export default function Criarconta() {
+  const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -27,6 +28,10 @@ export default function CriarConta() {
   const navigation = useNavigation();
 
 
+
+  function validateNome(nome: string) {
+    return nome.replace(/\D/g, '').length === 11;
+  }
 
 
 
@@ -56,13 +61,17 @@ export default function CriarConta() {
 
 
 
-  async function criarConta() {
+  async function Criarconta() {
 
 
 
 
-    if (!email || !password || !confirmPassword || !telefone || !cpf) {
+    if (!nome || !email || !password || !confirmPassword || !telefone || !cpf) {
       return Alert.alert('Atenção', 'Informe todos os campos obrigatórios!');
+    }
+
+    if (!validateNome(nome)) {
+      return Alert.alert('Atenção', 'Digite o seu nome!');
     }
 
     if (!validateEmail(email)) {
@@ -70,72 +79,82 @@ export default function CriarConta() {
     }
 
     if (password !== confirmPassword) {
-      return Alert.alert('Atenção', 'As senhas não coincidem!');
+      return Alert.alert('Atenção', 'Senhas não coincidem!');
     }
 
     if (!validateCPF(cpf)) {
-      return Alert.alert('Atenção', 'Informe um CPF válido (11 dígitos)!');
+      return Alert.alert('Atenção', 'CPF inválido!');
     }
 
     if (!validateTelefone(telefone)) {
-      return Alert.alert('Atenção', 'Informe um telefone válido (11 dígitos)!');
+      return Alert.alert('Atenção', 'Informe um telefone válido!');
     }
 
-
-
-
-
-
     setLoading(true);
-    console.log('Tentando criar conta com:', { email, password, telefone, cpf });
 
 
 
+
+
+
+
+                        //<~~TENTANDO CONECTAR COM BANCO DE DADOS~~>//
+
+    console.log('Tentando criar conta com:', {nome,  email, password, telefone, cpf });
 
     try {
       const API_URL = process.env.API_URL || 'http://localhost:5009';
       const response = await axios.post(`${API_URL}/api/Auth/register`, {
+        nome,
         email,
         password,
         Telefone: telefone,
         CPF: cpf
       });
+
       console.log('Resposta do servidor:', response.data);
+
+                        //<~~SE TUDO OK (201) REDIRECIONA PARA TELA DE LOGIN~~>//
 
       if (response.status === 201) {
         Alert.alert('Sucesso', 'Conta criada com sucesso!');
-        navigation.navigate('Login'); // Redireciona para a tela de login após o sucesso
+        navigation.navigate('Login'); 
       }
     }
     
     
     
     
-    catch (error) {
 
 
+
+
+                        //<~~TESTANDO A CONEXÃO DO AXIOS COM BANCO DE DADOS~~>//
+
+      catch (error) {
       console.error('Erro durante a criação da conta:', error);
-
-
-
-      if (axios.isAxiosError(error)) {
+                          
+        if (axios.isAxiosError(error)) {
         if (error.response) {
-          console.log('Erro na resposta do servidor:', error.response.data);
-          Alert.alert('Erro', error.response.data.message || 'Erro ao criar conta.');
+        console.log('Erro na resposta do servidor:', error.response.data);
+        Alert.alert('Erro', error.response.data.message || 'Erro ao criar conta.');
+            } else {
+        console.log('Erro de conexão com o servidor:', error.message);
+        Alert.alert('Erro', 'Erro na conexão com o servidor.');
+                            }
         } else {
-          console.log('Erro de conexão com o servidor:', error.message);
-          Alert.alert('Erro', 'Erro na conexão com o servidor.');
-        }
-      } else {
         console.log('Erro inesperado:', error);
         Alert.alert('Erro', 'Ocorreu um erro inesperado.');
-      }
+                          }
+                        }
+    
+    
+    
 
 
-    }
-    
-    
-    
+
+
+
     
     
     finally {
@@ -177,6 +196,24 @@ export default function CriarConta() {
 
 
       <View style={style.boxMid}>
+
+      <Text style={style.titleInput}>NOME COMPLETO</Text>
+
+
+<View style={style.boxInput}>
+
+  <TextInput
+    style={style.input}
+    value={nome}
+    onChangeText={setNome}
+    placeholder="Digite seu nome"
+    autoCapitalize="none"
+  />
+
+  <MaterialIcons name="person" size={20} color={'gray'} />
+
+</View>
+
 
         <Text style={style.titleInput}>ENDEREÇO DE E-MAIL</Text>
 
@@ -294,7 +331,7 @@ export default function CriarConta() {
 
       <View style={style.boxBottom}>
 
-        <TouchableOpacity style={style.button} onPress={criarConta} disabled={loading}>
+        <TouchableOpacity style={style.button} onPress={Criarconta} disabled={loading}>
 
 
           {loading ? (
@@ -329,23 +366,24 @@ export const style = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    backgroundColor:themas.Colors.gg,
   },
   boxTop: {
-    height: Dimensions.get('window').height / 4,
+    height: 200,
     width: '100%',
     backgroundColor: '#EDEDED',
     alignItems: 'center',
     justifyContent: 'center'
   },
   boxMid: {
-    height: Dimensions.get('window').height / 2,
+    height: 505,
     width: '100%',
     backgroundColor: '#F2F2F2',
     paddingHorizontal: 37
   },
   boxBottom: {
-    height: Dimensions.get('window').height / 5,
+    height: 205,
     width: '100%',
     backgroundColor: '#F8F8F8',
     alignItems: 'center',
@@ -357,7 +395,7 @@ export const style = StyleSheet.create({
     fontSize: 18,
   },
   titleInput: {
-    marginLeft: 420,
+    marginLeft: '30%',
     color: themas.Colors.gray,
     marginTop: 10,
   },
@@ -366,7 +404,7 @@ export const style = StyleSheet.create({
     height: 40,
     borderWidth: 1,
     marginTop: 10,
-    marginLeft: 420,
+    marginLeft: '30%',
     flexDirection: 'row',
     borderRadius: 20,
     alignItems: 'center',
@@ -385,7 +423,7 @@ export const style = StyleSheet.create({
     height: 50,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: themas.Colors.primary,
+    backgroundColor: themas.Colors.gg,
     borderRadius: 40,
     shadowColor: "#000",
     shadowOffset: {
@@ -408,7 +446,7 @@ export const style = StyleSheet.create({
   logo: {
     width: 100,
     height: 100,
-    marginBottom: 20,
+    marginBottom: 25,
     borderRadius: 60,
   },
 });

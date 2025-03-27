@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Microsoft\\Desktop\\PROJETO\\BackendCSharp\\BackendCSharp.csproj": {}
+    "C:\\Users\\aluno\\Desktop\\PROJETO2\\BackendCSharp\\BackendCSharp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Microsoft\\Desktop\\PROJETO\\BackendCSharp\\BackendCSharp.csproj": {
+    "C:\\Users\\aluno\\Desktop\\PROJETO2\\BackendCSharp\\BackendCSharp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Microsoft\\Desktop\\PROJETO\\BackendCSharp\\BackendCSharp.csproj",
+        "projectUniqueName": "C:\\Users\\aluno\\Desktop\\PROJETO2\\BackendCSharp\\BackendCSharp.csproj",
         "projectName": "BackendCSharp",
-        "projectPath": "C:\\Users\\Microsoft\\Desktop\\PROJETO\\BackendCSharp\\BackendCSharp.csproj",
-        "packagesPath": "C:\\Users\\Microsoft\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Microsoft\\Desktop\\PROJETO\\BackendCSharp\\obj\\",
+        "projectPath": "C:\\Users\\aluno\\Desktop\\PROJETO2\\BackendCSharp\\BackendCSharp.csproj",
+        "packagesPath": "C:\\Users\\aluno\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\aluno\\Desktop\\PROJETO2\\BackendCSharp\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Microsoft\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\aluno\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -83,7 +87,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

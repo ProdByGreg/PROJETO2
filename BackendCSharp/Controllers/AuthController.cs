@@ -35,7 +35,7 @@ namespace BackendCSharp.Controllers
         public async Task<IActionResult> Register([FromBody] RegisterRequest request)
         {
 
-            if (string.IsNullOrEmpty(request.Email) || string.IsNullOrEmpty(request.Password) ||
+            if (string.IsNullOrEmpty(request.Nome) ||string.IsNullOrEmpty(request.Email) || string.IsNullOrEmpty(request.Password) ||
                 string.IsNullOrEmpty(request.Telefone) || string.IsNullOrEmpty(request.CPF))
             {
                 return BadRequest(new { message = "Todos os campos são obrigatórios" });
@@ -56,6 +56,7 @@ namespace BackendCSharp.Controllers
 
             var user = new User
             {
+                Nome = request.Nome,
                 Email = request.Email,
                 Password = request.Password,
                 Role = "user",

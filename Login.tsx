@@ -8,7 +8,7 @@ import { themas } from "./src/global/themes";
 
 
 
-const logo = require('./src/assets/steve2.jpg');
+const logo = require('./src/assets/DripOrDrown.jpg');
 
 
 
@@ -46,10 +46,12 @@ export default function Login() {
 
 
     setLoading(true);
+
+
+
+
+
     console.log('Tentando fazer login com:', { email, password });
-
-
-
 
     try {
       const API_URL = process.env.API_URL || 'http://localhost:5009';
@@ -100,6 +102,9 @@ export default function Login() {
       }}
     
     
+
+
+      
     
     finally {
       setLoading(false);
@@ -127,7 +132,7 @@ export default function Login() {
         />
 
 
-        <Text style={style.text}>Steve Pizza!</Text>
+        <Text style={style.text}>DripOrDrown!</Text>
 
       </View>
 
@@ -237,7 +242,8 @@ export const style = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    backgroundColor:themas.Colors.gg,
   },
   boxTop: {
     height: Dimensions.get('window').height / 3,
@@ -247,13 +253,13 @@ export const style = StyleSheet.create({
     justifyContent: 'center'
   },
   boxMid: {
-    height: Dimensions.get('window').height / 4,
+    height: Dimensions.get('window').height / 3,
     width: '100%',
     backgroundColor: '#F2F2F2',
     paddingHorizontal: 37
   },
   boxBottom: {
-    height: Dimensions.get('window').height / 3,
+    height: Dimensions.get('window').height / 4,
     width: '100%',
     backgroundColor: '#F8F8F8',
     alignItems: 'center',
@@ -270,16 +276,16 @@ export const style = StyleSheet.create({
     fontSize: 18,
   },
   titleInput: {
-    marginLeft: 420,
+    marginLeft: '30%',
     color: themas.Colors.gray,
-    marginTop: 10,
+    marginTop: 50,
   },
   boxInput: {
     width: '40%',
     height: 40,
     borderWidth: 1,
     marginTop: 10,
-    marginLeft: 420,
+    marginLeft: '30%',
     flexDirection: 'row',
     borderRadius: 20,
     alignItems: 'center',
@@ -298,7 +304,7 @@ export const style = StyleSheet.create({
     height: 50,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: themas.Colors.primary,
+    backgroundColor: themas.Colors.gg,
     borderRadius: 40,
     shadowColor: "#000",
     shadowOffset: {

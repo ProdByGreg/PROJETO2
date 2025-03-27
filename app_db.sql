@@ -4,6 +4,7 @@ USE app_db;
 
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
+	nome VARCHAR(255) UNIQUE NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
     role ENUM('admin', 'user') DEFAULT 'user',
@@ -12,8 +13,7 @@ CREATE TABLE users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-INSERT INTO users (email, password, role, Telefone, CPF) VALUES
-('admin@admin.com', '1234', 'admin', '11987654321', '123.456.789-01'),
-('user@user.com', '1234', 'user', '11987654322', '987.654.321-09');
+INSERT INTO users (nome, email, password, role, Telefone, CPF) VALUES
+('Fernando','admin@admin.com', '1234', 'admin', '11987654321', '123.456.789-01');
 
 SELECT * FROM users;
