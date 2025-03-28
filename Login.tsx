@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Dimensions, Text, View, TextInput, TouchableOpacity, Alert, StyleSheet, ActivityIndicator, Image } from 'react-native';
+import { Dimensions, Text, View, TextInput, TouchableOpacity, Alert, StyleSheet, ActivityIndicator, Image, ScrollView } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
@@ -118,6 +118,7 @@ export default function Login() {
 
 
   return (
+    <ScrollView contentContainerStyle={style.scrollContainer}>
     <View style={style.container}>
 
 
@@ -228,7 +229,7 @@ export default function Login() {
 
 
     </View>
-
+    </ScrollView>
   );
 }
 
@@ -239,6 +240,10 @@ export default function Login() {
 
 
 export const style = StyleSheet.create({
+  scrollContainer: {
+    flexGrow: 1,
+    height: 100,
+  },
   container: {
     flex: 1,
     alignItems: 'center',
@@ -268,17 +273,18 @@ export const style = StyleSheet.create({
   logo: {
     width: 100,
     height: 100,
-    marginBottom: 20,
+    marginTop: 10,
     borderRadius: 60,
   },
   text: {
     fontWeight: 'bold',
     fontSize: 18,
+    marginTop: 20,
   },
   titleInput: {
     marginLeft: '30%',
     color: themas.Colors.gray,
-    marginTop: 50,
+    marginTop: 30,
   },
   boxInput: {
     width: '40%',
@@ -314,6 +320,7 @@ export const style = StyleSheet.create({
     shadowOpacity: 0.29,
     shadowRadius: 4.65,
     elevation: 7,
+    marginTop: 20,
   },
   textButton: {
     fontSize: 16,

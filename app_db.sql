@@ -8,8 +8,8 @@ CREATE TABLE users (
     email VARCHAR(255) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
     role ENUM('admin', 'user') DEFAULT 'user',
-    Telefone VARCHAR(20) NOT NULL, -- Nova coluna para o telefone
-    CPF VARCHAR(14) NOT NULL,      -- Nova coluna para o CPF
+    Telefone VARCHAR(20) NOT NULL,
+    CPF VARCHAR(14) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
