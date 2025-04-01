@@ -4,8 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Login from './Login';
 import Home from './Home';
 import Criarconta from './Criarconta';
-
-
+import Perfil from './Perfil';
 
 
 
@@ -44,6 +43,12 @@ export default function App() {
           name="Criarconta"
           component={Criarconta}
           options={{ title: 'Criarconta' }}
+        />
+
+<Stack.Screen
+          name="Perfil"
+          component={Perfil}
+          options={{ title: 'Perfil' }}
         />
 
 

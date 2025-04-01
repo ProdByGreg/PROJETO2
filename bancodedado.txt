@@ -1,0 +1,95 @@
+CREATE DATABASE app_db;
+
+USE app_db;
+
+CREATE TABLE users (
+    id_usuario INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    senha VARCHAR(255) NOT NULL,
+    idade INT,
+    genero ENUM('Masculino', 'Feminino', 'Outro'),
+    tipo_corpo VARCHAR(50),
+    estilo_preferido VARCHAR(100),
+	role ENUM('admin', 'user') DEFAULT 'user',
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE Consultor (
+    id_consultor INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    especialidade VARCHAR(255),
+    disponibilidade TEXT
+);
+CREATE TABLE Consulta (
+    id_consulta INT PRIMARY KEY AUTO_INCREMENT,
+    id_usuario INT NOT NULL,
+    id_consultor INT NOT NULL,
+    data_hora DATETIME NOT NULL,
+    status ENUM('Agendada', 'Concluída', 'Cancelada') NOT NULL,
+    FOREIGN KEY (id_usuario) REFERENCES Usuario(id_usuario) ON DELETE CASCADE,
+    FOREIGN KEY (id_consultor) REFERENCES Consultor(id_consultor) ON DELETE CASCADE
+);
+CREATE TABLE Look (
+    id_look INT PRIMARY KEY AUTO_INCREMENT,
+    id_usuario INT NOT NULL,
+    nome_look VARCHAR(100),
+    descricao TEXT,
+    data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_usuario) REFERENCES Usuario(id_usuario) ON DELETE CASCADE
+);
+CREATE TABLE PecaRoupa (
+    id_peca INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(100) NOT NULL,
+    tipo VARCHAR(50),
+    cor VARCHAR(50),
+    tamanho VARCHAR(10),
+    id_look INT,
+    FOREIGN KEY (id_look) REFERENCES Look(id_look) ON DELETE CASCADE
+);
+CREATE TABLE MetaEstilo (
+    id_meta INT PRIMARY KEY AUTO_INCREMENT,
+    id_usuario INT NOT NULL,
+    descricao TEXT NOT NULL,
+    status ENUM('Pendente', 'Concluída') NOT NULL DEFAULT 'Pendente',
+    data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_usuario) REFERENCES Usuario(id_usuario) ON DELETE CASCADE
+);
+CREATE TABLE HistoricoConsultorias (
+    id_historico INT PRIMARY KEY AUTO_INCREMENT,
+    id_usuario INT NOT NULL,
+    id_consulta INT NOT NULL,
+    feedback TEXT,
+    nota INT CHECK(nota BETWEEN 1 AND 5),
+    FOREIGN KEY (id_usuario) REFERENCES Usuario(id_usuario) ON DELETE CASCADE,
+    FOREIGN KEY (id_consulta) REFERENCES Consulta(id_consulta) ON DELETE CASCADE
+);
+
+INSERT INTO user (nome, email, senha, idade, genero, tipo_corpo, estilo_preferido, role) VALUES
+('Admin', 'admin@admin.com', '123', 28, 'Feminino', 'Magro', 'Executivo', 'admin'),
+('User', 'user@user.com', '123', 32, 'Masculino', 'Magro', 'Casual', 'user');
+
+INSERT INTO Consultor (nome, email, especialidade, disponibilidade) VALUES
+('Mariana Ribeiro', 'mariana@email.com', 'Moda Casual e Streetwear', 'Segunda a Sexta, 10h - 18h'),
+('Pedro Martins', 'pedro@email.com', 'Moda Executiva', 'Segunda a Sábado, 9h - 19h');
+
+INSERT INTO Consulta (id_usuario, id_consultor, data_hora, status) VALUES
+(1, 1, '2025-04-01 14:00:00', 'Agendada'),
+(2, 2, '2025-04-02 16:00:00', 'Agendada');
+
+INSERT INTO Look (id_usuario, nome_look, descricao) VALUES
+(1, 'Look Casual para Trabalho', 'Blazer bege, calça jeans, camiseta branca e tênis branco.'),
+(2, 'Look Executivo', 'Terno azul marinho, camisa branca, gravata preta e sapato social.');
+
+INSERT INTO PecaRoupa (nome, tipo, cor, tamanho, id_look) VALUES
+('Blazer Bege', 'Blazer', 'Bege', 'M', 1),
+('Terno Azul Marinho', 'Terno', 'Azul Marinho', 'G', 2);
+
+INSERT INTO MetaEstilo (id_usuario, descricao, status) VALUES
+(1, 'Adotar um estilo mais casual para o trabalho.', 'Pendente'),
+(2, 'Usar mais cores neutras no dia a dia.', 'Pendente');
+
+INSERT INTO HistoricoConsultorias (id_usuario, id_consulta, feedback, nota) VALUES
+(1, 1, 'A consultora foi muito atenciosa, gostei das recomendações.', 5),
+(2, 2, 'Recebi boas sugestões de looks formais.', 4);

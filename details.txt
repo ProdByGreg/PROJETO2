@@ -1,0 +1,108 @@
+- Após o login, o usuário será redirecionado a página Home.tsx onde poderá preencher um formulário com as seguintes informações:
+
+(Primeiro formulario)
+1. Primeiramente o usuario vai definir seu genero (Masculino/Feminino).
+A partir disso o usuario via ser direcionado ao questionario masculino ou feminino dependendo da sua escolha...
+(Envia informação e limpa a tela para a proxima questao.)
+
+(Segundo formulario)
+2. Apos a escolha do genero, o usuario devera inserir suas informações fisicas:
+
+-Altura
+-Peso
+-Cores de roupas preferidas
+
+- O sistema deverá validar as informações inseridas pelo usuário (ex: altura e peso devem ser numéricos e dentro de um intervalo razoável).
+(Envia informação e limpa a tela para a proxima questao.)
+
+(Terceiro formulario)
+3.DESCREVA SUA PERSONALIDADE:
+
+(Lembrando que o genero da palavra deve ser alterado dependendo do genero escolhido pelo usuario.)
+-Informal, espontânea, alegre, ativa, energética.
+-Conservadora, séria, organizada.
+-Exigente, refinada, bem-sucedida, reservada.
+-Feminina, meiga, delicada.
+-Glamorosa, excitante, sensual.
+-Sofisticada, moderna, firme.
+-Exótica, aventureira, inovadora.
+(O usuario pode selecionar ate 3 opções.)
+
+(Quarto formulario)
+4.QUAL O SEU TIPO DE ROUPA FAVORITA?
+
+-Looks confortáveis, soltos ao corpo, práticos para usar e para cuidar.
+-Roupas discretas, com caimento clássico e que passam despercebidas.
+-Peças com toques refinados, caimento perfeito, atual, mas sem modismos.
+-Roupas delicadas de cores suaves, fluídas no corpo.
+-Looks que se ajustam no corpo e valorizam partes estratégicas.
+-Peças estruturadas, assimétricas, modernas.
+-Formas e peças marcantes, em um mix no look.
+
+
+(Quinto formulario)
+5.QUAL VISUAL VOCÊ MAIS SE IDENTIFICA?
+
+-Básico confortável e prático
+-Formal tradicional e atemporal
+-Clássico sofisticado e atual
+-Delicado feminino e romântico
+-Sensual e provocante
+-Urbano e impactante
+-Diferente e criativo
+
+(Sexto formulario)
+6.QUAIS DETALHES VOCÊ MAIS GOSTA?
+
+-Looks sem detalhes; um visual despojado, prático e básico.
+-Detalhes bem discretos.
+-Detalhes sofisticados, que dão um ar refinado à roupa.
+-Detalhes mais delicados, como babados, rendas, bordados e laços.
+-Detalhes que valorizam o meu corpo, como decotes, fendas, recortes reveladores e transparências.
+-Detalhes que criam efeito marcante
+-Detalhes diferentes do convencional, produções ousadas.
+
+(Setimo formulario)
+7.QUAIS ESTAMPAS TEM MAIS A SUA CARA?
+
+Listras e xadrez, estampas coloridas e alegres.
+Risca de giz, espinha de peixe e xadrez.
+Estampas abstratas com formas geométricas,
+discretas e tramas no tecido como jacquard e tweed.
+Estampas florais e outras delicadas como bolinhas, borboletas, gatinhos e corações.
+Estampas de animal print, como onça, zebra e cobra.
+Estampas exageradas como grandes póas, geométricos ou abstratos.
+Estampas diferentes do usual, como orientais, africanas, animal e xadrez. Ou mesmo uma mistura de estampas.
+
+(Oitavo formulario)
+8.QUAL SEU SAPATO FAVORITO?
+
+Confortável
+Clássico
+Sofisticado
+Saldo alto e fino
+Feminino
+Design moderno e poderoso
+Diferente, colorido e vintage
+
+(Nono formulario)
+9.QUE TIPO DE ACESSÓRIOS VOCÊ GOSTA?
+
+-Esportivos, simples, pequenos e não costumo trocá-los.
+-Clássicos e discretos
+-Refinados
+-Delicados e femininos
+-Grandes e brilhantes
+-Peças de design arrojado e moderno
+-Peças de designdivertido, rústico e étnico
+
+(Decimo formulario)
+10.QUAL GRUPO DE PEÇAS QUE VOCÊ MAIS GOSTA?
+
+-Jeans, camiseta de malha, suéter, moletom, jaqueta jeans e tênis.
+-Saias, calças e scarpins sempre na linha clássica; vestido preto ou polo, camisa branca, terninho, tailleur, sapato fechado.
+-Peças de alfaiataria, jeans premium, blusas de seda, salto alto e delicado, bijuterias finas ou joias.
+-Vestido longo e fluido, saia rodada, sapatilhas, acessórios delicados ou discreto
+-Sapato de salto agulha, blusas decotadas ou com transparências, jeans justos e saias curtas ou justas.
+-Jeans destroyed, blusas e casacos volumosos e/ou com gola alta, jaqueta de couro, peças estruturadas e de design marcante
+-Não existe peças chaves exclusivas

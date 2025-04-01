@@ -1,3 +1,0 @@
-O icone da MaterialIcons vai ser um carrinho aonde o usuario vai poder adicionar suas compras, 
-faça com que quando o usuario escoher seus produtos vá automaticamente para o carrinho e quando o 
-usuario clicar no carrinho use um caminho com navigator para acessar a pagina Carrinho.tsx

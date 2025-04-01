@@ -1,65 +1,6 @@
-INICIAR BACK-END:
-
 dotnet build
 dotnet run
 
-INICIAR FRONT-END:
-
-npx expo start
-
-INICIAR SWAGGER:
-
 start http://localhost:5009/swagger
 
-
-
-
-retornar pasta CMD:
-
-cd ..
-
-
-
-
-
-ENCERRAR PROCESSO PELO CMD:
-
-Abrir o CMD como administrador e executar:
-netstat -ano | findstr :3306
-Matar a task:
-taskkill /PID 1234 /F
-Substituir 1234 pela PID
-
-Altere a porta do MySQL/MariaDB
-Se você não conseguir liberar a porta 3306, pode alterar a porta que o MySQL/MariaDB usa:
-
-Abra o arquivo de configuração do MySQL/MariaDB (my.ini ou my.cnf). No seu caso, como você está usando o XAMPP, 
-o arquivo está localizado em:
-
-C:\xampp\mysql\bin\my.ini
-
-port = 3306
-
-port = 3307
-
-netstat -ano | findstr :3306
-Se houver um processo usando a porta, você pode encerrá-lo:
-
-taskkill /PID <PID> /F
-Substitua <PID> pelo número do Process ID que você anotou.
-
-
-
-
-ENCERRAR PROCESSO NO GERENCIADOR:
-
-
-
-Identifique o processo que está usando a porta
-Abra o Gerenciador de Tarefas (Ctrl + Shift + Esc).
-
-Vá para a aba "Detalhes".
-
-Localize o processo com o PID 9432 (você pode ordenar a lista pelo PID clicando no cabeçalho da coluna "PID").
-
-Verifique o nome do processo. Provavelmente será mysqld.exe (MySQL) ou mariadb.exe (MariaDB).
+npx expo start

@@ -87,7 +87,6 @@ export default function Cadastrar() {
 
       console.log('Resposta do servidor:', response.data);
       
-      // Verifica a resposta do servidor
       if (response.status === 201) {
         console.log('Conta criada com sucesso!');
         Alert.alert('Sucesso', 'Conta criada com sucesso!');
@@ -225,7 +224,7 @@ export const style = StyleSheet.create({
     backgroundColor: themas.Colors.gg,
   },
   boxTop: {
-    height: 500,
+    height: 300,
     width: '100%',
     backgroundColor: '#EDEDED',
     alignItems: 'center',
@@ -302,7 +301,7 @@ export const style = StyleSheet.create({
   logo: {
     width: 100,
     height: 100,
-    marginTop: 200,
-    borderRadius: 60,
+    marginTop: 10,
+    borderRadius: 50,
   },
 });
