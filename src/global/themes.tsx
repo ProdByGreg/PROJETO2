@@ -6,5 +6,7 @@ export const themas = {
         gray:'gray',
         bgScreen:'#f1f7fa',
         gg:'green',
+        jetblack: `#0a0a0d`,
+        black: '#2D2D2D',
     }
 }

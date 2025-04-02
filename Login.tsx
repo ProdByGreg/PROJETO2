@@ -248,25 +248,25 @@ export const style = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor:themas.Colors.gg,
+    backgroundColor: themas.Colors.black,
   },
   boxTop: {
     height: Dimensions.get('window').height / 3,
     width: '100%',
-    backgroundColor: '#EDEDED',
+    backgroundColor: '#2a2a2a',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   boxMid: {
     height: Dimensions.get('window').height / 3,
     width: '100%',
-    backgroundColor: '#F2F2F2',
-    paddingHorizontal: 37
+    backgroundColor: '#2e2e2e',
+    paddingHorizontal: 37,
   },
   boxBottom: {
     height: Dimensions.get('window').height / 4,
     width: '100%',
-    backgroundColor: '#F8F8F8',
+    backgroundColor: '#333',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -279,11 +279,12 @@ export const style = StyleSheet.create({
   text: {
     fontWeight: 'bold',
     fontSize: 18,
+    color: '#fff',
     marginTop: 20,
   },
   titleInput: {
     marginLeft: '30%',
-    color: themas.Colors.gray,
+    color: themas.Colors.lightGray,
     marginTop: 30,
   },
   boxInput: {
@@ -296,14 +297,15 @@ export const style = StyleSheet.create({
     borderRadius: 20,
     alignItems: 'center',
     paddingHorizontal: 5,
-    backgroundColor: themas.Colors.lightGray,
-    borderColor: themas.Colors.lightGray,
+    backgroundColor: '#444',
+    borderColor: '#444',
   },
   input: {
     height: '100%',
     width: '95%',
     borderRadius: 20,
-    paddingLeft: 10
+    paddingLeft: 10,
+    color: '#fff',
   },
   button: {
     width: 200,
@@ -312,7 +314,7 @@ export const style = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: themas.Colors.gg,
     borderRadius: 40,
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 3,
@@ -324,21 +326,21 @@ export const style = StyleSheet.create({
   },
   textButton: {
     fontSize: 16,
-    color: '#FFFF',
+    color: '#fff',
     fontWeight: 'bold',
   },
   textC: {
     fontSize: 16,
-    color: themas.Colors.gray,
+    color: themas.Colors.lightGray,
   },
   textBottom: {
     fontSize: 16,
-    color: themas.Colors.primary,
+    color: `#8A2BE2`,
     fontWeight: 'bold',
   },
   rowContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: 20,
-  }
+  },
 });

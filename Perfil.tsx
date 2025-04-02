@@ -45,19 +45,19 @@ const styles = StyleSheet.create({
     flex: 2,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#EDEDED',
+    backgroundColor: '#2a2a2a',
   },
   boxMid: {
     flex: 6,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F2F2F2',
+    backgroundColor: '#2e2e2e',
   },
   boxBottom: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F8F8F8',
+    backgroundColor: '#333',
   },
   logo: {
     width: 100,
@@ -68,6 +68,7 @@ const styles = StyleSheet.create({
   text: {
     fontWeight: 'bold',
     fontSize: 18,
+    color: '#fff',
   },
   placeholderText: {
     fontSize: 16,

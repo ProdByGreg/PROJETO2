@@ -226,20 +226,20 @@ export const style = StyleSheet.create({
   boxTop: {
     height: 300,
     width: '100%',
-    backgroundColor: '#EDEDED',
+    backgroundColor: '#2a2a2a',
     alignItems: 'center',
     justifyContent: 'center',
   },
   boxMid: {
     height: 505,
     width: '100%',
-    backgroundColor: '#F2F2F2',
+    backgroundColor: '#2e2e2e',
     paddingHorizontal: 37,
   },
   boxBottom: {
     height: 205,
     width: '100%',
-    backgroundColor: '#F8F8F8',
+    backgroundColor: '#333',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -247,6 +247,7 @@ export const style = StyleSheet.create({
     fontWeight: 'bold',
     marginTop: 20,
     fontSize: 18,
+    color: '#fff',
   },
   titleInput: {
     marginLeft: '30%',
@@ -301,7 +302,7 @@ export const style = StyleSheet.create({
   logo: {
     width: 100,
     height: 100,
-    marginTop: 10,
+    marginTop: 150,
     borderRadius: 50,
   },
 });
