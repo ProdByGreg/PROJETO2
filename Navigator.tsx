@@ -15,6 +15,8 @@ const Stack = createStackNavigator();
 
 
 export default function App() {
+  console.log('Iniciando navegação.');
+  console.log('Iniciando navegação..');
   console.log('Iniciando navegação...');
 
 
@@ -45,7 +47,7 @@ export default function App() {
           options={{ title: 'Criarconta' }}
         />
 
-<Stack.Screen
+        <Stack.Screen
           name="Perfil"
           component={Perfil}
           options={{ title: 'Perfil' }}
@@ -56,6 +58,4 @@ export default function App() {
 
     </NavigationContainer>
 
-  );
-  
-}
+  );}

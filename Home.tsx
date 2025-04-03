@@ -8,7 +8,7 @@ const logo = require('./src/assets/DripOrDrown.jpg');
 
 const perguntas = [
   { id: 1, pergunta: 'Defina seu gênero', opcoes: ['Masculino', 'Feminino'] },
-  { id: 2, pergunta: 'Insira suas informações físicas', inputs: ['Altura', 'Peso', 'Cores de roupas preferidas'] },
+  { id: 2, pergunta: 'Insira suas informações físicas', inputs: ['Altura', 'tamanho da roupa', 'Cores de roupas preferidas'] },
   { id: 3, pergunta: 'Descreva sua personalidade', opcoes: ['Informal, espontânea, alegre', 'Conservadora, séria, organizada', 'Exigente, refinada, bem-sucedida', 'Feminina, meiga, delicada', 'Glamorosa, excitante, sensual', 'Sofisticada, moderna, firme', 'Exótica, aventureira, inovadora'] },
   { id: 4, pergunta: 'Qual o seu tipo de roupa favorita?', opcoes: ['Looks confortáveis, soltos ao corpo, práticos', 'Roupas discretas, com caimento clássico', 'Peças refinadas, sem modismos', 'Roupas delicadas, cores suaves', 'Looks ajustados que valorizam o corpo', 'Peças estruturadas, modernas', 'Formas e peças marcantes'] },
   { id: 5, pergunta: 'Qual visual você mais se identifica?', opcoes: ['Básico confortável e prático', 'Formal tradicional e atemporal', 'Clássico sofisticado e atual', 'Delicado feminino e romântico', 'Sensual e provocante', 'Urbano e impactante', 'Diferente e criativo'] },
@@ -81,7 +81,7 @@ const Home = () => {
 
         {perguntas[passo].inputs && (
           <TouchableOpacity style={styles.button} onPress={() => responder()}>
-            <Text style={styles.textButton}>Continuar</Text>
+            <Text style={styles.textButton}>CONTINUAR</Text>
           </TouchableOpacity>
         )}
       </View>
@@ -94,16 +94,70 @@ const Home = () => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#121212' },
-  menuButton: { position: 'absolute', top: 20, left: 20, zIndex: 10 },
-  boxTop: { flex: 2, justifyContent: 'center', alignItems: 'center', backgroundColor: '#2a2a2a' },
-  logo: { width: 100, height: 100, marginBottom: 10, borderRadius: 50 },
-  boxMid: { flex: 6, justifyContent: 'center', alignItems: 'center', backgroundColor: '#2e2e2e', paddingHorizontal: 20 },
-  boxBottom: { flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#333' },
-  text: { fontWeight: 'bold', fontSize: 18, color: '#fff', textAlign: 'center', marginBottom: 20 },
-  button: { width: 250, height: 50, alignItems: 'center', justifyContent: 'center', backgroundColor: '#6200ea', borderRadius: 40, marginVertical: 10 },
-  textButton: { fontSize: 16, color: '#fff', fontWeight: 'bold' },
-  input: { width: 250, height: 50, backgroundColor: '#444', color: '#fff', paddingHorizontal: 15, borderRadius: 10, marginVertical: 5 }
-});
 
+  container:{ 
+  flex: 1, 
+  backgroundColor: '#121212'},
+
+  menuButton:{
+  position: 'absolute', 
+  top: 20, 
+  left: 20, 
+  zIndex: 10},
+
+  boxTop:{
+  flex: 2, 
+  justifyContent: 'center', 
+  alignItems: 'center', 
+  backgroundColor: '#2a2a2a'},
+
+  logo:{ 
+    width: 100, 
+    height: 100, 
+    marginBottom: 10, 
+    borderRadius: 50},
+
+  boxMid:{ 
+    flex: 6, 
+    justifyContent: 'center', 
+    alignItems: 'center', 
+    backgroundColor: '#2e2e2e', 
+    paddingHorizontal: 20},
+
+  boxBottom:{ 
+    flex: 1, 
+    justifyContent: 'center', 
+    alignItems: 'center', 
+    backgroundColor: '#333'},
+
+  text:{ 
+    fontWeight: 'bold', 
+    fontSize: 18, 
+    color: '#fff', 
+    textAlign: 'center', 
+    marginBottom: 20},
+
+  button:{ 
+    width: 300, 
+    height: 40, 
+    alignItems: 'center', 
+    justifyContent: 'center', 
+    backgroundColor: 'green', 
+    borderRadius: 10, 
+    marginVertical: 10},
+
+  textButton: { 
+    fontSize: 16, 
+    color: '#fff', 
+    fontWeight: 'bold'},
+
+  input: { 
+    width: 250, 
+    height: 50, 
+    backgroundColor: '#444', 
+    color: '#fff', 
+    paddingHorizontal: 15, 
+    borderRadius: 1, 
+    marginVertical: 5,
+  }});
 export default Home;

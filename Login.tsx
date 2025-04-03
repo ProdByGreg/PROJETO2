@@ -217,7 +217,7 @@ export default function Login() {
 
           <TouchableOpacity onPress={() => navigation.navigate('Criarconta')}>
 
-            <Text style={style.textBottom}> Clique aqui para criar uma conta.</Text>
+            <Text style={style.textBottom}> Crie uma.</Text>
 
           </TouchableOpacity>
 
@@ -283,16 +283,16 @@ export const style = StyleSheet.create({
     marginTop: 20,
   },
   titleInput: {
-    marginLeft: '30%',
+    marginLeft: '38%',
     color: themas.Colors.lightGray,
     marginTop: 30,
   },
   boxInput: {
-    width: '40%',
+    width: '25%',
     height: 40,
     borderWidth: 1,
     marginTop: 10,
-    marginLeft: '30%',
+    marginLeft: '38%',
     flexDirection: 'row',
     borderRadius: 20,
     alignItems: 'center',
@@ -300,6 +300,7 @@ export const style = StyleSheet.create({
     backgroundColor: '#444',
     borderColor: '#444',
   },
+  
   input: {
     height: '100%',
     width: '95%',
@@ -309,7 +310,7 @@ export const style = StyleSheet.create({
   },
   button: {
     width: 200,
-    height: 50,
+    height: 40,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: themas.Colors.gg,
@@ -322,12 +323,13 @@ export const style = StyleSheet.create({
     shadowOpacity: 0.29,
     shadowRadius: 4.65,
     elevation: 7,
-    marginTop: 20,
+
   },
   textButton: {
     fontSize: 16,
     color: '#fff',
     fontWeight: 'bold',
+    
   },
   textC: {
     fontSize: 16,

@@ -18,7 +18,7 @@ CREATE TABLE preferencias_usuario (
     user_id INT UNIQUE REFERENCES users(id) ON DELETE CASCADE,
     genero VARCHAR(10) NOT NULL,
     altura DECIMAL(5,2) NOT NULL,
-    peso DECIMAL(5,2) NOT NULL,
+    tamanho_da_roupa VARCHAR(10) NOT NULL,
     cores_preferidas TEXT,
     personalidade TEXT,
     estilo_roupa TEXT,

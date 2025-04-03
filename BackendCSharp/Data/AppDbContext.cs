@@ -5,7 +5,7 @@ namespace BackendCSharp.Models
     public class AppDbContext : DbContext
     {
         public DbSet<User> Users { get; set; }
-        public DbSet<PreferenciasUsuario> PreferenciasUsuarios { get; set; } // Adicionando a nova tabela
+        public DbSet<PreferenciasUsuario> PreferenciasUsuarios { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
@@ -13,7 +13,6 @@ namespace BackendCSharp.Models
         {
             base.OnModelCreating(modelBuilder);
 
-            // Configuração para garantir que cada usuário tenha uma única entrada de preferências
             modelBuilder.Entity<PreferenciasUsuario>()
                 .HasIndex(p => p.UserId)
                 .IsUnique();
