@@ -4,8 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using BackendCSharp.Controllers;
 using BackendCSharp.Models;
 
-[Route("api/[controller]")]
 [ApiController]
+[Route("api/[controller]")]
 public class PreferenciasController : ControllerBase
 {
     private readonly AppDbContext _context;
@@ -15,23 +15,31 @@ public class PreferenciasController : ControllerBase
         _context = context;
     }
 
-    [HttpPost]
-    public async Task<IActionResult> SalvarPreferencias([FromBody] PreferenciasUsuario preferencias)
+
+
+
+
+
+
+  [HttpPost]
+public async Task<IActionResult> salvarPreferencias([FromBody] PreferenciasUsuario preferencias)
+{
+    if (preferencias == null)
     {
-        if (preferencias == null)
-        {
-            return BadRequest("Dados inválidos.");
-        }
+        return BadRequest("Preferências não fornecidas.");
+    }
 
-        var usuarioExistente = await _context.Users.FindAsync(preferencias.UserId);
-        if (usuarioExistente == null)
-        {
-            return NotFound("Usuário não encontrado.");
-        }
-
-        _context.PreferenciasUsuarios.Add(preferencias);
+    try
+    {
+        _context.preferenciasusuario.Add(preferencias);
         await _context.SaveChangesAsync();
-
-        return CreatedAtAction(nameof(SalvarPreferencias), new { id = preferencias.Id }, preferencias);
+        return Ok();
+    }
+    catch (DbUpdateException ex)
+    {
+        return StatusCode(500, $"Erro ao salvar preferências: {ex.Message}");
     }
 }
+}
+
+

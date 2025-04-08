@@ -41,8 +41,6 @@ const Home = () => {
 
     if (passo < perguntas.length - 1) {
       setPasso(passo + 1);
-    } else {
-      salvarPreferencias();
     }
   };
 
@@ -56,6 +54,10 @@ const Home = () => {
     }
   };
 
+
+
+
+  
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.menuButton} onPress={() => navigation.navigate('Perfil')}>
@@ -79,7 +81,15 @@ const Home = () => {
           <TextInput key={index} style={styles.input} placeholder={input} placeholderTextColor="#aaa" onChangeText={(value) => handleInputChange(input, value)} />
         ))}
 
-        {perguntas[passo].inputs && (
+        {/* Botão Confirmar na última pergunta */}
+        {passo === perguntas.length - 1 && (
+          <TouchableOpacity style={styles.button} onPress={salvarPreferencias}>
+            <Text style={styles.textButton}>CONFIRMAR</Text>
+          </TouchableOpacity>
+        )}
+
+        {/* Botão de continuar nas perguntas anteriores */}
+        {perguntas[passo].inputs && passo < perguntas.length - 1 && (
           <TouchableOpacity style={styles.button} onPress={() => responder()}>
             <Text style={styles.textButton}>CONTINUAR</Text>
           </TouchableOpacity>
@@ -94,63 +104,62 @@ const Home = () => {
 };
 
 const styles = StyleSheet.create({
-
-  container:{ 
-  flex: 1, 
-  backgroundColor: '#121212'},
-
-  menuButton:{
-  position: 'absolute', 
-  top: 20, 
-  left: 20, 
-  zIndex: 10},
-
-  boxTop:{
-  flex: 2, 
-  justifyContent: 'center', 
-  alignItems: 'center', 
-  backgroundColor: '#2a2a2a'},
-
-  logo:{ 
+  container: { 
+    flex: 1, 
+    backgroundColor: '#121212' 
+  },
+  menuButton: {
+    position: 'absolute', 
+    top: 20, 
+    left: 20, 
+    zIndex: 10
+  },
+  boxTop: {
+    flex: 2, 
+    justifyContent: 'center', 
+    alignItems: 'center', 
+    backgroundColor: '#2a2a2a'
+  },
+  logo: { 
     width: 100, 
     height: 100, 
     marginBottom: 10, 
-    borderRadius: 50},
-
-  boxMid:{ 
+    borderRadius: 50
+  },
+  boxMid: { 
     flex: 6, 
     justifyContent: 'center', 
     alignItems: 'center', 
     backgroundColor: '#2e2e2e', 
-    paddingHorizontal: 20},
-
-  boxBottom:{ 
+    paddingHorizontal: 20
+  },
+  boxBottom: { 
     flex: 1, 
     justifyContent: 'center', 
     alignItems: 'center', 
-    backgroundColor: '#333'},
-
-  text:{ 
+    backgroundColor: '#333'
+  },
+  text: { 
     fontWeight: 'bold', 
     fontSize: 18, 
     color: '#fff', 
     textAlign: 'center', 
-    marginBottom: 20},
-
-  button:{ 
+    marginBottom: 20
+  },
+  button: { 
     width: 300, 
     height: 40, 
     alignItems: 'center', 
     justifyContent: 'center', 
     backgroundColor: 'green', 
     borderRadius: 10, 
-    marginVertical: 10},
-
+    marginVertical: 10
+  },
   textButton: { 
     fontSize: 16, 
     color: '#fff', 
-    fontWeight: 'bold'},
-
+    fontWeight: 'bold'
+  },
   input: { 
     width: 250, 
     height: 50, 
@@ -158,6 +167,8 @@ const styles = StyleSheet.create({
     color: '#fff', 
     paddingHorizontal: 15, 
     borderRadius: 1, 
-    marginVertical: 5,
-  }});
+    marginVertical: 5
+  }
+});
+
 export default Home;

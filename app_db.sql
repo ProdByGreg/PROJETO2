@@ -13,7 +13,7 @@ CREATE TABLE users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE preferencias_usuario (
+CREATE TABLE preferenciasusuario (
     id SERIAL PRIMARY KEY,
     user_id INT UNIQUE REFERENCES users(id) ON DELETE CASCADE,
     genero VARCHAR(10) NOT NULL,
@@ -35,4 +35,7 @@ INSERT INTO users (nome, email, password, role, Telefone, CPF) VALUES
 ('Fernando','admin@admin.com', '1234', 'admin', '11987654321', '123.456.789-01');
 
 SELECT * FROM users;
-SELECT * FROM preferencias_usuario;
+SELECT * FROM preferenciasusuario;
+
+DESCRIBE preferenciasusuario;
+

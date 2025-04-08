@@ -420,4 +420,4 @@ C:\Users\enzo2\OneDrive\Área de Trabalho\PROJETO2\BackendCSharp\obj\Debug\net8.
 C:\Users\enzo2\OneDrive\Área de Trabalho\PROJETO2\BackendCSharp\obj\Debug\net8.0\BackendCSharp.pdb
 C:\Users\enzo2\OneDrive\Área de Trabalho\PROJETO2\BackendCSharp\obj\Debug\net8.0\BackendCSharp.genruntimeconfig.cache
 C:\Users\enzo2\OneDrive\Área de Trabalho\PROJETO2\BackendCSharp\obj\Debug\net8.0\ref\BackendCSharp.dll
-C:\Users\aluno\Desktop\PROJETO2\BackendCSharp\obj\Debug\net8.0\BackendCSharp.csproj.CopyComplete
+C:\Users\aluno\Desktop\PROJETO2\BackendCSharp\obj\Debug\net8.0\BackendC.7B2B7743.Up2Date
