@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert, Image } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert, Image, ScrollView } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
+import { themas } from "./src/global/themes";
 
 const logo = require('./src/assets/DripOrDrown.jpg');
 
@@ -54,46 +55,59 @@ const Home = () => {
     }
   };
 
-
-
-
-  
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.menuButton} onPress={() => navigation.navigate('Perfil')}>
         <MaterialIcons name="menu" size={32} color="gray" />
       </TouchableOpacity>
-      
+
       <View style={styles.boxTop}>
         <Image source={logo} style={styles.logo} resizeMode="contain" />
       </View>
-      
+
       <View style={styles.boxMid}>
-        <Text style={styles.text}>{perguntas[passo].pergunta}</Text>
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
+          <Text style={styles.text}>{perguntas[passo].pergunta}</Text>
 
-        {perguntas[passo].opcoes?.map((opcao, index) => (
-          <TouchableOpacity key={index} style={styles.button} onPress={() => responder(opcao)}>
-            <Text style={styles.textButton}>{opcao}</Text>
-          </TouchableOpacity>
-        ))}
+          {/* Opções em duas colunas */}
+          <View style={styles.opcoesContainer}>
+            {perguntas[passo].opcoes?.map((opcao, index) => (
+              <TouchableOpacity key={index} style={styles.opcaoButton} onPress={() => responder(opcao)}>
+                <Text style={styles.textButton}>{opcao}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
 
-        {perguntas[passo].inputs?.map((input, index) => (
-          <TextInput key={index} style={styles.input} placeholder={input} placeholderTextColor="#aaa" onChangeText={(value) => handleInputChange(input, value)} />
-        ))}
+          {/* Inputs se a pergunta exigir */}
+          {perguntas[passo].inputs?.map((input, index) => (
+            <TextInput
+              key={index}
+              style={styles.input}
+              placeholder={input}
+              placeholderTextColor="#aaa"
+              onChangeText={(value) => handleInputChange(input, value)}
+            />
+          ))}
 
-        {/* Botão Confirmar na última pergunta */}
-        {passo === perguntas.length - 1 && (
-          <TouchableOpacity style={styles.button} onPress={salvarPreferencias}>
-            <Text style={styles.textButton}>CONFIRMAR</Text>
-          </TouchableOpacity>
-        )}
+          {passo === perguntas.length - 1 && (
+            <TouchableOpacity style={styles.button} onPress={salvarPreferencias}>
+              <Text style={styles.textButton}>CONFIRMAR</Text>
+            </TouchableOpacity>
+          )}
 
-        {/* Botão de continuar nas perguntas anteriores */}
-        {perguntas[passo].inputs && passo < perguntas.length - 1 && (
-          <TouchableOpacity style={styles.button} onPress={() => responder()}>
-            <Text style={styles.textButton}>CONTINUAR</Text>
-          </TouchableOpacity>
-        )}
+          {perguntas[passo].inputs && passo < perguntas.length - 1 && (
+            <TouchableOpacity style={styles.button} onPress={() => responder()}>
+              <Text style={styles.textButton}>CONTINUAR</Text>
+            </TouchableOpacity>
+          )}
+
+          {/* Botão de Voltar para alterar resposta */}
+          {passo > 0 && (
+            <TouchableOpacity style={styles.buttonBack} onPress={() => setPasso(passo - 1)}>
+              <Text style={styles.textButton}>VOLTAR</Text>
+            </TouchableOpacity>
+          )}
+        </ScrollView>
       </View>
 
       <View style={styles.boxBottom}>
@@ -104,71 +118,116 @@ const Home = () => {
 };
 
 const styles = StyleSheet.create({
-  container: { 
-    flex: 1, 
-    backgroundColor: '#121212' 
+  scrollContainer: {
+    flexGrow: 1,
+    height: 100,
+  },
+  container: {
+    flex: 1,
+    backgroundColor: '#121212'
   },
   menuButton: {
-    position: 'absolute', 
-    top: 20, 
-    left: 20, 
+    position: 'absolute',
+    top: 20,
+    left: 20,
     zIndex: 10
   },
   boxTop: {
-    flex: 2, 
-    justifyContent: 'center', 
-    alignItems: 'center', 
+    flex: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: '#2a2a2a'
   },
-  logo: { 
-    width: 100, 
-    height: 100, 
-    marginBottom: 10, 
+  logo: {
+    width: 100,
+    height: 100,
+    marginBottom: 10,
     borderRadius: 50
   },
-  boxMid: { 
-    flex: 6, 
-    justifyContent: 'center', 
-    alignItems: 'center', 
-    backgroundColor: '#2e2e2e', 
+  boxMid: {
+    flex: 6,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#2e2e2e',
     paddingHorizontal: 20
   },
-  boxBottom: { 
-    flex: 1, 
-    justifyContent: 'center', 
-    alignItems: 'center', 
+  boxBottom: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: '#333'
   },
-  text: { 
-    fontWeight: 'bold', 
-    fontSize: 18, 
-    color: '#fff', 
-    textAlign: 'center', 
-    marginBottom: 20
+  text: {
+    fontWeight: 'bold',
+    fontSize: 18,
+    color: '#fff',
+    textAlign: 'center',
+    marginTop: 20
   },
-  button: { 
-    width: 300, 
-    height: 40, 
-    alignItems: 'center', 
-    justifyContent: 'center', 
-    backgroundColor: 'green', 
-    borderRadius: 10, 
-    marginVertical: 10
+  button: {
+    width: 300,
+    height: 35,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: themas.Colors.gg,
+    borderRadius: 20,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.29,
+    shadowRadius: 4.65,
+    elevation: 7,
   },
-  textButton: { 
-    fontSize: 16, 
-    color: '#fff', 
+  buttonBack: {
+    width: 300,
+    height: 35,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'red',
+    borderRadius: 20,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.29,
+    shadowRadius: 4.65,
+    elevation: 7,
+    marginTop: 5,
+  },
+  textButton: {
+    fontSize: 16,
+    color: '#fff',
     fontWeight: 'bold'
   },
-  input: { 
-    width: 250, 
-    height: 50, 
-    backgroundColor: '#444', 
-    color: '#fff', 
-    paddingHorizontal: 15, 
-    borderRadius: 1, 
+  input: {
+    width: 300,
+    height: 50,
+    backgroundColor: '#444',
+    color: '#fff',
+    paddingHorizontal: 15,
+    borderRadius: 1,
     marginVertical: 5
-  }
+  },
+  opcoesContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    position: 'static',
+    justifyContent: 'center',
+    gap: 10,
+    marginBottom: 20
+  },
+  opcaoButton: {
+    width: '50%',
+    height: 50,
+    backgroundColor: 'green',
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 5
+  },
 });
 
 export default Home;

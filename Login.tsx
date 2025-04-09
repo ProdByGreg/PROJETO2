@@ -258,7 +258,7 @@ export const style = StyleSheet.create({
     justifyContent: 'center',
   },
   boxMid: {
-    height: Dimensions.get('window').height / 3,
+    height: Dimensions.get('window').height / 2.5,
     width: '100%',
     backgroundColor: '#2e2e2e',
     paddingHorizontal: 37,
@@ -273,7 +273,7 @@ export const style = StyleSheet.create({
   logo: {
     width: 100,
     height: 100,
-    marginTop: 10,
+    marginTop: 30,
     borderRadius: 60,
   },
   text: {
@@ -323,7 +323,6 @@ export const style = StyleSheet.create({
     shadowOpacity: 0.29,
     shadowRadius: 4.65,
     elevation: 7,
-
   },
   textButton: {
     fontSize: 16,
