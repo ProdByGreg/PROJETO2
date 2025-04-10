@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using BackendCSharp.Controllers;
 using BackendCSharp.Models;
 
 [ApiController]
@@ -15,31 +14,18 @@ public class PreferenciasController : ControllerBase
         _context = context;
     }
 
-
-
-
-
-
-
-  [HttpPost]
-public async Task<IActionResult> salvarPreferencias([FromBody] PreferenciasUsuario preferencias)
-{
-    if (preferencias == null)
+    [HttpPost]
+    public async Task<IActionResult> SalvarPreferencia([FromBody] Preferencia preferencia)
     {
-        return BadRequest("Preferências não fornecidas.");
-    }
+        if (preferencia == null || preferencia.UserId == 0)
+        {
+            return BadRequest(new { message = "Dados inválidos" });
+        }
 
-    try
-    {
-        _context.preferenciasusuario.Add(preferencias);
+        _context.PreferenciasUsuarios.Add(preferencia);
         await _context.SaveChangesAsync();
-        return Ok();
-    }
-    catch (DbUpdateException ex)
-    {
-        return StatusCode(500, $"Erro ao salvar preferências: {ex.Message}");
-    }
-}
-}
 
+        return Ok(new { message = "Preferência salva com sucesso" });
+    }
 
+}

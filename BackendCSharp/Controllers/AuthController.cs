@@ -84,12 +84,10 @@ namespace BackendCSharp.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
-
             if (string.IsNullOrEmpty(request.Email) || string.IsNullOrEmpty(request.Password))
             {
                 return BadRequest(new { message = "E-mail e senha são obrigatórios" });
             }
-
 
             var user = await _context.Users
                 .FirstOrDefaultAsync(u => u.Email == request.Email && u.Password == request.Password);
@@ -99,8 +97,20 @@ namespace BackendCSharp.Controllers
                 return Unauthorized(new { message = "Credenciais inválidas" });
             }
 
-            return Ok(new { role = user.Role });
+            return Ok(new
+            {
+                user = new
+                {
+                    id = user.Id,
+                    email = user.Email,
+                    nome = user.Nome
+                },
+                role = user.Role
+            });
         }
+
+
+
     }
 
 

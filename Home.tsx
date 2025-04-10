@@ -1,59 +1,106 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert, Image, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Alert, Image, ScrollView } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { themas } from "./src/global/themes";
 
 const logo = require('./src/assets/DripOrDrown.jpg');
 
 const perguntas = [
-  { id: 1, pergunta: 'Defina seu gênero', opcoes: ['Masculino', 'Feminino'] },
-  { id: 2, pergunta: 'Insira suas informações físicas', inputs: ['Altura', 'tamanho da roupa', 'Cores de roupas preferidas'] },
-  { id: 3, pergunta: 'Descreva sua personalidade', opcoes: ['Informal, espontânea, alegre', 'Conservadora, séria, organizada', 'Exigente, refinada, bem-sucedida', 'Feminina, meiga, delicada', 'Glamorosa, excitante, sensual', 'Sofisticada, moderna, firme', 'Exótica, aventureira, inovadora'] },
-  { id: 4, pergunta: 'Qual o seu tipo de roupa favorita?', opcoes: ['Looks confortáveis, soltos ao corpo, práticos', 'Roupas discretas, com caimento clássico', 'Peças refinadas, sem modismos', 'Roupas delicadas, cores suaves', 'Looks ajustados que valorizam o corpo', 'Peças estruturadas, modernas', 'Formas e peças marcantes'] },
-  { id: 5, pergunta: 'Qual visual você mais se identifica?', opcoes: ['Básico confortável e prático', 'Formal tradicional e atemporal', 'Clássico sofisticado e atual', 'Delicado feminino e romântico', 'Sensual e provocante', 'Urbano e impactante', 'Diferente e criativo'] },
-  { id: 6, pergunta: 'Quais detalhes você mais gosta?', opcoes: ['Looks sem detalhes', 'Detalhes bem discretos', 'Detalhes sofisticados', 'Detalhes delicados', 'Detalhes que valorizam o corpo', 'Detalhes marcantes', 'Detalhes diferentes do convencional'] },
-  { id: 7, pergunta: 'Quais estampas tem mais a sua cara?', opcoes: ['Listras e xadrez', 'Risca de giz', 'Estampas abstratas', 'Florais e delicadas', 'Animal print', 'Estampas exageradas', 'Mistura de estampas'] },
-  { id: 8, pergunta: 'Qual seu sapato favorito?', opcoes: ['Confortável', 'Clássico', 'Sofisticado', 'Salto alto e fino', 'Feminino', 'Design moderno', 'Diferente e vintage'] },
-  { id: 9, pergunta: 'Que tipo de acessórios você gosta?', opcoes: ['Esportivos e simples', 'Clássicos e discretos', 'Refinados', 'Delicados e femininos', 'Grandes e brilhantes', 'Design arrojado', 'Divertidos e rústicos'] },
-  { id: 10, pergunta: 'Qual grupo de peças você mais gosta?', opcoes: ['Jeans e camiseta', 'Saias e scarpins clássicos', 'Peças de alfaiataria', 'Vestido fluido', 'Looks sensuais', 'Jeans destroyed e casacos volumosos', 'Sem peças chaves exclusivas'] }
+  { id: 1, pergunta: 'DEFINA SEU GÊNERO:', opcoes: ['MASCULINO', 'FEMININO', 'PREFIRO NÃO DIZER.'] },
+  { id: 2, pergunta: 'QUAL O SEU TAMANHO DE ROUPA?', opcoes: ['PP', 'P', 'M', 'G', 'GG', 'XG'] },
+  { id: 3, pergunta: 'QUAIS CORES DE ROUPAS VOCÊ PREFERE?', opcoes: ['NEUTRAS (PRETO, BRANCO, CINZA)', 'CORES VIVAS', 'PASTÉIS', 'TONS TERROSOS', 'COLORIDO E VIBRANTE'] },
+  { id: 4, pergunta: 'DESCREVA SUA PERSONALIDADE', opcoes: ['INFORMAL, ESPONTÂNEA, ALEGRE', 'CONSERVADORA, SÉRIA, ORGANIZADA', 'EXIGENTE, REFINADA, BEM-SUCEDIDA', 'FEMININA, MEIGA, DELICADA', 'GLAMOROSA, EXCITANTE, SENSUAL', 'SOFISTICADA, MODERNA, FIRME', 'EXÓTICA, AVENTUREIRA, INOVADORA'] },
+  { id: 5, pergunta: 'QUAL O SEU TIPO DE ROUPA FAVORITA?', opcoes: ['CONFORTÁVEIS, SOLTAS, PRÁTICAS', 'ROUPAS DISCRETAS, CLÁSSICAS', 'PEÇAS REFINADAS, SEM MODISMOS', 'ROUPAS DELICADAS, CORES SUAVES', 'LOOKS AJUSTADOS QUE VALORIZAM O CORPO', 'PEÇAS ESTRUTURADAS, MODERNAS', 'FORMAS E PEÇAS MARCANTES'] },
+  { id: 6, pergunta: 'QUAL VISUAL VOCÊ MAIS SE IDENTIFICA?', opcoes: ['BÁSICO CONFORTÁVEL E PRÁTICO', 'FORMAL TRADICIONAL E ATEMPORAL', 'CLÁSSICO SOFISTICADO E ATUAL', 'DELICADO FEMININO E ROMÂNTICO', 'SENSUAL E PROVOCANTE', 'URBANO E IMPACTANTE', 'DIFERENTE E CRIATIVO'] },
+  { id: 7, pergunta: 'QUAIS DETALHES VOCÊ MAIS GOSTA?', opcoes: ['LOOKS SEM DETALHES', 'DETALHES BEM DISCRETOS', 'DETALHES SOFISTICADOS', 'DETALHES DELICADOS', 'DETALHES QUE VALORIZAM O CORPO', 'DETALHES MARCANTES', 'DETALHES DIFERENTES DO CONVENCIONAL'] },
+  { id: 8, pergunta: 'QUAIS ESTAMPAS TÊM MAIS A SUA CARA?', opcoes: ['LISTRAS E XADREZ', 'RISCA DE GIZ', 'ESTAMPAS ABSTRATAS', 'FLORAIS E DELICADAS', 'ANIMAL PRINT', 'ESTAMPAS EXAGERADAS', 'MISTURA DE ESTAMPAS'] },
+  { id: 9, pergunta: 'QUAL SEU SAPATO FAVORITO?', opcoes: ['CONFORTÁVEL', 'CLÁSSICO', 'SOFISTICADO', 'SALTO ALTO E FINO', 'FEMININO', 'DESIGN MODERNO', 'DIFERENTE E VINTAGE'] },
+  { id: 10, pergunta: 'QUE TIPO DE ACESSÓRIOS VOCÊ GOSTA?', opcoes: ['ESPORTIVOS E SIMPLES', 'CLÁSSICOS E DISCRETOS', 'REFINADOS', 'DELICADOS E FEMININOS', 'GRANDES E BRILHANTES', 'DESIGN ARROJADO', 'DIVERTIDOS E RÚSTICOS'] },
+  { id: 11, pergunta: 'QUAL GRUPO DE PEÇAS VOCÊ MAIS GOSTA?', opcoes: ['JEANS E CAMISETA', 'SAIAS E SCARPINS CLÁSSICOS', 'PEÇAS DE ALFAIATARIA', 'VESTIDO FLUIDO', 'LOOKS SENSUAIS', 'JEANS DESTROYED E CASACOS VOLUMOSOS', 'SEM PEÇAS CHAVES EXCLUSIVAS'] }
 ];
 
 const Home = () => {
   const navigation = useNavigation();
   const [passo, setPasso] = useState(0);
-  const [respostas, setRespostas] = useState<Record<string, string | string[]>>({});
-  const [inputs, setInputs] = useState<{ [key: string]: string }>({});
+  const [respostas, setRespostas] = useState<Record<string, string>>({});
 
-  const handleInputChange = (field: string, value: string) => {
-    setInputs({ ...inputs, [field]: value });
-  };
-
-  const responder = (resposta?: string) => {
+  const responder = (resposta: string) => {
     const perguntaAtual = perguntas[passo].pergunta;
-
-    if (perguntas[passo].inputs) {
-      const respostasInputs = Object.values(inputs).map(String);
-      setRespostas((prev) => ({ ...prev, [perguntaAtual]: respostasInputs }));
-    } else if (resposta) {
-      setRespostas((prev) => ({ ...prev, [perguntaAtual]: resposta }));
-    }
+    setRespostas((prev) => ({ ...prev, [perguntaAtual]: resposta }));
 
     if (passo < perguntas.length - 1) {
       setPasso(passo + 1);
     }
   };
 
-  const salvarPreferencias = async () => {
-    try {
-      const API_URL = process.env.API_URL || 'http://localhost:5009';
-      await axios.post(`${API_URL}/api/Preferencias`, respostas);
-      Alert.alert('Sucesso', 'Suas preferências foram salvas com sucesso!');
-    } catch (error) {
-      Alert.alert('Erro', 'Não foi possível salvar suas preferências.');
+
+
+
+
+
+const salvarPreferencias = async () => {
+  try {
+    const UserId = await AsyncStorage.getItem('userid');
+    console.log('UserId:', UserId);
+
+    if (!UserId) {
+      Alert.alert('Erro', 'Usuário não identificado.');
+      return;
     }
-  };
+
+    const preferenciasFormatadas = {
+      UserId,
+      Genero: respostas['DEFINA SEU GÊNERO:'],
+      TamanhoDaRoupa: respostas['QUAL O SEU TAMANHO DE ROUPA?'],
+      CoresPreferidas: respostas['QUAIS CORES DE ROUPAS VOCÊ PREFERE?'],
+      Personalidade: respostas['DESCREVA SUA PERSONALIDADE'],
+      EstiloRoupa: respostas['QUAL O SEU TIPO DE ROUPA FAVORITA?'],
+      IdentidadeVisual: respostas['QUAL VISUAL VOCÊ MAIS SE IDENTIFICA?'],
+      DetalhesFavoritos: respostas['QUAIS DETALHES VOCÊ MAIS GOSTA?'],
+      EstampasFavoritas: respostas['QUAIS ESTAMPAS TÊM MAIS A SUA CARA?'],
+      SapatosFavoritos: respostas['QUAL SEU SAPATO FAVORITO?'],
+      AcessoriosFavoritos: respostas['QUE TIPO DE ACESSÓRIOS VOCÊ GOSTA?'],
+      PecasFavoritas: respostas['QUAL GRUPO DE PEÇAS VOCÊ MAIS GOSTA?']
+    };
+
+    console.log('Preferências formatadas:', preferenciasFormatadas);
+
+    const API_URL = process.env.API_URL || 'http://localhost:5009';
+    const endpoint = `${API_URL}/api/Preferencias`;
+    console.log('Enviando POST para:', endpoint);
+
+    const response = await axios.post(endpoint, preferenciasFormatadas);
+
+    console.log('Resposta do servidor:', response.data);
+
+    Alert.alert('Sucesso', 'Suas preferências foram salvas com sucesso!');
+  } catch (error: any) {
+    console.error('Erro ao salvar preferências:', error);
+
+    if (error.response) {
+      console.error('Resposta do servidor com erro:', error.response.data);
+      Alert.alert('Erro do servidor', JSON.stringify(error.response.data));
+    } else if (error.request) {
+      console.error('Nenhuma resposta recebida do servidor:', error.request);
+      Alert.alert('Erro de conexão', 'Não foi possível conectar ao servidor.');
+    } else {
+      console.error('Erro ao configurar a requisição:', error.message);
+      Alert.alert('Erro', error.message);
+    }
+  }
+};
+
+
+
+
+
+
+
+
+
 
   return (
     <View style={styles.container}>
@@ -69,7 +116,6 @@ const Home = () => {
         <ScrollView contentContainerStyle={styles.scrollContainer}>
           <Text style={styles.text}>{perguntas[passo].pergunta}</Text>
 
-          {/* Opções em duas colunas */}
           <View style={styles.opcoesContainer}>
             {perguntas[passo].opcoes?.map((opcao, index) => (
               <TouchableOpacity key={index} style={styles.opcaoButton} onPress={() => responder(opcao)}>
@@ -78,40 +124,24 @@ const Home = () => {
             ))}
           </View>
 
-          {/* Inputs se a pergunta exigir */}
-          {perguntas[passo].inputs?.map((input, index) => (
-            <TextInput
-              key={index}
-              style={styles.input}
-              placeholder={input}
-              placeholderTextColor="#aaa"
-              onChangeText={(value) => handleInputChange(input, value)}
-            />
-          ))}
+          <View style={styles.botoesContainer}>
+            {passo === perguntas.length - 1 && (
+              <TouchableOpacity style={styles.button} onPress={salvarPreferencias}>
+                <Text style={styles.textButton}>CONFIRMAR</Text>
+              </TouchableOpacity>
+            )}
 
-          {passo === perguntas.length - 1 && (
-            <TouchableOpacity style={styles.button} onPress={salvarPreferencias}>
-              <Text style={styles.textButton}>CONFIRMAR</Text>
-            </TouchableOpacity>
-          )}
-
-          {perguntas[passo].inputs && passo < perguntas.length - 1 && (
-            <TouchableOpacity style={styles.button} onPress={() => responder()}>
-              <Text style={styles.textButton}>CONTINUAR</Text>
-            </TouchableOpacity>
-          )}
-
-          {/* Botão de Voltar para alterar resposta */}
-          {passo > 0 && (
-            <TouchableOpacity style={styles.buttonBack} onPress={() => setPasso(passo - 1)}>
-              <Text style={styles.textButton}>VOLTAR</Text>
-            </TouchableOpacity>
-          )}
+            {passo > 0 && (
+              <TouchableOpacity style={styles.buttonBack} onPress={() => setPasso(passo - 1)}>
+                <Text style={styles.textButton}>VOLTAR</Text>
+              </TouchableOpacity>
+            )}
+          </View>
         </ScrollView>
       </View>
 
       <View style={styles.boxBottom}>
-        <Text style={styles.text}>© 2025 DripOrDrown</Text>
+        <Text style={styles.text2}>© 2025 DripOrDrown</Text>
       </View>
     </View>
   );
@@ -120,7 +150,7 @@ const Home = () => {
 const styles = StyleSheet.create({
   scrollContainer: {
     flexGrow: 1,
-    height: 100,
+    paddingBottom: 20,
   },
   container: {
     flex: 1,
@@ -146,8 +176,6 @@ const styles = StyleSheet.create({
   },
   boxMid: {
     flex: 6,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: '#2e2e2e',
     paddingHorizontal: 20
   },
@@ -159,75 +187,73 @@ const styles = StyleSheet.create({
   },
   text: {
     fontWeight: 'bold',
+    fontSize: 30,
+    color: '#fff',
+    textAlign: 'center',
+    marginTop: 50,
+    marginBottom: 120
+  },
+  text2: {
+    fontWeight: 'bold',
     fontSize: 18,
     color: '#fff',
     textAlign: 'center',
-    marginTop: 20
+    marginTop: 20,
+    marginBottom: 15
+  },
+  textButton: {
+    fontSize: 20,
+    color: '#fff',
+    fontWeight: 'bold',
+    textAlign: 'center'
+  },
+  opcoesContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    gap: 10,
+    marginBottom: 20,
+  },
+  opcaoButton: {
+    width: '25%',
+    minHeight: 40,
+    backgroundColor: 'green',
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 5,
+    paddingHorizontal: 8,
+  },
+  botoesContainer: {
+    alignItems: 'center',
+    gap: 10
   },
   button: {
     width: 300,
-    height: 35,
+    height: 40,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: themas.Colors.gg,
     borderRadius: 20,
     shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
+    shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.29,
     shadowRadius: 4.65,
-    elevation: 7,
+    elevation: 7
   },
   buttonBack: {
     width: 300,
-    height: 35,
+    height: 40,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'red',
     borderRadius: 20,
     shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
+    shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.29,
     shadowRadius: 4.65,
-    elevation: 7,
-    marginTop: 5,
-  },
-  textButton: {
-    fontSize: 16,
-    color: '#fff',
-    fontWeight: 'bold'
-  },
-  input: {
-    width: 300,
-    height: 50,
-    backgroundColor: '#444',
-    color: '#fff',
-    paddingHorizontal: 15,
-    borderRadius: 1,
-    marginVertical: 5
-  },
-  opcoesContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    position: 'static',
-    justifyContent: 'center',
-    gap: 10,
-    marginBottom: 20
-  },
-  opcaoButton: {
-    width: '50%',
-    height: 50,
-    backgroundColor: 'green',
-    borderRadius: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    margin: 5
-  },
+    elevation: 7
+  }
 });
 
 export default Home;
