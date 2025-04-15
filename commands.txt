@@ -1,0 +1,8 @@
+dotnet build
+dotnet run
+
+start http://localhost:5009/swagger
+
+npx expo start
+
+npm install -g expo-cli

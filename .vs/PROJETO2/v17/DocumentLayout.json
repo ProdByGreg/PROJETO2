@@ -1,0 +1,54 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\aluno\\Desktop\\PROJETO2\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{6B77C608-C07B-48CD-AF16-43A5230DAC3A}|BackendCSharp\\BackendCSharp.csproj|c:\\users\\aluno\\desktop\\projeto2\\backendcsharp\\controllers\\preferenciascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6B77C608-C07B-48CD-AF16-43A5230DAC3A}|BackendCSharp\\BackendCSharp.csproj|solutionrelative:backendcsharp\\controllers\\preferenciascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6B77C608-C07B-48CD-AF16-43A5230DAC3A}|BackendCSharp\\BackendCSharp.csproj|c:\\users\\aluno\\desktop\\projeto2\\backendcsharp\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6B77C608-C07B-48CD-AF16-43A5230DAC3A}|BackendCSharp\\BackendCSharp.csproj|solutionrelative:backendcsharp\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AppDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\aluno\\Desktop\\PROJETO2\\BackendCSharp\\Data\\AppDbContext.cs",
+              "RelativeDocumentMoniker": "BackendCSharp\\Data\\AppDbContext.cs",
+              "ToolTip": "C:\\Users\\aluno\\Desktop\\PROJETO2\\BackendCSharp\\Data\\AppDbContext.cs",
+              "RelativeToolTip": "BackendCSharp\\Data\\AppDbContext.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAoAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-14T22:31:17.114Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "PreferenciasController.cs",
+              "DocumentMoniker": "C:\\Users\\aluno\\Desktop\\PROJETO2\\BackendCSharp\\Controllers\\PreferenciasController.cs",
+              "RelativeDocumentMoniker": "BackendCSharp\\Controllers\\PreferenciasController.cs",
+              "ToolTip": "C:\\Users\\aluno\\Desktop\\PROJETO2\\BackendCSharp\\Controllers\\PreferenciasController.cs",
+              "RelativeToolTip": "BackendCSharp\\Controllers\\PreferenciasController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABUAAABDAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-14T22:30:58.748Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
