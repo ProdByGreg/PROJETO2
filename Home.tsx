@@ -26,81 +26,53 @@ const Home = () => {
   const navigation = useNavigation();
   const [passo, setPasso] = useState(0);
   const [respostas, setRespostas] = useState<Record<string, string>>({});
+  const [preferenciasSalvas, setPreferenciasSalvas] = useState(false);
 
   const responder = (resposta: string) => {
     const perguntaAtual = perguntas[passo].pergunta;
     setRespostas((prev) => ({ ...prev, [perguntaAtual]: resposta }));
-
     if (passo < perguntas.length - 1) {
       setPasso(passo + 1);
     }
   };
 
+  const salvarPreferencias = async () => {
+    try {
+      const UserId = await AsyncStorage.getItem('userid');
+      if (!UserId) {
+        Alert.alert('Erro', 'Usuário não identificado.');
+        return;
+      }
 
+      const preferenciasFormatadas = {
+        UserId,
+        Genero: respostas['DEFINA SEU GÊNERO:'],
+        TamanhoDaRoupa: respostas['QUAL O SEU TAMANHO DE ROUPA?'],
+        CoresPreferidas: respostas['QUAIS CORES DE ROUPAS VOCÊ PREFERE?'],
+        Personalidade: respostas['DESCREVA SUA PERSONALIDADE'],
+        EstiloRoupa: respostas['QUAL O SEU TIPO DE ROUPA FAVORITA?'],
+        IdentidadeVisual: respostas['QUAL VISUAL VOCÊ MAIS SE IDENTIFICA?'],
+        DetalhesFavoritos: respostas['QUAIS DETALHES VOCÊ MAIS GOSTA?'],
+        EstampasFavoritas: respostas['QUAIS ESTAMPAS TÊM MAIS A SUA CARA?'],
+        SapatosFavoritos: respostas['QUAL SEU SAPATO FAVORITO?'],
+        AcessoriosFavoritos: respostas['QUE TIPO DE ACESSÓRIOS VOCÊ GOSTA?'],
+        PecasFavoritas: respostas['QUAL GRUPO DE PEÇAS VOCÊ MAIS GOSTA?']
+      };
 
+      const API_URL = process.env.API_URL || 'http://localhost:5009';
+      const response = await axios.post(`${API_URL}/api/Preferencias`, preferenciasFormatadas);
 
-
-
-const salvarPreferencias = async () => {
-  try {
-    const UserId = await AsyncStorage.getItem('userid');
-    console.log('UserId:', UserId);
-
-    if (!UserId) {
-      Alert.alert('Erro', 'Usuário não identificado.');
-      return;
+      if (response.status === 200 || response.status === 201) {
+        setPreferenciasSalvas(true);
+        navigation.navigate('Perfil');
+      } else {
+        Alert.alert('Erro', 'Não foi possível salvar suas preferências.');
+      }
+    } catch (error) {
+      console.error('Erro ao salvar preferências:', error);
+      Alert.alert('Erro', 'Ocorreu um erro ao salvar suas preferências.');
     }
-
-    const preferenciasFormatadas = {
-      UserId,
-      Genero: respostas['DEFINA SEU GÊNERO:'],
-      TamanhoDaRoupa: respostas['QUAL O SEU TAMANHO DE ROUPA?'],
-      CoresPreferidas: respostas['QUAIS CORES DE ROUPAS VOCÊ PREFERE?'],
-      Personalidade: respostas['DESCREVA SUA PERSONALIDADE'],
-      EstiloRoupa: respostas['QUAL O SEU TIPO DE ROUPA FAVORITA?'],
-      IdentidadeVisual: respostas['QUAL VISUAL VOCÊ MAIS SE IDENTIFICA?'],
-      DetalhesFavoritos: respostas['QUAIS DETALHES VOCÊ MAIS GOSTA?'],
-      EstampasFavoritas: respostas['QUAIS ESTAMPAS TÊM MAIS A SUA CARA?'],
-      SapatosFavoritos: respostas['QUAL SEU SAPATO FAVORITO?'],
-      AcessoriosFavoritos: respostas['QUE TIPO DE ACESSÓRIOS VOCÊ GOSTA?'],
-      PecasFavoritas: respostas['QUAL GRUPO DE PEÇAS VOCÊ MAIS GOSTA?']
-    };
-
-    console.log('Preferências formatadas:', preferenciasFormatadas);
-
-    const API_URL = process.env.API_URL || 'http://localhost:5009';
-    const endpoint = `${API_URL}/api/Preferencias`;
-    console.log('Enviando POST para:', endpoint);
-
-    const response = await axios.post(endpoint, preferenciasFormatadas);
-
-    console.log('Resposta do servidor:', response.data);
-
-    Alert.alert('Sucesso', 'Suas preferências foram salvas com sucesso!');
-  } catch (error: any) {
-    console.error('Erro ao salvar preferências:', error);
-
-    if (error.response) {
-      console.error('Resposta do servidor com erro:', error.response.data);
-      Alert.alert('Erro do servidor', JSON.stringify(error.response.data));
-    } else if (error.request) {
-      console.error('Nenhuma resposta recebida do servidor:', error.request);
-      Alert.alert('Erro de conexão', 'Não foi possível conectar ao servidor.');
-    } else {
-      console.error('Erro ao configurar a requisição:', error.message);
-      Alert.alert('Erro', error.message);
-    }
-  }
-};
-
-
-
-
-
-
-
-
-
+  };
 
   return (
     <View style={styles.container}>
@@ -113,31 +85,36 @@ const salvarPreferencias = async () => {
       </View>
 
       <View style={styles.boxMid}>
-        <ScrollView contentContainerStyle={styles.scrollContainer}>
-          <Text style={styles.text}>{perguntas[passo].pergunta}</Text>
-
-          <View style={styles.opcoesContainer}>
-            {perguntas[passo].opcoes?.map((opcao, index) => (
-              <TouchableOpacity key={index} style={styles.opcaoButton} onPress={() => responder(opcao)}>
-                <Text style={styles.textButton}>{opcao}</Text>
-              </TouchableOpacity>
-            ))}
+        {preferenciasSalvas ? (
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <Text style={[styles.text, { marginTop: 0 }]}>PREFERÊNCIAS SALVAS COM SUCESSO!</Text>
           </View>
+        ) : (
+          <ScrollView contentContainerStyle={styles.scrollContainer}>
+            <Text style={styles.text}>{perguntas[passo].pergunta}</Text>
 
-          <View style={styles.botoesContainer}>
-            {passo === perguntas.length - 1 && (
-              <TouchableOpacity style={styles.button} onPress={salvarPreferencias}>
-                <Text style={styles.textButton}>CONFIRMAR</Text>
-              </TouchableOpacity>
-            )}
+            <View style={styles.opcoesContainer}>
+              {perguntas[passo].opcoes?.map((opcao, index) => (
+                <TouchableOpacity key={index} style={styles.opcaoButton} onPress={() => responder(opcao)}>
+                  <Text style={styles.textButton}>{opcao}</Text>
+                </TouchableOpacity>
+              ))}
+            </View>
 
-            {passo > 0 && (
-              <TouchableOpacity style={styles.buttonBack} onPress={() => setPasso(passo - 1)}>
-                <Text style={styles.textButton}>VOLTAR</Text>
-              </TouchableOpacity>
-            )}
-          </View>
-        </ScrollView>
+            <View style={styles.botoesContainer}>
+              {passo === perguntas.length - 1 && (
+                <TouchableOpacity style={styles.button} onPress={salvarPreferencias}>
+                  <Text style={styles.textButton}>CONFIRMAR</Text>
+                </TouchableOpacity>
+              )}
+              {passo > 0 && (
+                <TouchableOpacity style={styles.buttonBack} onPress={() => setPasso(passo - 1)}>
+                  <Text style={styles.textButton}>VOLTAR</Text>
+                </TouchableOpacity>
+              )}
+            </View>
+          </ScrollView>
+        )}
       </View>
 
       <View style={styles.boxBottom}>

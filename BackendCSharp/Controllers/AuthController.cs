@@ -79,6 +79,31 @@ namespace BackendCSharp.Controllers
 
 
 
+        [HttpGet("{userId}")]
+        public async Task<IActionResult> GetUser(int userId)
+        {
+            var usuario = await _context.Users.FindAsync(userId);
+
+            if (usuario == null)
+            {
+                return NotFound(new { message = "Usuário não encontrado." });
+            }
+
+            return Ok(new
+            {
+                usuario.Id,
+                usuario.Nome,
+                usuario.Email,
+                usuario.Telefone,
+                usuario.CPF
+            });
+        }
+
+
+
+
+
+
 
 
         [HttpPost("login")]
