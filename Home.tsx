@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Alert, Image, ScrollView } from 'react-native';
+import { Dimensions, View, Text, StyleSheet, TouchableOpacity, Alert, Image, ScrollView } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -39,10 +39,7 @@ const Home = () => {
   const salvarPreferencias = async () => {
     try {
       const UserId = await AsyncStorage.getItem('userid');
-      if (!UserId) {
-        Alert.alert('Erro', 'Usuário não identificado.');
-        return;
-      }
+      if (!UserId) return Alert.alert('Erro', 'Usuário não identificado.');
 
       const preferenciasFormatadas = {
         UserId,
@@ -75,161 +72,201 @@ const Home = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <TouchableOpacity style={styles.menuButton} onPress={() => navigation.navigate('Perfil')}>
-        <MaterialIcons name="menu" size={32} color="gray" />
-      </TouchableOpacity>
+    <ScrollView contentContainerStyle={styles.scrollContainer}>
 
-      <View style={styles.boxTop}>
-        <Image source={logo} style={styles.logo} resizeMode="contain" />
+
+
+
+      <View style={styles.container}>
+
+
+
+
+
+
+        <View style={styles.boxTop}>
+          <TouchableOpacity style={styles.menuButton} onPress={() => navigation.navigate('Perfil')}>
+            <MaterialIcons name="menu" size={28} color="gray" />
+          </TouchableOpacity>
+
+          <Image source={logo} style={styles.logo} resizeMode="contain" />
+          <Text style={styles.title}>Selecione suas Preferências:</Text>
+        </View>
+
+
+
+
+
+
+
+
+
+
+
+
+        <View style={styles.boxMid}>
+          {preferenciasSalvas ? (
+            <Text style={styles.sucesso}>PREFERÊNCIAS SALVAS COM SUCESSO!</Text>
+          ) : (
+            <>
+              <Text style={styles.pergunta}>{perguntas[passo].pergunta}</Text>
+              <View style={styles.opcoesContainer}>
+                {perguntas[passo].opcoes?.map((opcao, index) => (
+                  <TouchableOpacity key={index} style={styles.opcaoButton} onPress={() => responder(opcao)}>
+                    <Text style={styles.opcaoText}>{opcao}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+
+              <View style={styles.botoesContainer}>
+                {passo === perguntas.length - 1 && (
+                  <TouchableOpacity style={styles.button} onPress={salvarPreferencias}>
+                    <Text style={styles.buttonText}>CONFIRMAR</Text>
+                  </TouchableOpacity>
+                )}
+                {passo > 0 && (
+                  <TouchableOpacity style={styles.buttonBack} onPress={() => setPasso(passo - 1)}>
+                    <Text style={styles.buttonText}>VOLTAR</Text>
+                  </TouchableOpacity>
+                )}
+              </View>
+            </>
+          )}
+        </View>
+
+
+
+
+
+
+
+
+
+
+        <View style={styles.boxBottom}>
+          <Text style={styles.footerText}>© 2025 DripOrDrown</Text>
+        </View>
+
+
+
       </View>
 
-      <View style={styles.boxMid}>
-        {preferenciasSalvas ? (
-          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text style={[styles.text, { marginTop: 0 }]}>PREFERÊNCIAS SALVAS COM SUCESSO!</Text>
-          </View>
-        ) : (
-          <ScrollView contentContainerStyle={styles.scrollContainer}>
-            <Text style={styles.text}>{perguntas[passo].pergunta}</Text>
 
-            <View style={styles.opcoesContainer}>
-              {perguntas[passo].opcoes?.map((opcao, index) => (
-                <TouchableOpacity key={index} style={styles.opcaoButton} onPress={() => responder(opcao)}>
-                  <Text style={styles.textButton}>{opcao}</Text>
-                </TouchableOpacity>
-              ))}
-            </View>
 
-            <View style={styles.botoesContainer}>
-              {passo === perguntas.length - 1 && (
-                <TouchableOpacity style={styles.button} onPress={salvarPreferencias}>
-                  <Text style={styles.textButton}>CONFIRMAR</Text>
-                </TouchableOpacity>
-              )}
-              {passo > 0 && (
-                <TouchableOpacity style={styles.buttonBack} onPress={() => setPasso(passo - 1)}>
-                  <Text style={styles.textButton}>VOLTAR</Text>
-                </TouchableOpacity>
-              )}
-            </View>
-          </ScrollView>
-        )}
-      </View>
 
-      <View style={styles.boxBottom}>
-        <Text style={styles.text2}>© 2025 DripOrDrown</Text>
-      </View>
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   scrollContainer: {
     flexGrow: 1,
-    paddingBottom: 20,
+    height: Dimensions.get('window').height / 4,
   },
   container: {
     flex: 1,
-    backgroundColor: '#121212'
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: themas.Colors.gg,
+  },
+  boxTop: {
+    height: 300,
+    width: '100%',
+    backgroundColor: '#2a2a2a',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 350,
   },
   menuButton: {
     position: 'absolute',
-    top: 20,
-    left: 20,
-    zIndex: 10
-  },
-  boxTop: {
-    flex: 2,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#2a2a2a'
+    top: 10,
+    left: 10,
+    padding: 10
   },
   logo: {
     width: 100,
     height: 100,
-    marginBottom: 10,
-    borderRadius: 50
+    borderRadius: 50,
+    marginBottom: 10
+  },
+  title: {
+    fontSize: 22,
+    color: '#fff',
+    fontWeight: 'bold',
+    marginTop: 10
   },
   boxMid: {
-    flex: 6,
+    height: 505,
+    width: '100%',
     backgroundColor: '#2e2e2e',
-    paddingHorizontal: 20
+    paddingHorizontal: 37,
   },
-  boxBottom: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#333'
-  },
-  text: {
-    fontWeight: 'bold',
-    fontSize: 30,
+  pergunta: {
     color: '#fff',
-    textAlign: 'center',
-    marginTop: 50,
-    marginBottom: 120
-  },
-  text2: {
-    fontWeight: 'bold',
     fontSize: 18,
-    color: '#fff',
-    textAlign: 'center',
-    marginTop: 20,
-    marginBottom: 15
-  },
-  textButton: {
-    fontSize: 20,
-    color: '#fff',
     fontWeight: 'bold',
+    marginBottom: 20,
+    marginTop: 60,
     textAlign: 'center'
   },
   opcoesContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
-    gap: 10,
-    marginBottom: 20,
+    gap: 10
   },
   opcaoButton: {
-    width: '25%',
-    minHeight: 40,
-    backgroundColor: 'green',
+    backgroundColor: themas.Colors.gg,
     borderRadius: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
+    paddingVertical: 10,
+    paddingHorizontal: 12,
     margin: 5,
-    paddingHorizontal: 8,
+    minWidth: '40%'
+  },
+  opcaoText: {
+    color: '#fff',
+    textAlign: 'center',
+    fontWeight: 'bold'
   },
   botoesContainer: {
+    marginTop: 20,
     alignItems: 'center',
     gap: 10
   },
   button: {
-    width: 300,
-    height: 40,
-    alignItems: 'center',
-    justifyContent: 'center',
     backgroundColor: themas.Colors.gg,
     borderRadius: 20,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.29,
-    shadowRadius: 4.65,
-    elevation: 7
+    padding: 12,
+    width: '80%'
   },
   buttonBack: {
-    width: 300,
-    height: 40,
-    alignItems: 'center',
-    justifyContent: 'center',
     backgroundColor: 'red',
     borderRadius: 20,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.29,
-    shadowRadius: 4.65,
-    elevation: 7
+    padding: 12,
+    width: '80%'
+  },
+  buttonText: {
+    color: '#fff',
+    textAlign: 'center',
+    fontWeight: 'bold'
+  },
+  boxBottom: {
+    height: 80,
+    width: '100%',
+    backgroundColor: '#333',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  footerText: {
+    color: '#fff',
+    fontSize: 16
+  },
+  sucesso: {
+    color: '#00ff99',
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginTop: 50
   }
 });
 
