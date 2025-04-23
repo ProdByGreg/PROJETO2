@@ -118,10 +118,10 @@ export default function Cadastrar() {
       <View style={style.container}>
         <View style={style.boxTop}>
           <Image source={logo} style={style.logo} resizeMode="contain" />
-          <Text style={style.text}>Criar uma nova conta!</Text>
         </View>
 
         <View style={style.boxMid}>
+        <Text style={style.text}>Criar uma nova conta!</Text>
           <Text style={style.titleInput}>NOME COMPLETO</Text>
           <View style={style.boxInput}>
             <TextInput
@@ -203,7 +203,14 @@ export default function Cadastrar() {
             {loading ? (
               <ActivityIndicator color="#fff" />
             ) : (
-              <Text style={style.textButton}>Criar Conta</Text>
+              <Text style={style.textButton}>Criar Conta.</Text>
+            )}
+          </TouchableOpacity>
+          <TouchableOpacity style={style.button} onPress={() => navigation.navigate('Login')}>
+            {loading ? (
+              <ActivityIndicator color="#fff" />
+            ) : (
+              <Text style={style.textButton}>Ja tenho conta.</Text>
             )}
           </TouchableOpacity>
         </View>
@@ -229,30 +236,35 @@ export const style = StyleSheet.create({
     backgroundColor: '#2a2a2a',
     alignItems: 'center',
     justifyContent: 'center',
+    marginTop: 300,
   },
   boxMid: {
-    height: 505,
+    height: 705,
     width: '100%',
     backgroundColor: '#2e2e2e',
     paddingHorizontal: 37,
   },
   boxBottom: {
-    height: 205,
+    height: 200,
     width: '100%',
     backgroundColor: '#333',
     alignItems: 'center',
     justifyContent: 'center',
+    flexDirection: 'row',
+    gap: 30,
+    
   },
   text: {
     fontWeight: 'bold',
-    marginTop: 20,
-    fontSize: 18,
+    marginTop: 70,
+    marginLeft: 450,
+    fontSize: 28,
     color: '#fff',
   },
   titleInput: {
     marginLeft: '30%',
     color: themas.Colors.gray,
-    marginTop: 10,
+    marginTop: 20,
   },
   boxInput: {
     width: '40%',

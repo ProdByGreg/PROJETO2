@@ -110,6 +110,8 @@ const Home = () => {
           ) : (
             <>
               <Text style={styles.pergunta}>{perguntas[passo].pergunta}</Text>
+
+
               <View style={styles.opcoesContainer}>
                 {perguntas[passo].opcoes?.map((opcao, index) => (
                   <TouchableOpacity key={index} style={styles.opcaoButton} onPress={() => responder(opcao)}>
@@ -130,6 +132,9 @@ const Home = () => {
                   </TouchableOpacity>
                 )}
               </View>
+
+
+
             </>
           )}
         </View>
@@ -175,7 +180,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#2a2a2a',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 350,
+    marginTop: 650,
   },
   menuButton: {
     position: 'absolute',
@@ -196,7 +201,7 @@ const styles = StyleSheet.create({
     marginTop: 10
   },
   boxMid: {
-    height: 505,
+    height: 800,
     width: '100%',
     backgroundColor: '#2e2e2e',
     paddingHorizontal: 37,
@@ -213,15 +218,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
-    gap: 10
+    gap: 20
   },
   opcaoButton: {
-    backgroundColor: themas.Colors.gg,
-    borderRadius: 10,
-    paddingVertical: 10,
-    paddingHorizontal: 12,
-    margin: 5,
-    minWidth: '40%'
+    backgroundColor: themas.Colors.test,
+    borderRadius: 12,
+    padding: 12,
+    width: '80%',
+    marginTop: 10,
   },
   opcaoText: {
     color: '#fff',
@@ -229,19 +233,20 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   botoesContainer: {
-    marginTop: 20,
+    marginTop: 50,
     alignItems: 'center',
-    gap: 10
+    gap: 20
   },
   button: {
     backgroundColor: themas.Colors.gg,
-    borderRadius: 20,
+    borderRadius: 12,
     padding: 12,
-    width: '80%'
+    width: '80%',
+    marginTop: 10,
   },
   buttonBack: {
     backgroundColor: 'red',
-    borderRadius: 20,
+    borderRadius: 12,
     padding: 12,
     width: '80%'
   },

@@ -8,5 +8,6 @@ export const themas = {
         gg:'green',
         jetblack: `#0a0a0d`,
         black: '#2D2D2D',
+        test: '#3a3a3a'
     }
 }

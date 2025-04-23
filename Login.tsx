@@ -236,7 +236,7 @@ export const style = StyleSheet.create({
     color: '#fff',
   },
   button: {
-    width: 200,
+    width: 230,
     height: 40,
     alignItems: 'center',
     justifyContent: 'center',

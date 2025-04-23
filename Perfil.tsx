@@ -10,6 +10,7 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
+import { themas } from "./src/global/themes";
 
 const campoRotulos: Record<string, string> = {
   Genero: 'Gênero',
@@ -169,7 +170,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
-    elevation: 4, // para Android
+    elevation: 4,
   },
   rotulo: {
     color: '#aaa',
