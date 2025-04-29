@@ -5,6 +5,7 @@ import Login from './Login';
 import Home from './Home';
 import Criarconta from './Criarconta';
 import Perfil from './Perfil';
+import EstiloUsuario from './EstiloUsuario';
 
 
 
@@ -53,6 +54,11 @@ export default function App() {
           options={{ title: 'Perfil' }}
         />
 
+<Stack.Screen
+          name="EstiloUsuario"
+          component={EstiloUsuario}
+          options={{ title: 'EstiloUsuario' }}
+        />
 
       </Stack.Navigator>
 

@@ -17,7 +17,6 @@ CREATE TABLE preferenciasusuario (
     id SERIAL PRIMARY KEY,
     user_id INT UNIQUE REFERENCES users(id) ON DELETE CASCADE,
     genero VARCHAR(10) NOT NULL,
-    altura DECIMAL(5,2) NOT NULL,
     tamanho_da_roupa VARCHAR(10) NOT NULL,
     cores_preferidas TEXT,
     personalidade TEXT,
@@ -38,4 +37,6 @@ SELECT * FROM users;
 SELECT * FROM preferenciasusuario;
 
 DESCRIBE preferenciasusuario;
+DELETE FROM preferenciasusuario WHERE id = 1;
+
 

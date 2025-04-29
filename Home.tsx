@@ -121,17 +121,25 @@ const Home = () => {
               </View>
 
               <View style={styles.botoesContainer}>
-                {passo === perguntas.length - 1 && (
-                  <TouchableOpacity style={styles.button} onPress={salvarPreferencias}>
-                    <Text style={styles.buttonText}>CONFIRMAR</Text>
-                  </TouchableOpacity>
-                )}
-                {passo > 0 && (
-                  <TouchableOpacity style={styles.buttonBack} onPress={() => setPasso(passo - 1)}>
-                    <Text style={styles.buttonText}>VOLTAR</Text>
-                  </TouchableOpacity>
-                )}
-              </View>
+  {passo === perguntas.length - 1 && (
+    <>
+      <TouchableOpacity style={styles.button} onPress={salvarPreferencias}>
+        <Text style={styles.buttonText}>CONFIRMAR</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('EstiloUsuario')}>
+        <Text style={styles.buttonText}>VER RESULTADO FINAL</Text>
+      </TouchableOpacity>
+    </>
+  )}
+
+  {passo > 0 && (
+    <TouchableOpacity style={styles.buttonBack} onPress={() => setPasso(passo - 1)}>
+      <Text style={styles.buttonText}>VOLTAR</Text>
+    </TouchableOpacity>
+  )}
+</View>
+
 
 
 
@@ -180,7 +188,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#2a2a2a',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 650,
+    marginTop: 290, //PC
+    //marginTop: 650, //
   },
   menuButton: {
     position: 'absolute',
