@@ -61,7 +61,6 @@ const Home = () => {
 
       if (response.status === 200 || response.status === 201) {
         setPreferenciasSalvas(true);
-        navigation.navigate('Perfil');
       } else {
         Alert.alert('Erro', 'Não foi possível salvar suas preferências.');
       }
@@ -73,45 +72,26 @@ const Home = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
-
-
-
-
       <View style={styles.container}>
-
-
-
-
-
-
         <View style={styles.boxTop}>
           <TouchableOpacity style={styles.menuButton} onPress={() => navigation.navigate('Perfil')}>
             <MaterialIcons name="menu" size={28} color="gray" />
           </TouchableOpacity>
-
           <Image source={logo} style={styles.logo} resizeMode="contain" />
           <Text style={styles.title}>Selecione suas Preferências:</Text>
         </View>
 
-
-
-
-
-
-
-
-
-
-
-
         <View style={styles.boxMid}>
           {preferenciasSalvas ? (
-            <Text style={styles.sucesso}>PREFERÊNCIAS SALVAS COM SUCESSO!</Text>
+            <>
+              <Text style={styles.sucesso}>PREFERÊNCIAS SALVAS COM SUCESSO!</Text>
+              <TouchableOpacity style={styles.seeButton} onPress={() => navigation.navigate('EstiloUsuario')}>
+                <Text style={styles.buttonText}>VER RESULTADO</Text>
+              </TouchableOpacity>
+            </>
           ) : (
             <>
               <Text style={styles.pergunta}>{perguntas[passo].pergunta}</Text>
-
-
               <View style={styles.opcoesContainer}>
                 {perguntas[passo].opcoes?.map((opcao, index) => (
                   <TouchableOpacity key={index} style={styles.opcaoButton} onPress={() => responder(opcao)}>
@@ -121,52 +101,26 @@ const Home = () => {
               </View>
 
               <View style={styles.botoesContainer}>
-  {passo === perguntas.length - 1 && (
-    <>
-      <TouchableOpacity style={styles.button} onPress={salvarPreferencias}>
-        <Text style={styles.buttonText}>CONFIRMAR</Text>
-      </TouchableOpacity>
+                {!preferenciasSalvas && passo === perguntas.length - 1 && (
+                  <TouchableOpacity style={styles.button} onPress={salvarPreferencias}>
+                    <Text style={styles.buttonText}>CONFIRMAR</Text>
+                  </TouchableOpacity>
+                )}
 
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('EstiloUsuario')}>
-        <Text style={styles.buttonText}>VER RESULTADO FINAL</Text>
-      </TouchableOpacity>
-    </>
-  )}
-
-  {passo > 0 && (
-    <TouchableOpacity style={styles.buttonBack} onPress={() => setPasso(passo - 1)}>
-      <Text style={styles.buttonText}>VOLTAR</Text>
-    </TouchableOpacity>
-  )}
-</View>
-
-
-
-
+                {passo > 0 && !preferenciasSalvas && (
+                  <TouchableOpacity style={styles.buttonBack} onPress={() => setPasso(passo - 1)}>
+                    <Text style={styles.buttonText}>VOLTAR</Text>
+                  </TouchableOpacity>
+                )}
+              </View>
             </>
           )}
         </View>
 
-
-
-
-
-
-
-
-
-
         <View style={styles.boxBottom}>
           <Text style={styles.footerText}>© 2025 DripOrDrown</Text>
         </View>
-
-
-
       </View>
-
-
-
-
     </ScrollView>
   );
 };
@@ -188,8 +142,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#2a2a2a',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 290, //PC
-    //marginTop: 650, //
+    marginTop: 600,
   },
   menuButton: {
     position: 'absolute',
@@ -210,7 +163,7 @@ const styles = StyleSheet.create({
     marginTop: 10
   },
   boxMid: {
-    height: 800,
+    height: 1000,
     width: '100%',
     backgroundColor: '#2e2e2e',
     paddingHorizontal: 37,
@@ -258,6 +211,14 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 12,
     width: '80%'
+  },
+  seeButton: {
+    backgroundColor: themas.Colors.gg,
+    borderRadius: 12,
+    padding: 12,
+    width: '80%',
+    marginTop: 100,
+    marginLeft: 170,
   },
   buttonText: {
     color: '#fff',

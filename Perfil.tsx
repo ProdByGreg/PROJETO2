@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
+  Dimensions,
   View,
   Text,
   StyleSheet,
@@ -46,7 +47,6 @@ const Perfil = () => {
 
         // Carregar dados do usuário
         const usuarioUrl = `http://localhost:5009/api/Preferencias/perfil/${idSalvo}`;
-
         const usuarioResponse = await axios.get(usuarioUrl);
         setUsuario(usuarioResponse.data);
 
@@ -86,12 +86,12 @@ const Perfil = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
+            <View style={styles.container}>
       {/* Exibindo dados do usuário */}
       <Text style={styles.title}>Dados do Usuário</Text>
       <View style={styles.card}>
         <Text style={styles.rotulo}>Nome</Text>
         <Text style={styles.valor}>{usuario.nome}</Text>
-
         <Text style={styles.rotulo}>Email</Text>
         <Text style={styles.valor}>{usuario.email}</Text>
 
@@ -117,6 +117,21 @@ const Perfil = () => {
           </View>
         );
       })}
+
+      {/* Estilo final do usuário */}
+      <Text style={styles.title}>Estilo Detectado</Text>
+      <View style={styles.card}>
+        <Text style={styles.valor}>{preferencias.estiloFinal || 'Estilo não definido'}</Text>
+      </View>
+
+      {/* Botão para voltar à Home */}
+      <TouchableOpacity
+        onPress={() => navigation.navigate('Home')}
+        style={[styles.button, { marginBottom: 30 }]}
+      >
+        <Text style={styles.buttonText}>Voltar para Home</Text>
+      </TouchableOpacity>
+      </View>
     </ScrollView>
   );
 };
@@ -124,12 +139,10 @@ const Perfil = () => {
 const styles = StyleSheet.create({
   scrollContainer: {
     flexGrow: 1,
-    height: 500,
+    height: Dimensions.get('window').height / 6,
   },
   container: {
-    flex: 1,
     backgroundColor: '#2e2e2e',
-    padding: 20,
   },
   center: {
     flex: 1,
@@ -139,7 +152,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   title: {
-    color: 'black',
+    color: '#fff',
     fontSize: 22,
     fontWeight: 'bold',
     marginBottom: 20,
@@ -156,6 +169,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 30,
     borderRadius: 5,
+    alignSelf: 'center',
   },
   buttonText: {
     color: '#fff',

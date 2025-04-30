@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { themas } from "./src/global/themes";
+import { useNavigation } from '@react-navigation/native'; // ✅ Importação adicionada
 
 const EstiloUsuario = () => {
   const [estilo, setEstilo] = useState<string | null>(null);
+  const navigation = useNavigation(); // ✅ Hook de navegação
 
   useEffect(() => {
     buscarPreferencias();
@@ -21,13 +23,12 @@ const EstiloUsuario = () => {
         return;
       }
 
-      const UserId = parseInt(UserIdString, 10); // Converte para inteiro
+      const UserId = parseInt(UserIdString, 10);
       const API_URL = process.env.API_URL || 'http://localhost:5009';
       const endpoint = `${API_URL}/api/Preferencias/${UserId}`;
       console.log('🔵 Fazendo requisição para:', endpoint);
 
       const response = await axios.get(endpoint);
-
       console.log('🟢 Resposta da API recebida:', response.data);
 
       if (response.status === 200) {
@@ -43,13 +44,12 @@ const EstiloUsuario = () => {
 
   const definirEstilo = (preferencias: any) => {
     const {
-      coresPreferidas = '', // Corrigido o nome do campo
-      estiloRoupa = '', // Corrigido o nome do campo
-      identidadeVisual = '', // Corrigido o nome do campo
+      coresPreferidas = '',
+      estiloRoupa = '',
+      identidadeVisual = '',
       personalidade = ''
     } = preferencias;
 
-    // Transforma tudo em maiúsculo
     const cores = coresPreferidas.toUpperCase();
     const estiloRoupaFormatado = estiloRoupa.toUpperCase();
     const identidade = identidadeVisual.toUpperCase();
@@ -57,42 +57,36 @@ const EstiloUsuario = () => {
 
     console.log('🔵 Dados normalizados:', { cores, estiloRoupaFormatado, identidade, personalidadeAjustada });
 
-    if (cores.includes('NEUTRAS (PRETO, BRANCO, CINZA)') && estiloRoupaFormatado.includes('CONFORTÁVEIS, SOLTAS, PRÁTICAS') && personalidadeAjustada.includes('INFORMAL, ESPONTÂNEA, ALEGRE')) {
-      console.log('✅ Estilo detectado: Básico');
+    if (cores.includes('NEUTRAS (PRETO, BRANCO, CINZA)') &&
+        estiloRoupaFormatado.includes('CONFORTÁVEIS, SOLTAS, PRÁTICAS') &&
+        personalidadeAjustada.includes('INFORMAL, ESPONTÂNEA, ALEGRE')) {
       return 'Básico';
     }
 
     if (identidade.includes('FORMAL') || estiloRoupaFormatado.includes('ROUPAS DISCRETAS') || personalidadeAjustada.includes('CONSERVADORA')) {
-      console.log('✅ Estilo detectado: Formal / Clássico');
       return 'Formal / Clássico';
     }
 
     if (identidade.includes('DELICADO') || estiloRoupaFormatado.includes('ROUPAS DELICADAS') || personalidadeAjustada.includes('FEMININA')) {
-      console.log('✅ Estilo detectado: Romântico');
       return 'Romântico';
     }
 
     if (identidade.includes('SENSUAL') || estiloRoupaFormatado.includes('LOOKS AJUSTADOS') || personalidadeAjustada.includes('GLAMOROSA')) {
-      console.log('✅ Estilo detectado: Sensual');
       return 'Sensual';
     }
 
     if (identidade.includes('CLÁSSICO SOFISTICADO') || estiloRoupaFormatado.includes('PEÇAS REFINADAS') || personalidadeAjustada.includes('SOFISTICADA')) {
-      console.log('✅ Estilo detectado: Sofisticado');
       return 'Sofisticado';
     }
 
     if (identidade.includes('DIFERENTE') || estiloRoupaFormatado.includes('FORMAS E PEÇAS MARCANTES') || personalidadeAjustada.includes('EXÓTICA')) {
-      console.log('✅ Estilo detectado: Criativo');
       return 'Criativo';
     }
 
     if (identidade.includes('URBANO') || estiloRoupaFormatado.includes('JEANS DESTROYED') || personalidadeAjustada.includes('INOVADORA')) {
-      console.log('✅ Estilo detectado: Streetwear / Urbano');
       return 'Streetwear / Urbano';
     }
 
-    console.warn('⚠️ Nenhum estilo correspondido. Estilo indefinido.');
     return 'Estilo indefinido';
   };
 
@@ -103,6 +97,9 @@ const EstiloUsuario = () => {
           <>
             <Text style={styles.title}>Seu estilo é:</Text>
             <Text style={styles.estilo}>{estilo}</Text>
+            <TouchableOpacity style={styles.seeButton} onPress={() => navigation.navigate('Perfil')}>
+              <Text style={styles.buttonText}>VER PERFIL</Text>
+            </TouchableOpacity>
           </>
         ) : (
           <Text style={styles.title}>Carregando seu estilo...</Text>
@@ -134,7 +131,19 @@ const styles = StyleSheet.create({
     color: '#00ff99',
     fontWeight: 'bold',
     textAlign: 'center',
-  }
+  },
+  seeButton: {
+    backgroundColor: themas.Colors.black,
+    borderRadius: 12,
+    padding: 12,
+    width: '80%',
+    marginTop: 30,
+  },
+  buttonText: {
+    color: '#fff',
+    textAlign: 'center',
+    fontWeight: 'bold'
+  },
 });
 
 export default EstiloUsuario;
