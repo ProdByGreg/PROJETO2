@@ -26,7 +26,8 @@ CREATE TABLE preferenciasusuario (
     estampas_favoritas TEXT,
     sapatos_favoritos TEXT,
     acessorios_favoritos TEXT,
-    pecas_favoritas TEXT
+    pecas_favoritas TEXT,
+    estilo_final TEXT
 );
 
 

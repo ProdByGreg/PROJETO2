@@ -87,7 +87,6 @@ const Perfil = () => {
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
             <View style={styles.container}>
-      {/* Exibindo dados do usuário */}
       <Text style={styles.title}>Dados do Usuário</Text>
       <View style={styles.card}>
         <Text style={styles.rotulo}>Nome</Text>
@@ -118,13 +117,11 @@ const Perfil = () => {
         );
       })}
 
-      {/* Estilo final do usuário */}
       <Text style={styles.title}>Estilo Detectado</Text>
       <View style={styles.card}>
         <Text style={styles.valor}>{preferencias.estiloFinal || 'Estilo não definido'}</Text>
       </View>
 
-      {/* Botão para voltar à Home */}
       <TouchableOpacity
         onPress={() => navigation.navigate('Home')}
         style={[styles.button, { marginBottom: 30 }]}

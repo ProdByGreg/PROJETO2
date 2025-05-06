@@ -45,5 +45,8 @@ namespace BackendCSharp.Models
 
         [Column("pecas_favoritas")]
         public string PecasFavoritas { get; set; } = string.Empty;
+
+        [Column("estilo_final")]
+        public string EstiloFinal { get; set; } = string.Empty;
     }
 }

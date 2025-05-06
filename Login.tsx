@@ -213,7 +213,7 @@ export const style = StyleSheet.create({
   titleInput: {
     marginLeft: '38%',
     color: themas.Colors.lightGray,
-    marginTop: 30,
+    marginTop: 70,
   },
   boxInput: {
     width: '25%',

@@ -26,7 +26,7 @@ export default function App() {
   return (
     <NavigationContainer>
 
-      <Stack.Navigator initialRouteName="Perfil">
+      <Stack.Navigator initialRouteName="EstiloUsuario">
 
 
         <Stack.Screen

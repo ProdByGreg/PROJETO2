@@ -22,6 +22,36 @@ const perguntas = [
   { id: 11, pergunta: 'QUAL GRUPO DE PEÇAS VOCÊ MAIS GOSTA?', opcoes: ['JEANS E CAMISETA', 'SAIAS E SCARPINS CLÁSSICOS', 'PEÇAS DE ALFAIATARIA', 'VESTIDO FLUIDO', 'LOOKS SENSUAIS', 'JEANS DESTROYED E CASACOS VOLUMOSOS', 'SEM PEÇAS CHAVES EXCLUSIVAS'] }
 ];
 
+// Função para definir o estilo final com base em algumas respostas
+const determinarEstiloFinal = (respostas: Record<string, string>) => {
+  const visual = respostas['QUAL VISUAL VOCÊ MAIS SE IDENTIFICA?'] || '';
+  const personalidade = respostas['DESCREVA SUA PERSONALIDADE'] || '';
+
+  if (visual.includes('CONFORTÁVEL') || personalidade.includes('INFORMAL')) {
+    return 'Estilo Casual';
+  }
+  if (visual.includes('FORMAL') || personalidade.includes('CONSERVADORA')) {
+    return 'Estilo Clássico';
+  }
+  if (visual.includes('SOFISTICADO') || personalidade.includes('EXIGENTE')) {
+    return 'Estilo Sofisticado';
+  }
+  if (visual.includes('ROMÂNTICO') || personalidade.includes('FEMININA')) {
+    return 'Estilo Romântico';
+  }
+  if (visual.includes('SENSUAL') || personalidade.includes('GLAMOROSA')) {
+    return 'Estilo Sexy';
+  }
+  if (visual.includes('IMPACTANTE') || personalidade.includes('MODERNA')) {
+    return 'Estilo Urbano';
+  }
+  if (visual.includes('CRIATIVO') || personalidade.includes('EXÓTICA')) {
+    return 'Estilo Criativo';
+  }
+
+  return 'Estilo Indefinido';
+};
+
 const Home = () => {
   const navigation = useNavigation();
   const [passo, setPasso] = useState(0);
@@ -41,6 +71,8 @@ const Home = () => {
       const UserId = await AsyncStorage.getItem('userid');
       if (!UserId) return Alert.alert('Erro', 'Usuário não identificado.');
 
+      const estiloFinal = determinarEstiloFinal(respostas);
+
       const preferenciasFormatadas = {
         UserId,
         Genero: respostas['DEFINA SEU GÊNERO:'],
@@ -53,7 +85,8 @@ const Home = () => {
         EstampasFavoritas: respostas['QUAIS ESTAMPAS TÊM MAIS A SUA CARA?'],
         SapatosFavoritos: respostas['QUAL SEU SAPATO FAVORITO?'],
         AcessoriosFavoritos: respostas['QUE TIPO DE ACESSÓRIOS VOCÊ GOSTA?'],
-        PecasFavoritas: respostas['QUAL GRUPO DE PEÇAS VOCÊ MAIS GOSTA?']
+        PecasFavoritas: respostas['QUAL GRUPO DE PEÇAS VOCÊ MAIS GOSTA?'],
+        EstiloFinal: estiloFinal
       };
 
       const API_URL = process.env.API_URL || 'http://localhost:5009';
@@ -142,7 +175,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#2a2a2a',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 600,
+    marginTop: 490,
   },
   menuButton: {
     position: 'absolute',

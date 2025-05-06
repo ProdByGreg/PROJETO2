@@ -118,10 +118,10 @@ export default function Cadastrar() {
       <View style={style.container}>
         <View style={style.boxTop}>
           <Image source={logo} style={style.logo} resizeMode="contain" />
+                  <Text style={style.text}>Criar uma nova conta!</Text>
         </View>
 
         <View style={style.boxMid}>
-        <Text style={style.text}>Criar uma nova conta!</Text>
           <Text style={style.titleInput}>NOME COMPLETO</Text>
           <View style={style.boxInput}>
             <TextInput
@@ -196,9 +196,6 @@ export default function Cadastrar() {
             />
             <MaterialIcons name="person" size={20} color={'gray'} />
           </View>
-        </View>
-
-        <View style={style.boxBottom}>
           <TouchableOpacity style={style.button} onPress={criarConta} disabled={loading}>
             {loading ? (
               <ActivityIndicator color="#fff" />
@@ -213,6 +210,13 @@ export default function Cadastrar() {
               <Text style={style.textButton}>Ja tenho conta.</Text>
             )}
           </TouchableOpacity>
+        </View>
+
+        <View style={style.boxBottom}>
+
+
+          <Text style={style.footerText}>© 2025 DripOrDrown</Text>
+
         </View>
       </View>
     </ScrollView>
@@ -231,18 +235,20 @@ export const style = StyleSheet.create({
     backgroundColor: themas.Colors.gg,
   },
   boxTop: {
-    height: 300,
+    height: 350,
     width: '100%',
     backgroundColor: '#2a2a2a',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 300,
+    marginTop: 250,
   },
   boxMid: {
-    height: 705,
+    height: 905,
     width: '100%',
     backgroundColor: '#2e2e2e',
     paddingHorizontal: 37,
+    gap: 10,
+    
   },
   boxBottom: {
     height: 200,
@@ -251,13 +257,11 @@ export const style = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
-    gap: 30,
     
   },
   text: {
     fontWeight: 'bold',
-    marginTop: 70,
-    marginLeft: 450,
+    marginTop: 40,
     fontSize: 28,
     color: '#fff',
   },
@@ -286,8 +290,8 @@ export const style = StyleSheet.create({
     paddingLeft: 10,
   },
   button: {
-    width: 200,
-    height: 50,
+    width: 730,
+    height: 45,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: themas.Colors.gg,
@@ -300,7 +304,8 @@ export const style = StyleSheet.create({
     shadowOpacity: 0.29,
     shadowRadius: 4.65,
     elevation: 7,
-    marginBottom: 70,
+    marginTop: 50,
+    marginLeft: 545,
   },
   textButton: {
     fontSize: 16,
@@ -316,5 +321,9 @@ export const style = StyleSheet.create({
     height: 100,
     marginTop: 150,
     borderRadius: 50,
+  },
+  footerText: {
+    color: '#fff',
+    fontSize: 16
   },
 });

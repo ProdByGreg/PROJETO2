@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\enzo2\\OneDrive\\Área de Trabalho\\PROJETO2\\BackendCSharp\\BackendCSharp.csproj": {}
+    "C:\\Users\\aluno\\Desktop\\PROJETO2\\BackendCSharp\\BackendCSharp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\enzo2\\OneDrive\\Área de Trabalho\\PROJETO2\\BackendCSharp\\BackendCSharp.csproj": {
+    "C:\\Users\\aluno\\Desktop\\PROJETO2\\BackendCSharp\\BackendCSharp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\enzo2\\OneDrive\\Área de Trabalho\\PROJETO2\\BackendCSharp\\BackendCSharp.csproj",
+        "projectUniqueName": "C:\\Users\\aluno\\Desktop\\PROJETO2\\BackendCSharp\\BackendCSharp.csproj",
         "projectName": "BackendCSharp",
-        "projectPath": "C:\\Users\\enzo2\\OneDrive\\Área de Trabalho\\PROJETO2\\BackendCSharp\\BackendCSharp.csproj",
-        "packagesPath": "C:\\Users\\enzo2\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\enzo2\\OneDrive\\Área de Trabalho\\PROJETO2\\BackendCSharp\\obj\\",
+        "projectPath": "C:\\Users\\aluno\\Desktop\\PROJETO2\\BackendCSharp\\BackendCSharp.csproj",
+        "packagesPath": "C:\\Users\\aluno\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\aluno\\Desktop\\PROJETO2\\BackendCSharp\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\enzo2\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\aluno\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -43,8 +43,7 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        },
-        "SdkAnalysisLevel": "9.0.100"
+        }
       },
       "frameworks": {
         "net8.0": {
@@ -88,7 +87,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
