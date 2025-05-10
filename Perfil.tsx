@@ -85,113 +85,133 @@ const Perfil = () => {
   }
 
   return (
+    <View style={styles.body}>
     <ScrollView contentContainerStyle={styles.scrollContainer}>
-            <View style={styles.container}>
-      <Text style={styles.title}>Dados do Usuário</Text>
-      <View style={styles.card}>
-        <Text style={styles.rotulo}>Nome</Text>
-        <Text style={styles.valor}>{usuario.nome}</Text>
-        <Text style={styles.rotulo}>Email</Text>
-        <Text style={styles.valor}>{usuario.email}</Text>
+      <View style={styles.container}>
+        <Text style={styles.title}>Dados do Usuário</Text>
+        <View style={styles.card}>
+          <Text style={styles.rotulo}>Nome</Text>
+          <Text style={styles.valor}>{usuario.nome}</Text>
+          <Text style={styles.rotulo}>Email</Text>
+          <Text style={styles.valor}>{usuario.email}</Text>
 
-        <Text style={styles.rotulo}>Telefone</Text>
-        <Text style={styles.valor}>{usuario.telefone}</Text>
+          <Text style={styles.rotulo}>Telefone</Text>
+          <Text style={styles.valor}>{usuario.telefone}</Text>
 
-        <Text style={styles.rotulo}>CPF</Text>
-        <Text style={styles.valor}>{usuario.cpf}</Text>
-      </View>
+          <Text style={styles.rotulo}>CPF</Text>
+          <Text style={styles.valor}>{usuario.cpf}</Text>
+        </View>
 
-      {/* Exibindo preferências */}
-      <Text style={styles.title}>Suas Preferências</Text>
-      {Object.entries(preferencias).map(([chave, valor]) => {
-        if (chave.toLowerCase() === 'id' || chave.toLowerCase() === 'userid') return null;
+        {/* Exibindo preferências */}
+        <Text style={styles.title}>Suas Preferências</Text>
+        {Object.entries(preferencias).map(([chave, valor]) => {
+          if (chave.toLowerCase() === 'id' || chave.toLowerCase() === 'userid') return null;
 
-        const rotulo = campoRotulos[chave] || chave;
-        const valorFormatado = Array.isArray(valor) ? valor.join(', ') : String(valor);
+          const rotulo = campoRotulos[chave] || chave;
+          const valorFormatado = Array.isArray(valor) ? valor.join(', ') : String(valor);
 
-        return (
-          <View key={chave} style={styles.card}>
-            <Text style={styles.rotulo}>{rotulo}</Text>
-            <Text style={styles.valor}>{valorFormatado}</Text>
-          </View>
-        );
-      })}
+          return (
+            <View key={chave} style={styles.card}>
+              <Text style={styles.rotulo}>{rotulo}</Text>
+              <Text style={styles.valor}>{valorFormatado}</Text>
+            </View>
+          );
+        })}
 
-      <Text style={styles.title}>Estilo Detectado</Text>
-      <View style={styles.card}>
-        <Text style={styles.valor}>{preferencias.estiloFinal || 'Estilo não definido'}</Text>
-      </View>
+        <Text style={styles.title}>ESTILO FINAL</Text>
+        <View style={[styles.card, styles.estiloCard]}>
+          <Text style={styles.valor}>{preferencias.estiloFinal || 'Estilo não definido'}</Text>
+        </View>
 
-      <TouchableOpacity
-        onPress={() => navigation.navigate('Home')}
-        style={[styles.button, { marginBottom: 30 }]}
-      >
-        <Text style={styles.buttonText}>Voltar para Home</Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Home')}
+          style={[styles.button, { marginBottom: 30 }]}
+        >
+          <Text style={styles.buttonText}>Voltar para Home</Text>
+        </TouchableOpacity>
       </View>
     </ScrollView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  body: {
+    height: '100%',
+    backgroundColor: themas.Colors.gg,
+  },
   scrollContainer: {
     flexGrow: 1,
     height: Dimensions.get('window').height / 6,
   },
   container: {
-    backgroundColor: '#2e2e2e',
+    flexGrow: 1,
+    paddingVertical: 20,
+    paddingHorizontal: 15,
+    height: Dimensions.get('window').height / 4,
   },
   center: {
     flex: 1,
-    backgroundColor: '#2e2e2e',
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
+    
   },
   title: {
     color: '#fff',
-    fontSize: 22,
+    fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
     textAlign: 'center',
+    textTransform: 'uppercase',
+    letterSpacing: 1,
   },
   alertText: {
-    color: '#fff',
+    color: '#ccc',
     fontSize: 18,
-    marginBottom: 15,
+    marginBottom: 20,
     textAlign: 'center',
   },
   button: {
-    backgroundColor: '#444',
-    paddingVertical: 10,
+    backgroundColor: '#5c6bc0',
+    paddingVertical: 12,
     paddingHorizontal: 30,
-    borderRadius: 5,
+    borderRadius: 8,
     alignSelf: 'center',
+    marginTop: 10,
+    marginBottom: 100,
   },
   buttonText: {
     color: '#fff',
     fontWeight: 'bold',
+    fontSize: 16,
   },
   card: {
-    backgroundColor: '#3a3a3a',
-    borderRadius: 10,
-    padding: 15,
-    marginBottom: 15,
+    backgroundColor: '#2a2a2a',
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 12,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
+    shadowOpacity: 0.25,
     shadowRadius: 4,
-    elevation: 4,
+    elevation: 3,
+    
   },
   rotulo: {
-    color: '#aaa',
-    fontSize: 14,
-    marginBottom: 5,
+    color: '#bbb',
+    fontSize: 13,
+    marginBottom: 4,
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
   },
   valor: {
-    color: '#fff',
+    color: '#f5f5f5',
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: '500',
+  },
+  estiloCard: {
+    backgroundColor: 'darkred',
   },
 });
 

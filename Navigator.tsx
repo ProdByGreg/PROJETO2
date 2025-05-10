@@ -6,6 +6,7 @@ import Home from './Home';
 import Criarconta from './Criarconta';
 import Perfil from './Perfil';
 import EstiloUsuario from './EstiloUsuario';
+import Inicial from './Inicial';
 
 
 
@@ -26,7 +27,7 @@ export default function App() {
   return (
     <NavigationContainer>
 
-      <Stack.Navigator initialRouteName="EstiloUsuario">
+      <Stack.Navigator initialRouteName="Inicial">
 
 
         <Stack.Screen
@@ -54,10 +55,16 @@ export default function App() {
           options={{ title: 'Perfil' }}
         />
 
-<Stack.Screen
+        <Stack.Screen
           name="EstiloUsuario"
           component={EstiloUsuario}
           options={{ title: 'EstiloUsuario' }}
+        />
+
+        <Stack.Screen
+          name="Inicial"
+          component={Inicial}
+          options={{ title: 'Inicial' }}
         />
 
       </Stack.Navigator>

@@ -8,60 +8,72 @@ import { themas } from "./src/global/themes";
 
 const logo = require('./src/assets/DripOrDrown.jpg');
 
-const perguntas = [
-  { id: 1, pergunta: 'DEFINA SEU GÊNERO:', opcoes: ['MASCULINO', 'FEMININO', 'PREFIRO NÃO DIZER.'] },
+const perguntasBase = [
+  { id: 1, pergunta: 'DEFINA SEU GÊNERO:', opcoes: ['MASCULINO', 'FEMININO'] },
   { id: 2, pergunta: 'QUAL O SEU TAMANHO DE ROUPA?', opcoes: ['PP', 'P', 'M', 'G', 'GG', 'XG'] },
   { id: 3, pergunta: 'QUAIS CORES DE ROUPAS VOCÊ PREFERE?', opcoes: ['NEUTRAS (PRETO, BRANCO, CINZA)', 'CORES VIVAS', 'PASTÉIS', 'TONS TERROSOS', 'COLORIDO E VIBRANTE'] },
-  { id: 4, pergunta: 'DESCREVA SUA PERSONALIDADE', opcoes: ['INFORMAL, ESPONTÂNEA, ALEGRE', 'CONSERVADORA, SÉRIA, ORGANIZADA', 'EXIGENTE, REFINADA, BEM-SUCEDIDA', 'FEMININA, MEIGA, DELICADA', 'GLAMOROSA, EXCITANTE, SENSUAL', 'SOFISTICADA, MODERNA, FIRME', 'EXÓTICA, AVENTUREIRA, INOVADORA'] },
-  { id: 5, pergunta: 'QUAL O SEU TIPO DE ROUPA FAVORITA?', opcoes: ['CONFORTÁVEIS, SOLTAS, PRÁTICAS', 'ROUPAS DISCRETAS, CLÁSSICAS', 'PEÇAS REFINADAS, SEM MODISMOS', 'ROUPAS DELICADAS, CORES SUAVES', 'LOOKS AJUSTADOS QUE VALORIZAM O CORPO', 'PEÇAS ESTRUTURADAS, MODERNAS', 'FORMAS E PEÇAS MARCANTES'] },
-  { id: 6, pergunta: 'QUAL VISUAL VOCÊ MAIS SE IDENTIFICA?', opcoes: ['BÁSICO CONFORTÁVEL E PRÁTICO', 'FORMAL TRADICIONAL E ATEMPORAL', 'CLÁSSICO SOFISTICADO E ATUAL', 'DELICADO FEMININO E ROMÂNTICO', 'SENSUAL E PROVOCANTE', 'URBANO E IMPACTANTE', 'DIFERENTE E CRIATIVO'] },
+  { id: 4, pergunta: 'DESCREVA SUA PERSONALIDADE', opcoesFeminino: ['INFORMAL, ESPONTÂNEA, ALEGRE', 'CONSERVADORA, SÉRIA, ORGANIZADA', 'EXIGENTE, REFINADA, BEM-SUCEDIDA', 'FEMININA, MEIGA, DELICADA', 'GLAMOROSA, EXCITANTE, SENSUAL', 'SOFISTICADA, MODERNA, FIRME', 'EXÓTICA, AVENTUREIRA, INOVADORA'], opcoesMasculino: ['INFORMAL, ESPONTÂNEO, ALEGRE', 'CONSERVADOR, SÉRIO, ORGANIZADO', 'EXIGENTE, REFINADO, BEM-SUCEDIDO', 'MASCULINO, TRANQUILO, GENTIL', 'ELEGANTE, IMPONENTE, SENSUAL', 'SOFISTICADO, MODERNO, FIRME', 'EXÓTICO, AVENTUREIRO, INOVADOR'] },
+  { id: 5, pergunta: 'QUAL O SEU TIPO DE ROUPA FAVORITA?', opcoesFeminino: ['CONFORTÁVEIS, SOLTAS, PRÁTICAS', 'ROUPAS DISCRETAS, CLÁSSICAS', 'PEÇAS REFINADAS, SEM MODISMOS', 'ROUPAS DELICADAS, CORES SUAVES', 'LOOKS AJUSTADOS QUE VALORIZAM O CORPO', 'PEÇAS ESTRUTURADAS, MODERNAS', 'FORMAS E PEÇAS MARCANTES'], opcoesMasculino: ['CONFORTÁVEIS, SOLTAS, PRÁTICAS', 'ROUPAS DISCRETAS, CLÁSSICAS', 'PEÇAS REFINADAS, SEM MODISMOS', 'ROUPAS SIMPLES E TRANQUILAS', 'LOOKS AJUSTADOS QUE VALORIZAM O CORPO', 'PEÇAS ESTRUTURADAS, MODERNAS', 'FORMAS E PEÇAS MARCANTES'] },
+  { id: 6, pergunta: 'QUAL VISUAL VOCÊ MAIS SE IDENTIFICA?', opcoesFeminino: ['BÁSICO CONFORTÁVEL E PRÁTICO', 'FORMAL TRADICIONAL E ATEMPORAL', 'CLÁSSICO SOFISTICADO E ATUAL', 'DELICADO FEMININO E ROMÂNTICO', 'SENSUAL E PROVOCANTE', 'URBANO E IMPACTANTE', 'DIFERENTE E CRIATIVO'], opcoesMasculino: ['BÁSICO CONFORTÁVEL E PRÁTICO', 'FORMAL TRADICIONAL E ATEMPORAL', 'CLÁSSICO SOFISTICADO E ATUAL', 'SIMPLES E ROMÂNTICO', 'SENSUAL E PROVOCANTE', 'URBANO E IMPACTANTE', 'DIFERENTE E CRIATIVO'] },
   { id: 7, pergunta: 'QUAIS DETALHES VOCÊ MAIS GOSTA?', opcoes: ['LOOKS SEM DETALHES', 'DETALHES BEM DISCRETOS', 'DETALHES SOFISTICADOS', 'DETALHES DELICADOS', 'DETALHES QUE VALORIZAM O CORPO', 'DETALHES MARCANTES', 'DETALHES DIFERENTES DO CONVENCIONAL'] },
   { id: 8, pergunta: 'QUAIS ESTAMPAS TÊM MAIS A SUA CARA?', opcoes: ['LISTRAS E XADREZ', 'RISCA DE GIZ', 'ESTAMPAS ABSTRATAS', 'FLORAIS E DELICADAS', 'ANIMAL PRINT', 'ESTAMPAS EXAGERADAS', 'MISTURA DE ESTAMPAS'] },
-  { id: 9, pergunta: 'QUAL SEU SAPATO FAVORITO?', opcoes: ['CONFORTÁVEL', 'CLÁSSICO', 'SOFISTICADO', 'SALTO ALTO E FINO', 'FEMININO', 'DESIGN MODERNO', 'DIFERENTE E VINTAGE'] },
-  { id: 10, pergunta: 'QUE TIPO DE ACESSÓRIOS VOCÊ GOSTA?', opcoes: ['ESPORTIVOS E SIMPLES', 'CLÁSSICOS E DISCRETOS', 'REFINADOS', 'DELICADOS E FEMININOS', 'GRANDES E BRILHANTES', 'DESIGN ARROJADO', 'DIVERTIDOS E RÚSTICOS'] },
-  { id: 11, pergunta: 'QUAL GRUPO DE PEÇAS VOCÊ MAIS GOSTA?', opcoes: ['JEANS E CAMISETA', 'SAIAS E SCARPINS CLÁSSICOS', 'PEÇAS DE ALFAIATARIA', 'VESTIDO FLUIDO', 'LOOKS SENSUAIS', 'JEANS DESTROYED E CASACOS VOLUMOSOS', 'SEM PEÇAS CHAVES EXCLUSIVAS'] }
+  { id: 9, pergunta: 'QUAL SEU SAPATO FAVORITO?', opcoesFeminino: ['CONFORTÁVEL', 'CLÁSSICO', 'SOFISTICADO', 'SALTO ALTO E FINO', 'FEMININO', 'DESIGN MODERNO', 'DIFERENTE E VINTAGE'], opcoesMasculino: ['CONFORTÁVEL', 'CLÁSSICO', 'SOFISTICADO', 'SOCIAL', 'MASCULINO', 'DESIGN MODERNO', 'DIFERENTE E VINTAGE'] },
+  { id: 10, pergunta: 'QUE TIPO DE ACESSÓRIOS VOCÊ GOSTA?', opcoesFeminino: ['ESPORTIVOS E SIMPLES', 'CLÁSSICOS E DISCRETOS', 'REFINADOS', 'DELICADOS E FEMININOS', 'GRANDES E BRILHANTES', 'DESIGN ARROJADO', 'DIVERTIDOS E RÚSTICOS'], opcoesMasculino: ['ESPORTIVOS E SIMPLES', 'CLÁSSICOS E DISCRETOS', 'REFINADOS', 'SIMPLES E MASCULINOS', 'GRANDES E MARCANTES', 'DESIGN ARROJADO', 'DIVERTIDOS E RÚSTICOS'] },
+  { id: 11, pergunta: 'QUAL GRUPO DE PEÇAS VOCÊ MAIS GOSTA?', opcoesFeminino: ['JEANS E CAMISETA', 'SAIAS E SCARPINS CLÁSSICOS', 'PEÇAS DE ALFAIATARIA', 'VESTIDO FLUIDO', 'LOOKS SENSUAIS', 'JEANS DESTROYED E CASACOS VOLUMOSOS', 'SEM PEÇAS CHAVES EXCLUSIVAS'], opcoesMasculino: ['JEANS E CAMISETA', 'CALÇAS E SAPATOS SOCIAIS', 'PEÇAS DE ALFAIATARIA', 'ROUPAS LEVES E FLUIDAS', 'LOOKS SENSUAIS', 'JEANS DESTROYED E CASACOS VOLUMOSOS', 'SEM PEÇAS CHAVES EXCLUSIVAS'] }
 ];
 
-// Função para definir o estilo final com base em algumas respostas
 const determinarEstiloFinal = (respostas: Record<string, string>) => {
-  const visual = respostas['QUAL VISUAL VOCÊ MAIS SE IDENTIFICA?'] || '';
-  const personalidade = respostas['DESCREVA SUA PERSONALIDADE'] || '';
+  const todasRespostas = Object.values(respostas).join(' ').toUpperCase();
 
-  if (visual.includes('CONFORTÁVEL') || personalidade.includes('INFORMAL')) {
+  if (todasRespostas.includes('CONFORTÁVEL') || todasRespostas.includes('PRÁTICO') || todasRespostas.includes('ESPORTIVO')) {
     return 'Estilo Casual';
   }
-  if (visual.includes('FORMAL') || personalidade.includes('CONSERVADORA')) {
+
+  if (todasRespostas.includes('CLÁSSICO') || todasRespostas.includes('TRADICIONAL') || todasRespostas.includes('DISCRETO') || todasRespostas.includes('ALFAIATARIA')) {
     return 'Estilo Clássico';
   }
-  if (visual.includes('SOFISTICADO') || personalidade.includes('EXIGENTE')) {
+
+  if (todasRespostas.includes('SOFISTICADO') || todasRespostas.includes('REFINADO') || todasRespostas.includes('MODERNO') || todasRespostas.includes('ESTRUTURADO')) {
     return 'Estilo Sofisticado';
   }
-  if (visual.includes('ROMÂNTICO') || personalidade.includes('FEMININA')) {
+
+  if (todasRespostas.includes('DELICADO') || todasRespostas.includes('FEMININO') || todasRespostas.includes('ROMÂNTICO') || todasRespostas.includes('FLORAIS')) {
     return 'Estilo Romântico';
   }
-  if (visual.includes('SENSUAL') || personalidade.includes('GLAMOROSA')) {
+
+  if (todasRespostas.includes('SENSUAL') || todasRespostas.includes('VALORIZAM O CORPO') || todasRespostas.includes('SALTO ALTO') || todasRespostas.includes('LOOKS SENSUAIS')) {
     return 'Estilo Sexy';
   }
-  if (visual.includes('IMPACTANTE') || personalidade.includes('MODERNA')) {
+
+  if (todasRespostas.includes('IMPACTANTE') || todasRespostas.includes('URBANO') || todasRespostas.includes('JEANS DESTROYED') || todasRespostas.includes('CASACOS VOLUMOSOS')) {
     return 'Estilo Urbano';
   }
-  if (visual.includes('CRIATIVO') || personalidade.includes('EXÓTICA')) {
+
+  if (todasRespostas.includes('CRIATIVO') || todasRespostas.includes('INOVADOR') || todasRespostas.includes('EXÓTICO') || todasRespostas.includes('ESTAMPAS EXAGERADAS') || todasRespostas.includes('MISTURA DE ESTAMPAS')) {
     return 'Estilo Criativo';
   }
 
   return 'Estilo Indefinido';
 };
 
+
 const Home = () => {
   const navigation = useNavigation();
   const [passo, setPasso] = useState(0);
   const [respostas, setRespostas] = useState<Record<string, string>>({});
+  const [genero, setGenero] = useState<'MASCULINO' | 'FEMININO' | null>(null);
   const [preferenciasSalvas, setPreferenciasSalvas] = useState(false);
 
   const responder = (resposta: string) => {
-    const perguntaAtual = perguntas[passo].pergunta;
-    setRespostas((prev) => ({ ...prev, [perguntaAtual]: resposta }));
-    if (passo < perguntas.length - 1) {
+    const perguntaAtual = perguntasBase[passo].pergunta;
+    const novaResposta = { ...respostas, [perguntaAtual]: resposta };
+    setRespostas(novaResposta);
+
+    if (perguntaAtual === 'DEFINA SEU GÊNERO:') {
+      setGenero(resposta === 'MASCULINO' ? 'MASCULINO' : 'FEMININO');
+    }
+
+    if (passo < perguntasBase.length - 1) {
       setPasso(passo + 1);
     }
   };
@@ -103,6 +115,12 @@ const Home = () => {
     }
   };
 
+  const perguntaAtual = perguntasBase[passo];
+  let opcoes = perguntaAtual.opcoes;
+  if (!opcoes && genero) {
+    opcoes = genero === 'MASCULINO' ? perguntaAtual.opcoesMasculino : perguntaAtual.opcoesFeminino;
+  }
+
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={styles.container}>
@@ -124,9 +142,9 @@ const Home = () => {
             </>
           ) : (
             <>
-              <Text style={styles.pergunta}>{perguntas[passo].pergunta}</Text>
+              <Text style={styles.pergunta}>{perguntaAtual.pergunta}</Text>
               <View style={styles.opcoesContainer}>
-                {perguntas[passo].opcoes?.map((opcao, index) => (
+                {opcoes?.map((opcao, index) => (
                   <TouchableOpacity key={index} style={styles.opcaoButton} onPress={() => responder(opcao)}>
                     <Text style={styles.opcaoText}>{opcao}</Text>
                   </TouchableOpacity>
@@ -134,12 +152,11 @@ const Home = () => {
               </View>
 
               <View style={styles.botoesContainer}>
-                {!preferenciasSalvas && passo === perguntas.length - 1 && (
+                {!preferenciasSalvas && passo === perguntasBase.length - 1 && (
                   <TouchableOpacity style={styles.button} onPress={salvarPreferencias}>
                     <Text style={styles.buttonText}>CONFIRMAR</Text>
                   </TouchableOpacity>
                 )}
-
                 {passo > 0 && !preferenciasSalvas && (
                   <TouchableOpacity style={styles.buttonBack} onPress={() => setPasso(passo - 1)}>
                     <Text style={styles.buttonText}>VOLTAR</Text>

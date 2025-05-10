@@ -3,92 +3,114 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-nati
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { themas } from "./src/global/themes";
-import { useNavigation } from '@react-navigation/native'; // ✅ Importação adicionada
+import { useNavigation } from '@react-navigation/native';
+
+interface Preferencias {
+  coresPreferidas?: string;
+  estiloRoupa?: string;
+  identidadeVisual?: string;
+  personalidade?: string;
+}
 
 const EstiloUsuario = () => {
   const [estilo, setEstilo] = useState<string | null>(null);
-  const navigation = useNavigation(); // ✅ Hook de navegação
+  const navigation = useNavigation();
 
   useEffect(() => {
-    buscarPreferencias();
+    carregarEstiloUsuario();
   }, []);
 
-  const buscarPreferencias = async () => {
+  const carregarEstiloUsuario = async () => {
     try {
-      const UserIdString = await AsyncStorage.getItem('userid');
-      console.log('🔵 UserId encontrado no AsyncStorage:', UserIdString);
+      const userId = await obterUserIdAsyncStorage();
+      if (!userId) return;
 
-      if (!UserIdString) {
-        console.warn('⚠️ Nenhum UserId encontrado no AsyncStorage.');
-        return;
-      }
-
-      const UserId = parseInt(UserIdString, 10);
-      const API_URL = process.env.API_URL || 'http://localhost:5009';
-      const endpoint = `${API_URL}/api/Preferencias/${UserId}`;
-      console.log('🔵 Fazendo requisição para:', endpoint);
-
-      const response = await axios.get(endpoint);
-      console.log('🟢 Resposta da API recebida:', response.data);
-
-      if (response.status === 200) {
-        const preferencias = response.data;
-        const estiloCalculado = definirEstilo(preferencias);
-        console.log('🟢 Estilo calculado:', estiloCalculado);
+      const preferencias = await buscarPreferenciasUsuario(userId);
+      if (preferencias) {
+        const estiloCalculado = calcularEstilo(preferencias);
         setEstilo(estiloCalculado);
       }
     } catch (error) {
-      console.error('🔴 Erro ao buscar preferências:', error);
+      console.error('🔴 Erro ao carregar estilo do usuário:', error);
     }
   };
 
-  const definirEstilo = (preferencias: any) => {
+  const obterUserIdAsyncStorage = async (): Promise<number | null> => {
+    const userIdString = await AsyncStorage.getItem('userid');
+    console.log('🔵 UserId encontrado no AsyncStorage:', userIdString);
+
+    if (!userIdString) {
+      console.warn('⚠️ Nenhum UserId encontrado no AsyncStorage.');
+      return null;
+    }
+
+    return parseInt(userIdString, 10);
+  };
+
+  const buscarPreferenciasUsuario = async (userId: number): Promise<Preferencias | null> => {
+    const API_URL = process.env.API_URL || 'http://localhost:5009';
+    const endpoint = `${API_URL}/api/Preferencias/${userId}`;
+    console.log('🔵 Fazendo requisição para:', endpoint);
+
+    try {
+      const response = await axios.get(endpoint);
+      console.log('🟢 Resposta da API recebida:', response.data);
+
+      return response.status === 200 ? response.data : null;
+    } catch (error) {
+      console.error('🔴 Erro ao buscar preferências:', error);
+      return null;
+    }
+  };
+
+  const calcularEstilo = (preferencias: Preferencias): string => {
     const {
       coresPreferidas = '',
       estiloRoupa = '',
       identidadeVisual = '',
       personalidade = ''
     } = preferencias;
-
-    const cores = coresPreferidas.toUpperCase();
-    const estiloRoupaFormatado = estiloRoupa.toUpperCase();
-    const identidade = identidadeVisual.toUpperCase();
-    const personalidadeAjustada = personalidade.toUpperCase();
-
-    console.log('🔵 Dados normalizados:', { cores, estiloRoupaFormatado, identidade, personalidadeAjustada });
-
-    if (cores.includes('NEUTRAS (PRETO, BRANCO, CINZA)') &&
-        estiloRoupaFormatado.includes('CONFORTÁVEIS, SOLTAS, PRÁTICAS') &&
-        personalidadeAjustada.includes('INFORMAL, ESPONTÂNEA, ALEGRE')) {
-      return 'Básico';
+  
+    const todasRespostas = (
+      coresPreferidas + ' ' +
+      estiloRoupa + ' ' +
+      identidadeVisual + ' ' +
+      personalidade
+    ).toUpperCase();
+  
+    console.log('🔵 Todas as respostas combinadas:', todasRespostas);
+  
+    if (todasRespostas.includes('CONFORTÁVEL') || todasRespostas.includes('PRÁTICO') || todasRespostas.includes('ESPORTIVO')) {
+      return 'Estilo Casual';
     }
-
-    if (identidade.includes('FORMAL') || estiloRoupaFormatado.includes('ROUPAS DISCRETAS') || personalidadeAjustada.includes('CONSERVADORA')) {
-      return 'Formal / Clássico';
+  
+    if (todasRespostas.includes('CLÁSSICO') || todasRespostas.includes('TRADICIONAL') || todasRespostas.includes('DISCRETO') || todasRespostas.includes('ALFAIATARIA')) {
+      return 'Estilo Clássico';
     }
-
-    if (identidade.includes('DELICADO') || estiloRoupaFormatado.includes('ROUPAS DELICADAS') || personalidadeAjustada.includes('FEMININA')) {
-      return 'Romântico';
+  
+    if (todasRespostas.includes('SOFISTICADO') || todasRespostas.includes('REFINADO') || todasRespostas.includes('MODERNO') || todasRespostas.includes('ESTRUTURADO')) {
+      return 'Estilo Sofisticado';
     }
-
-    if (identidade.includes('SENSUAL') || estiloRoupaFormatado.includes('LOOKS AJUSTADOS') || personalidadeAjustada.includes('GLAMOROSA')) {
-      return 'Sensual';
+  
+    if (todasRespostas.includes('DELICADO') || todasRespostas.includes('FEMININO') || todasRespostas.includes('ROMÂNTICO') || todasRespostas.includes('FLORAIS')) {
+      return 'Estilo Romântico';
     }
-
-    if (identidade.includes('CLÁSSICO SOFISTICADO') || estiloRoupaFormatado.includes('PEÇAS REFINADAS') || personalidadeAjustada.includes('SOFISTICADA')) {
-      return 'Sofisticado';
+  
+    if (todasRespostas.includes('SENSUAL') || todasRespostas.includes('VALORIZAM O CORPO') || todasRespostas.includes('SALTO ALTO') || todasRespostas.includes('LOOKS SENSUAIS')) {
+      return 'Estilo Sexy';
     }
-
-    if (identidade.includes('DIFERENTE') || estiloRoupaFormatado.includes('FORMAS E PEÇAS MARCANTES') || personalidadeAjustada.includes('EXÓTICA')) {
-      return 'Criativo';
+  
+    if (todasRespostas.includes('IMPACTANTE') || todasRespostas.includes('URBANO') || todasRespostas.includes('JEANS DESTROYED') || todasRespostas.includes('CASACOS VOLUMOSOS')) {
+      return 'Estilo Urbano';
     }
-
-    if (identidade.includes('URBANO') || estiloRoupaFormatado.includes('JEANS DESTROYED') || personalidadeAjustada.includes('INOVADORA')) {
-      return 'Streetwear / Urbano';
+  
+    if (todasRespostas.includes('CRIATIVO') || todasRespostas.includes('INOVADOR') || todasRespostas.includes('EXÓTICO') || todasRespostas.includes('ESTAMPAS EXAGERADAS') || todasRespostas.includes('MISTURA DE ESTAMPAS')) {
+      return 'Estilo Criativo';
     }
-
-    return 'Estilo indefinido';
+  
+    return 'Estilo Indefinido';
   };
+  
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
