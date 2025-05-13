@@ -85,11 +85,11 @@ const Perfil = () => {
   }
 
   return (
-    <View style={styles.body}>
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={styles.container}>
+        <View style={styles.boxTop}>        
         <Text style={styles.title}>Dados do Usuário</Text>
-        <View style={styles.card}>
+
           <Text style={styles.rotulo}>Nome</Text>
           <Text style={styles.valor}>{usuario.nome}</Text>
           <Text style={styles.rotulo}>Email</Text>
@@ -111,7 +111,7 @@ const Perfil = () => {
           const valorFormatado = Array.isArray(valor) ? valor.join(', ') : String(valor);
 
           return (
-            <View key={chave} style={styles.card}>
+            <View key={chave} style={styles.boxMid}>
               <Text style={styles.rotulo}>{rotulo}</Text>
               <Text style={styles.valor}>{valorFormatado}</Text>
             </View>
@@ -119,7 +119,7 @@ const Perfil = () => {
         })}
 
         <Text style={styles.title}>ESTILO FINAL</Text>
-        <View style={[styles.card, styles.estiloCard]}>
+        <View style={[styles.boxMid, styles.boxBottom]}>
           <Text style={styles.valor}>{preferencias.estiloFinal || 'Estilo não definido'}</Text>
         </View>
 
@@ -131,24 +131,18 @@ const Perfil = () => {
         </TouchableOpacity>
       </View>
     </ScrollView>
-    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  body: {
-    height: '100%',
-    backgroundColor: themas.Colors.gg,
-  },
   scrollContainer: {
     flexGrow: 1,
     height: Dimensions.get('window').height / 6,
   },
   container: {
-    flexGrow: 1,
-    paddingVertical: 20,
-    paddingHorizontal: 15,
-    height: Dimensions.get('window').height / 4,
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   center: {
     flex: 1,
@@ -186,18 +180,112 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 16,
   },
-  card: {
-    backgroundColor: '#2a2a2a',
-    borderRadius: 12,
-    padding: 16,
-    marginBottom: 12,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 3,
-    
+
+
+
+  boxTop: {
+    height: Dimensions.get('window').height / 2,
+    width: '100%',
+    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+    paddingHorizontal: 37,
+    borderTopRightRadius: 10,
+    borderTopLeftRadius: 10,
+    borderBottomRightRadius: 10,
+    borderBottomLeftRadius: 10,
+    marginBottom: 30,
+    marginTop: 5000,
+    borderWidth: 1,
+    borderColor: 'rgba(200, 200, 200, 0.5)',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.29,
+    shadowRadius: 3.65,
+    elevation: 7,
+
   },
+
+
+  boxMid: {
+    height: Dimensions.get('window').height / 2.2,
+    width: 1200,
+    backgroundColor: 'rgba(0, 0, 0, 0.1)',
+    paddingHorizontal: 37,
+    borderTopRightRadius: 10,
+    borderTopLeftRadius: 10,
+    borderBottomRightRadius: 10,
+    borderBottomLeftRadius: 10,
+    marginBottom: 50,
+    marginTop: 10,
+    borderWidth: 1,
+    borderColor: 'rgba(200, 200, 200, 0.5)',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    shadowOpacity: 0.29,
+    shadowRadius: 3.65,
+    elevation: 7,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+
+  boxMid2: {
+    height: Dimensions.get('window').height / 1.3,
+    width: 1200,
+    backgroundColor: 'rgba(0, 0, 0, 0.1)',
+    paddingHorizontal: 37,
+    borderTopRightRadius: 10,
+    borderTopLeftRadius: 10,
+    borderBottomRightRadius: 10,
+    borderBottomLeftRadius: 10,
+    marginBottom: 50,
+    marginTop: 10,
+    borderWidth: 1,
+    borderColor: 'rgba(200, 200, 200, 0.5)',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    shadowOpacity: 0.29,
+    shadowRadius: 3.65,
+    elevation: 7,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+
+
+  boxBottom: {
+    height: Dimensions.get('window').height / 4,
+    width: 1200,
+    paddingHorizontal: 37,
+    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+    borderTopRightRadius: 10,
+    borderTopLeftRadius: 10,
+    borderBottomRightRadius: 10,
+    borderBottomLeftRadius: 10,
+    marginBottom: 100,
+    marginTop: 10,
+    borderWidth: 1,
+    borderColor: 'rgba(200, 200, 200, 0.5)',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.29,
+    shadowRadius: 3.65,
+    elevation: 7,
+    justifyContent: 'center',
+  },
+
+
   rotulo: {
     color: '#bbb',
     fontSize: 13,
@@ -210,7 +298,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '500',
   },
-  estiloCard: {
+  estiloboxMid: {
     backgroundColor: 'darkred',
   },
 });

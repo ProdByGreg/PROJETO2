@@ -396,7 +396,7 @@ const styles = StyleSheet.create({
   },
   boxBottom: {
     height: Dimensions.get('window').height / 8,
-    width: 1200,
+    width: '100%',
     paddingHorizontal: 37,
     backgroundColor: 'rgba(0, 0, 0, 0.8)',
     borderTopRightRadius: 10,

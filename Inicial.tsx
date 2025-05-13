@@ -231,7 +231,7 @@ export const style = StyleSheet.create({
 
 
   boxMid2: {
-    height: Dimensions.get('window').height / 1.5,
+    height: Dimensions.get('window').height / 1.3,
     width: 1200,
     backgroundColor: 'rgba(0, 0, 0, 0.1)',
     paddingHorizontal: 37,

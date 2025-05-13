@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions, } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { themas } from "./src/global/themes";
@@ -80,7 +80,7 @@ const EstiloUsuario = () => {
   
     console.log('🔵 Todas as respostas combinadas:', todasRespostas);
   
-    if (todasRespostas.includes('CONFORTÁVEL') || todasRespostas.includes('PRÁTICO') || todasRespostas.includes('ESPORTIVO')) {
+    if (todasRespostas.includes('CONFORTÁVEL') || todasRespostas.includes('PRÁTICO') || todasRespostas.includes('SALTO ALTO') || todasRespostas.includes('LOOKS DESPOJADOS')) {
       return 'Estilo Casual';
     }
   
@@ -96,12 +96,12 @@ const EstiloUsuario = () => {
       return 'Estilo Romântico';
     }
   
-    if (todasRespostas.includes('SENSUAL') || todasRespostas.includes('VALORIZAM O CORPO') || todasRespostas.includes('SALTO ALTO') || todasRespostas.includes('LOOKS SENSUAIS')) {
-      return 'Estilo Sexy';
+    if (todasRespostas.includes('SENSUAL') || todasRespostas.includes('VALORIZAM O CORPO') || todasRespostas.includes('ESPORTIVO') || todasRespostas.includes('LOOKS SENSUAIS')) {
+      return 'Estilo Esportivo';
     }
   
     if (todasRespostas.includes('IMPACTANTE') || todasRespostas.includes('URBANO') || todasRespostas.includes('JEANS DESTROYED') || todasRespostas.includes('CASACOS VOLUMOSOS')) {
-      return 'Estilo Urbano';
+      return 'Estilo Streetwear';
     }
   
     if (todasRespostas.includes('CRIATIVO') || todasRespostas.includes('INOVADOR') || todasRespostas.includes('EXÓTICO') || todasRespostas.includes('ESTAMPAS EXAGERADAS') || todasRespostas.includes('MISTURA DE ESTAMPAS')) {
@@ -113,8 +113,9 @@ const EstiloUsuario = () => {
   
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <View style={styles.content}>
+    <ScrollView contentContainerStyle={styles.scrollContainer}>
+            <View style={styles.boxTop}></View>
+      <View style={styles.boxMid}>
         {estilo ? (
           <>
             <Text style={styles.title}>Seu estilo é:</Text>
@@ -124,23 +125,22 @@ const EstiloUsuario = () => {
             </TouchableOpacity>
           </>
         ) : (
-          <Text style={styles.title}>Carregando seu estilo...</Text>
+          <Text style={styles.title}>Estilo a definir...</Text>
         )}
       </View>
+
+      <View style={styles.boxMid2}></View>
+      <View style={styles.boxBottom}></View>
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  scrollContainer: {
     flexGrow: 1,
-    backgroundColor: themas.Colors.gg,
-    justifyContent: 'center',
+    height: Dimensions.get('window').height / 7,
     alignItems: 'center',
-  },
-  content: {
-    padding: 30,
-    alignItems: 'center'
+    justifyContent: 'center',
   },
   title: {
     fontSize: 24,
@@ -150,15 +150,26 @@ const styles = StyleSheet.create({
   },
   estilo: {
     fontSize: 32,
-    color: '#00ff99',
+    color: themas.Colors.gg,
     fontWeight: 'bold',
     textAlign: 'center',
   },
   seeButton: {
-    backgroundColor: themas.Colors.black,
-    borderRadius: 12,
-    padding: 12,
-    width: '80%',
+    width: 550,
+    height: 35,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: themas.Colors.gg,
+    borderRadius: 5,
+    borderColor: 'rgba(200, 200, 200, 0.5)',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.29,
+    shadowRadius: 3.65,
+    elevation: 7,
     marginTop: 30,
   },
   buttonText: {
@@ -166,6 +177,129 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: 'bold'
   },
+    boxTop: {
+      height: Dimensions.get('window').height / 6,
+      width: 1200,
+      backgroundColor: 'rgba(0, 0, 0, 0.8)',
+      paddingHorizontal: 37,
+      borderTopRightRadius: 10,
+      borderTopLeftRadius: 10,
+      borderBottomRightRadius: 10,
+      borderBottomLeftRadius: 10,
+      marginBottom: 30,
+      marginTop: 1000,
+      borderWidth: 1,
+      borderColor: 'rgba(200, 200, 200, 0.5)',
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 3,
+      },
+      shadowOpacity: 0.29,
+      shadowRadius: 3.65,
+      elevation: 7,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+  
+    boxMid: {
+      height: Dimensions.get('window').height / 2.2,
+      width: 1200,
+      backgroundColor: 'rgba(0, 0, 0, 0.1)',
+      paddingHorizontal: 37,
+      borderTopRightRadius: 10,
+      borderTopLeftRadius: 10,
+      borderBottomRightRadius: 10,
+      borderBottomLeftRadius: 10,
+      marginBottom: 50,
+      marginTop: 10,
+      borderWidth: 1,
+      borderColor: 'rgba(200, 200, 200, 0.5)',
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 5,
+      },
+      shadowOpacity: 0.29,
+      shadowRadius: 3.65,
+      elevation: 7,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+  
+  
+    boxMid2: {
+      height: Dimensions.get('window').height / 1.3,
+      width: 1200,
+      backgroundColor: 'rgba(0, 0, 0, 0.1)',
+      paddingHorizontal: 37,
+      borderTopRightRadius: 10,
+      borderTopLeftRadius: 10,
+      borderBottomRightRadius: 10,
+      borderBottomLeftRadius: 10,
+      marginBottom: 50,
+      marginTop: 10,
+      borderWidth: 1,
+      borderColor: 'rgba(200, 200, 200, 0.5)',
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 5,
+      },
+      shadowOpacity: 0.29,
+      shadowRadius: 3.65,
+      elevation: 7,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+  
+  
+    boxBottom: {
+      height: Dimensions.get('window').height / 4,
+      width: 1200,
+      paddingHorizontal: 37,
+      backgroundColor: 'rgba(0, 0, 0, 0.8)',
+      borderTopRightRadius: 10,
+      borderTopLeftRadius: 10,
+      borderBottomRightRadius: 10,
+      borderBottomLeftRadius: 10,
+      marginBottom: 100,
+      marginTop: 10,
+      borderWidth: 1,
+      borderColor: 'rgba(200, 200, 200, 0.5)',
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 3,
+      },
+      shadowOpacity: 0.29,
+      shadowRadius: 3.65,
+      elevation: 7,
+      justifyContent: 'center',
+    },
+    boxBottom2: {
+      height: Dimensions.get('window').height / 0.8,
+      width: 1200,
+      paddingHorizontal: 37,
+      backgroundColor: 'rgba(0, 0, 0, 0.8)',
+      borderTopRightRadius: 10,
+      borderTopLeftRadius: 10,
+      borderBottomRightRadius: 10,
+      borderBottomLeftRadius: 10,
+      marginBottom: 100,
+      marginTop: 10,
+      borderWidth: 1,
+      borderColor: 'rgba(200, 200, 200, 0.5)',
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 3,
+      },
+      shadowOpacity: 0.29,
+      shadowRadius: 3.65,
+      elevation: 7,
+      justifyContent: 'center',
+    },
 });
 
 export default EstiloUsuario;
