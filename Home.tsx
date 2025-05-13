@@ -56,25 +56,35 @@ const determinarEstiloFinal = (respostas: Record<string, string>) => {
   return 'Estilo Indefinido';
 };
 
-
 const Home = () => {
   const navigation = useNavigation();
   const [passo, setPasso] = useState(0);
   const [respostas, setRespostas] = useState<Record<string, string>>({});
   const [genero, setGenero] = useState<'MASCULINO' | 'FEMININO' | null>(null);
   const [preferenciasSalvas, setPreferenciasSalvas] = useState(false);
+  const [respostaSelecionada, setRespostaSelecionada] = useState<string | null>(null);
 
-  const responder = (resposta: string) => {
+  const selecionarResposta = (resposta: string) => {
+    setRespostaSelecionada(resposta);
+  };
+
+  const avancar = () => {
+    if (!respostaSelecionada) {
+      Alert.alert('Atenção', 'Por favor, selecione uma opção antes de continuar.');
+      return;
+    }
+
     const perguntaAtual = perguntasBase[passo].pergunta;
-    const novaResposta = { ...respostas, [perguntaAtual]: resposta };
+    const novaResposta = { ...respostas, [perguntaAtual]: respostaSelecionada };
     setRespostas(novaResposta);
 
     if (perguntaAtual === 'DEFINA SEU GÊNERO:') {
-      setGenero(resposta === 'MASCULINO' ? 'MASCULINO' : 'FEMININO');
+      setGenero(respostaSelecionada === 'MASCULINO' ? 'MASCULINO' : 'FEMININO');
     }
 
     if (passo < perguntasBase.length - 1) {
       setPasso(passo + 1);
+      setRespostaSelecionada(null);
     }
   };
 
@@ -98,7 +108,7 @@ const Home = () => {
         SapatosFavoritos: respostas['QUAL SEU SAPATO FAVORITO?'],
         AcessoriosFavoritos: respostas['QUE TIPO DE ACESSÓRIOS VOCÊ GOSTA?'],
         PecasFavoritas: respostas['QUAL GRUPO DE PEÇAS VOCÊ MAIS GOSTA?'],
-        EstiloFinal: estiloFinal
+        EstiloFinal: estiloFinal,
       };
 
       const API_URL = process.env.API_URL || 'http://localhost:5009';
@@ -145,20 +155,34 @@ const Home = () => {
               <Text style={styles.pergunta}>{perguntaAtual.pergunta}</Text>
               <View style={styles.opcoesContainer}>
                 {opcoes?.map((opcao, index) => (
-                  <TouchableOpacity key={index} style={styles.opcaoButton} onPress={() => responder(opcao)}>
+                  <TouchableOpacity 
+                    key={index} 
+                    style={[
+                      styles.opcaoButton, 
+                      respostaSelecionada === opcao && styles.opcaoSelecionada
+                    ]} 
+                    onPress={() => selecionarResposta(opcao)}
+                  >
                     <Text style={styles.opcaoText}>{opcao}</Text>
                   </TouchableOpacity>
                 ))}
               </View>
 
               <View style={styles.botoesContainer}>
-                {!preferenciasSalvas && passo === perguntasBase.length - 1 && (
+                {passo < perguntasBase.length - 1 ? (
+                  <TouchableOpacity style={styles.buttonNext} onPress={avancar}>
+                    <Text style={styles.buttonText}>PRÓXIMO</Text>
+                  </TouchableOpacity>
+                ) : (
                   <TouchableOpacity style={styles.button} onPress={salvarPreferencias}>
                     <Text style={styles.buttonText}>CONFIRMAR</Text>
                   </TouchableOpacity>
                 )}
-                {passo > 0 && !preferenciasSalvas && (
-                  <TouchableOpacity style={styles.buttonBack} onPress={() => setPasso(passo - 1)}>
+                {passo > 0 && (
+                  <TouchableOpacity style={styles.buttonBack} onPress={() => {
+                    setPasso(passo - 1);
+                    setRespostaSelecionada(null);
+                  }}>
                     <Text style={styles.buttonText}>VOLTAR</Text>
                   </TouchableOpacity>
                 )}
@@ -178,21 +202,36 @@ const Home = () => {
 const styles = StyleSheet.create({
   scrollContainer: {
     flexGrow: 1,
-    height: Dimensions.get('window').height / 4,
+    height: Dimensions.get('window').height / 7,
   },
   container: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: themas.Colors.gg,
   },
   boxTop: {
-    height: 300,
+    height: Dimensions.get('window').height / 6,
     width: '100%',
-    backgroundColor: '#2a2a2a',
+    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+    paddingHorizontal: 37,
+    borderTopRightRadius: 10,
+    borderTopLeftRadius: 10,
+    borderBottomRightRadius: 10,
+    borderBottomLeftRadius: 10,
+    marginBottom: 30,
+    marginTop: 1625,
+    borderWidth: 1,
+    borderColor: 'rgba(200, 200, 200, 0.5)',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.29,
+    shadowRadius: 3.65,
+    elevation: 7,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 490,
   },
   menuButton: {
     position: 'absolute',
@@ -213,10 +252,28 @@ const styles = StyleSheet.create({
     marginTop: 10
   },
   boxMid: {
-    height: 1000,
-    width: '100%',
-    backgroundColor: '#2e2e2e',
+    height: Dimensions.get('window').height / 1.5,
+    width: 1200,
+    backgroundColor: 'rgba(0, 0, 0, 0.1)',
     paddingHorizontal: 37,
+    borderTopRightRadius: 10,
+    borderTopLeftRadius: 10,
+    borderBottomRightRadius: 10,
+    borderBottomLeftRadius: 10,
+    marginBottom: 50,
+    marginTop: 10,
+    borderWidth: 1,
+    borderColor: 'rgba(200, 200, 200, 0.5)',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    shadowOpacity: 0.29,
+    shadowRadius: 3.65,
+    elevation: 7,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   pergunta: {
     color: '#fff',
@@ -227,17 +284,31 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   opcoesContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    gap: 20
-  },
+    flexDirection: 'column',
+    alignItems: 'center',
+    gap: 20,
+  },  
   opcaoButton: {
+    width: 550,
+    height: 35,
+    alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: themas.Colors.test,
-    borderRadius: 12,
-    padding: 12,
-    width: '80%',
-    marginTop: 10,
+    borderRadius: 5,
+    borderColor: 'rgba(200, 200, 200, 0.5)',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.29,
+    shadowRadius: 3.65,
+    elevation: 7,
+  },
+  opcaoSelecionada: {
+    backgroundColor: themas.Colors.gg,
+    borderColor: '#fff',
+    borderWidth: 1,
   },
   opcaoText: {
     color: '#fff',
@@ -250,25 +321,73 @@ const styles = StyleSheet.create({
     gap: 20
   },
   button: {
+    width: 550,
+    height: 35,
+    alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: themas.Colors.gg,
-    borderRadius: 12,
-    padding: 12,
-    width: '80%',
-    marginTop: 10,
+    borderRadius: 5,
+    borderColor: 'rgba(200, 200, 200, 0.5)',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.29,
+    shadowRadius: 3.65,
+    elevation: 7,
+  },
+  buttonNext: {
+    width: 550,
+    height: 35,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: themas.Colors.gg,
+    borderRadius: 5,
+    borderColor: 'rgba(200, 200, 200, 0.5)',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.29,
+    shadowRadius: 3.65,
+    elevation: 7,
   },
   buttonBack: {
+    width: 550,
+    height: 35,
+    alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: 'red',
-    borderRadius: 12,
-    padding: 12,
-    width: '80%'
+    borderRadius: 5,
+    borderColor: 'rgba(200, 200, 200, 0.5)',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.29,
+    shadowRadius: 3.65,
+    elevation: 7,
   },
   seeButton: {
+    width: 550,
+    height: 35,
+    alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: themas.Colors.gg,
-    borderRadius: 12,
-    padding: 12,
-    width: '80%',
-    marginTop: 100,
-    marginLeft: 170,
+    borderRadius: 5,
+    borderColor: 'rgba(200, 200, 200, 0.5)',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.29,
+    shadowRadius: 3.65,
+    elevation: 7,
+    marginTop: 30,
   },
   buttonText: {
     color: '#fff',
@@ -276,18 +395,35 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   boxBottom: {
-    height: 80,
-    width: '100%',
-    backgroundColor: '#333',
-    alignItems: 'center',
+    height: Dimensions.get('window').height / 8,
+    width: 1200,
+    paddingHorizontal: 37,
+    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+    borderTopRightRadius: 10,
+    borderTopLeftRadius: 10,
+    borderBottomRightRadius: 10,
+    borderBottomLeftRadius: 10,
+    marginBottom: 1500,
+    marginTop: 10,
+    borderWidth: 1,
+    borderColor: 'rgba(200, 200, 200, 0.5)',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.29,
+    shadowRadius: 3.65,
+    elevation: 7,
     justifyContent: 'center',
+    alignItems: 'center',
   },
   footerText: {
     color: '#fff',
     fontSize: 16
   },
   sucesso: {
-    color: '#00ff99',
+    color: 'black',
     fontSize: 20,
     fontWeight: 'bold',
     textAlign: 'center',

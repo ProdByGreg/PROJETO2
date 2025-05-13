@@ -6,9 +6,12 @@ import {
   ScrollView,
   StyleSheet,
   TouchableOpacity,
+  Image,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { themas } from "./src/global/themes";
+
+const logo = require('./src/assets/DripOrDrown.jpg');
 
 export default function Login() {
   const navigation = useNavigation();
@@ -16,11 +19,14 @@ export default function Login() {
   return (
     <ScrollView contentContainerStyle={style.scrollContainer}>
       <View style={style.container}>
+      <Image source={logo} style={style.logo} resizeMode="contain" />
         <View style={{ flexDirection: 'row' }}>
           <View>
-            <View style={style.boxTop}>
+            
+
+            <View style={style.boxTop}>  
               <Text style={style.heading}>
-                Bem-vindo ao <Text style={{ color: 'green' }}>DripOrDrown</Text>!
+                Bem-vindo ao <Text style={style.sectionTitle}>DripOrDrown</Text>
               </Text>
               <Text style={style.subheading}>
                 Onde seu estilo encontra sua essência.
@@ -30,10 +36,12 @@ export default function Login() {
             <View style={style.boxMid}>
               <Text style={style.sectionTitle}>Por que descobrir seu estilo?</Text>
               <Text style={style.sectionText}>
-                Seu estilo pessoal é mais do que roupas — é como você se comunica com o mundo sem dizer uma palavra. 
+                Seu estilo pessoal é mais do que roupas — 
+                É como você se comunica com o mundo sem dizer uma palavra. 
               </Text>
               <Text style={style.sectionText}>
-                Nosso teste foi criado para te ajudar a descobrir o que combina com sua essência, te dando clareza e confiança na hora de se vestir.
+                Nosso teste foi criado para te ajudar a descobrir o que combina com sua essência, 
+                te dando clareza e confiança na hora de se vestir.
               </Text>
               <Text style={style.sectionText}>
                 Ao final, você receberá recomendações únicas para compor um visual que realmente tem a ver com você.
@@ -64,6 +72,80 @@ export default function Login() {
                 <Text style={style.buttonText}>FAÇA O TESTE AQUI</Text>
               </TouchableOpacity>
             </View>
+
+
+
+            <View style={style.boxMid2}>
+              <Text style={style.sectionTitle}>
+                Descobrir seu estilo é importante por vários motivos, tanto práticos quanto emocionais.
+              </Text>
+
+              <Text style={style.sectionTitle}>
+                Aqui estão alguns dos principais:
+              </Text>
+
+              <Text style={style.sectionText}>
+                🧠 1. Autoconhecimento e expressão pessoal{"\n"}
+                Seu estilo é uma forma de comunicar quem você é sem precisar dizer uma palavra.{"\n"}
+                Ele reflete sua personalidade, valores, gostos e até seu estado de espírito.{"\n\n"}
+
+                💸 2. Economia de tempo e dinheiro{"\n"}
+                Conhecendo seu estilo, você evita compras por impulso e foca no que realmente combina com você.{"\n"}
+                Isso reduz erros, peças esquecidas no guarda-roupa e facilita montar looks rapidamente.{"\n\n"}
+
+                💪 3. Confiança e autoestima{"\n"}
+                Quando você se veste de forma alinhada com sua identidade, se sente mais confiante.{"\n"}
+                Estar confortável e bem vestido ajuda a encarar o dia com mais segurança.{"\n\n"}
+
+                🧩 4. Versatilidade e praticidade{"\n"}
+                Um estilo bem definido facilita a criação de um guarda-roupa funcional e coerente.{"\n"}
+                Isso permite combinações fáceis, menos indecisão e mais praticidade no dia a dia.{"\n\n"}
+
+                🌐 5. Impacto social e profissional{"\n"}
+                A forma como você se apresenta influencia a percepção que os outros têm de você.{"\n"}
+                Um estilo bem construído pode transmitir profissionalismo, criatividade ou autoridade, dependendo do contexto.
+              </Text>
+            </View>
+
+
+
+            <View style={style.boxBottom2}>
+              <Text style={style.sectionTitle2}>
+                A moda tem um papel profundo na construção e fortalecimento da autoestima, porque vai muito além de tendências ou aparências:{"\n\n"}
+                Ela está diretamente ligada à forma como nos vemos e nos sentimos.{"\n\n"}
+                Veja por que ela é tão importante nesse aspecto:
+              </Text>
+
+              <Text style={style.ctaText}>
+                🌟 1. Reflete sua identidade{"\n"}
+                Vestir-se de maneira alinhada com quem você é reforça sua autenticidade. Isso traz segurança e faz com que você se sinta representado na sua própria imagem.{"\n\n"}
+
+                💬 2. Expressa emoções e fases da vida{"\n"}
+                A moda é uma forma de comunicação não verbal. Escolher determinadas cores, tecidos ou estilos pode expressar alegria, força, delicadeza, ousadia, ou qualquer sentimento que você queira transmitir — inclusive para si mesmo.{"\n\n"}
+
+                👗 3. Aumenta a confiança{"\n"}
+                Quando você se sente bem com o que está vestindo, seu corpo responde: postura mais ereta, olhar mais firme, sorriso mais fácil. Isso afeta diretamente sua confiança em situações sociais ou profissionais.{"\n\n"}
+
+                🔄 4. Incentiva o autocuidado{"\n"}
+                Cuidar da própria aparência — sem futilidade, mas com intenção — é um ato de carinho consigo mesmo. Escolher roupas que valorizam seu corpo e fazem você se sentir bem é parte desse processo.{"\n\n"}
+
+                🚫 5. Ajuda a desconstruir padrões{"\n"}
+                Ao desenvolver seu próprio estilo, você começa a se libertar das imposições de beleza e a se valorizar do seu jeito. Isso fortalece sua autoestima de forma saudável e realista.
+              </Text>
+
+              <TouchableOpacity
+                style={style.button}
+                onPress={() => navigation.navigate('Home')}
+              >
+                <Text style={style.buttonText}>FAÇA AGORA O TESTE E DESCUBRA.</Text>
+              </TouchableOpacity>
+            </View>
+
+
+
+
+
+            
           </View>
         </View>
       </View>
@@ -86,6 +168,14 @@ export const style = StyleSheet.create({
 
 
 
+  logo: {
+    width: 200,
+    height: 200,
+    marginTop: 3000,
+    borderRadius: 150,
+  },
+
+
 
 
 
@@ -98,8 +188,8 @@ export const style = StyleSheet.create({
     borderTopLeftRadius: 10,
     borderBottomRightRadius: 10,
     borderBottomLeftRadius: 10,
-    marginBottom: 10,
-    marginTop: 400,
+    marginBottom: 30,
+    marginTop: 30,
     borderWidth: 1,
     borderColor: 'rgba(200, 200, 200, 0.5)',
     shadowColor: "#000",
@@ -115,15 +205,67 @@ export const style = StyleSheet.create({
   },
 
   boxMid: {
-    height: Dimensions.get('window').height / 2.8,
+    height: Dimensions.get('window').height / 2.2,
     width: 1200,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: 'rgba(0, 0, 0, 0.1)',
     paddingHorizontal: 37,
     borderTopRightRadius: 10,
     borderTopLeftRadius: 10,
     borderBottomRightRadius: 10,
     borderBottomLeftRadius: 10,
-    marginBottom: 10,
+    marginBottom: 50,
+    marginTop: 10,
+    borderWidth: 1,
+    borderColor: 'rgba(200, 200, 200, 0.5)',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    shadowOpacity: 0.29,
+    shadowRadius: 3.65,
+    elevation: 7,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+
+  boxMid2: {
+    height: Dimensions.get('window').height / 1.5,
+    width: 1200,
+    backgroundColor: 'rgba(0, 0, 0, 0.1)',
+    paddingHorizontal: 37,
+    borderTopRightRadius: 10,
+    borderTopLeftRadius: 10,
+    borderBottomRightRadius: 10,
+    borderBottomLeftRadius: 10,
+    marginBottom: 50,
+    marginTop: 10,
+    borderWidth: 1,
+    borderColor: 'rgba(200, 200, 200, 0.5)',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    shadowOpacity: 0.29,
+    shadowRadius: 3.65,
+    elevation: 7,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+
+  boxBottom: {
+    height: Dimensions.get('window').height / 4,
+    width: 1200,
+    paddingHorizontal: 37,
+    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+    borderTopRightRadius: 10,
+    borderTopLeftRadius: 10,
+    borderBottomRightRadius: 10,
+    borderBottomLeftRadius: 10,
+    marginBottom: 100,
     marginTop: 10,
     borderWidth: 1,
     borderColor: 'rgba(200, 200, 200, 0.5)',
@@ -135,15 +277,13 @@ export const style = StyleSheet.create({
     shadowOpacity: 0.29,
     shadowRadius: 3.65,
     elevation: 7,
-    alignItems: 'center',
     justifyContent: 'center',
   },
-
-  boxBottom: {
-    height: Dimensions.get('window').height / 4,
+  boxBottom2: {
+    height: Dimensions.get('window').height / 0.8,
     width: 1200,
     paddingHorizontal: 37,
-    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    backgroundColor: 'rgba(0, 0, 0, 0.8)',
     borderTopRightRadius: 10,
     borderTopLeftRadius: 10,
     borderBottomRightRadius: 10,
@@ -181,19 +321,27 @@ export const style = StyleSheet.create({
     textAlign: 'center',
   },
   subheading: {
-    color: '#00ff88',
+    color: '#fff',
     fontSize: 22,
     marginTop: 10,
     textAlign: 'center',
   },
   sectionTitle: {
-    color: '#00ff88',
+    color: themas.Colors.gg,
     fontSize: 26,
     fontWeight: 'bold',
     marginBottom: 15,
   },
+  sectionTitle2: {
+    color: 'lightblue',
+    fontSize: 28,
+    fontWeight: 'bold',
+    marginTop: 0,
+    marginBottom: 100,
+    textAlign: 'center',
+  },
   sectionText: {
-    color: '#fff',
+    color: 'black',
     fontSize: 20,
     marginBottom: 10,
   },
