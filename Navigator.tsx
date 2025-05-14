@@ -27,7 +27,7 @@ export default function App() {
   return (
     <NavigationContainer>
 
-      <Stack.Navigator initialRouteName="Perfil" screenOptions={{ headerShown: false }}>
+      <Stack.Navigator initialRouteName="Criarconta" screenOptions={{ headerShown: false }}>
 
 
         <Stack.Screen

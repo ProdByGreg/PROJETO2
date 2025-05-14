@@ -116,10 +116,30 @@ export default function Cadastrar() {
   return (
     <ScrollView contentContainerStyle={style.scrollContainer}>
       <View style={style.container}>
+
+
+
+
+
         <View style={style.boxTop}>
-          <Image source={logo} style={style.logo} resizeMode="contain" />
-                  <Text style={style.text}>Criar uma nova conta!</Text>
+          <Text style={style.text3}>Já tem conta?</Text>
+          <TouchableOpacity style={style.button2} onPress={() => navigation.navigate('Login')}>
+            {loading ? (
+              <ActivityIndicator color="#fff" />
+            ) : (
+              
+              <Text style={style.textButton}>Faça login</Text>
+            )}
+                    <Image source={logo} style={style.logo} resizeMode="contain" />
+          </TouchableOpacity>
+                  <Text style={style.text}>Crie sua conta gratis.</Text>
+                  <Text style={style.text2}>Explore o conteúdo do site para fins pessoais e organizacionais.</Text>
         </View>
+
+
+
+
+
 
         <View style={style.boxMid}>
           <Text style={style.titleInput}>NOME COMPLETO</Text>
@@ -128,7 +148,7 @@ export default function Cadastrar() {
               style={style.input}
               value={nome}
               onChangeText={setNome}
-              placeholder="Digite seu nome"
+              placeholder=" Digite seu nome"
               autoCapitalize="none"
             />
             <MaterialIcons name="person" size={20} color={'gray'} />
@@ -140,7 +160,7 @@ export default function Cadastrar() {
               style={style.input}
               value={email}
               onChangeText={setEmail}
-              placeholder="Digite seu email"
+              placeholder=" Digite seu email"
               keyboardType="email-address"
               autoCapitalize="none"
             />
@@ -153,7 +173,7 @@ export default function Cadastrar() {
               style={style.input}
               value={password}
               onChangeText={setPassword}
-              placeholder="Digite sua senha"
+              placeholder=" Digite sua senha"
               secureTextEntry
               autoCapitalize="none"
             />
@@ -166,7 +186,7 @@ export default function Cadastrar() {
               style={style.input}
               value={confirmPassword}
               onChangeText={setConfirmPassword}
-              placeholder="Confirme sua senha"
+              placeholder=" Confirme sua senha"
               secureTextEntry
               autoCapitalize="none"
             />
@@ -179,7 +199,7 @@ export default function Cadastrar() {
               style={style.input}
               value={telefone}
               onChangeText={setTelefone}
-              placeholder="Digite seu telefone"
+              placeholder=" Digite seu telefone"
               keyboardType="phone-pad"
             />
             <MaterialIcons name="phone" size={20} color={'gray'} />
@@ -191,7 +211,7 @@ export default function Cadastrar() {
               style={style.input}
               value={cpf}
               onChangeText={setCPF}
-              placeholder="Digite seu CPF"
+              placeholder=" Digite seu CPF"
               keyboardType="numeric"
             />
             <MaterialIcons name="person" size={20} color={'gray'} />
@@ -226,89 +246,157 @@ export default function Cadastrar() {
 export const style = StyleSheet.create({
   scrollContainer: {
     flexGrow: 1,
-    height: Dimensions.get('window').height / 1,
+    height: Dimensions.get('window').height / 2,
   },
   container: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: themas.Colors.gg,
   },
   boxTop: {
-    height: 350,
-    width: '100%',
-    backgroundColor: '#2a2a2a',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 250,
-  },
-  boxMid: {
-    height: 905,
-    width: '100%',
-    backgroundColor: '#2e2e2e',
-    paddingHorizontal: 37,
-    gap: 10,
-    
-  },
-  boxBottom: {
-    height: 200,
-    width: '100%',
-    backgroundColor: '#333',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'row',
-    
-  },
-  text: {
-    fontWeight: 'bold',
-    marginTop: 40,
-    fontSize: 28,
-    color: '#fff',
-  },
-  titleInput: {
-    marginLeft: '30%',
-    color: themas.Colors.gray,
-    marginTop: 20,
-  },
-  boxInput: {
-    width: '40%',
-    height: 40,
+    width: '70%',
+    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+    padding: 20,
+    borderRadius: 10,
+    marginTop: 460,
+    marginBottom: 20,
     borderWidth: 1,
-    marginTop: 10,
-    marginLeft: '30%',
-    flexDirection: 'row',
-    borderRadius: 20,
-    alignItems: 'center',
-    paddingHorizontal: 5,
-    backgroundColor: themas.Colors.lightGray,
-    borderColor: themas.Colors.lightGray,
-  },
-  input: {
-    height: '100%',
-    width: '95%',
-    borderRadius: 20,
-    paddingLeft: 10,
-  },
-  button: {
-    width: 730,
-    height: 45,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: themas.Colors.gg,
-    borderRadius: 40,
+    borderColor: 'rgba(200, 200, 200, 0.5)',
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 3,
     },
     shadowOpacity: 0.29,
-    shadowRadius: 4.65,
+    shadowRadius: 3.65,
     elevation: 7,
-    marginTop: 50,
-    marginLeft: 545,
+
+  },
+  
+  boxMid: {
+    height: Dimensions.get('window').height / 1,
+    width: '70%',
+    paddingHorizontal: 37,
+    borderTopRightRadius: 10,
+    borderTopLeftRadius: 10,
+    borderBottomRightRadius: 10,
+    borderBottomLeftRadius: 10,
+    marginBottom: 50,
+    marginTop: 10,
+    borderWidth: 1,
+    borderColor: 'rgba(200, 200, 200, 0.5)',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    shadowOpacity: 0.29,
+    shadowRadius: 3.65,
+    elevation: 7,
+  },
+  boxBottom: {
+    height: Dimensions.get('window').height / 4,
+    width: '70%',
+    paddingHorizontal: 37,
+    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+    borderTopRightRadius: 10,
+    borderTopLeftRadius: 10,
+    borderBottomRightRadius: 10,
+    borderBottomLeftRadius: 10,
+    marginBottom: 100,
+    marginTop: 10,
+    borderWidth: 1,
+    borderColor: 'rgba(200, 200, 200, 0.5)',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.29,
+    shadowRadius: 3.65,
+    elevation: 7,
+    justifyContent: 'center',
+  },
+  text: {
+    fontWeight: 'bold',
+    fontSize: 24,
+    color: '#fff',
+    marginTop: 10,
+  },
+  text2: {
+    fontSize: 16,
+    color: '#fff',
+    marginTop: 10,
+  },
+  text3: {
+    fontSize: 18,
+    color: '#fff',
+    marginTop: 15,
+    marginLeft: '38.2%',
+  },
+  titleInput: {
+    color: 'black',
+    marginTop: 20,
+    marginLeft: '32%',
+  },
+  boxInput: {
+      width: 550,
+      height: 35,
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderRadius: 15,
+      borderColor: 'rgba(200, 200, 200, 0.5)',
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 1,
+      },
+      shadowOpacity: 0.29,
+      shadowRadius: 3.65,
+      elevation: 7,
+      marginTop: 30,
+      marginLeft: '32%',
+      borderWidth: 1,
+      flexDirection: 'row',
+  },
+  input: {
+    width: 550,
+    height: 35,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 15,
+    flexDirection: 'row',
+},
+  button: {
+    width: 550,
+    height: 35,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: themas.Colors.gg,
+    borderRadius: 5,
+    borderColor: 'rgba(200, 200, 200, 0.5)',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.29,
+    shadowRadius: 3.65,
+    elevation: 7,
+    marginTop: 30,
+    marginLeft: '32%',
+  },
+  button2: {
+    width: 100,
+    height: 35,
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 7,
+    marginTop: 29,
+    marginLeft: '47%',
   },
   textButton: {
-    fontSize: 16,
+    fontSize: 18,
     color: '#FFFF',
     fontWeight: 'bold',
   },
@@ -317,10 +405,10 @@ export const style = StyleSheet.create({
     color: themas.Colors.gray,
   },
   logo: {
-    width: 100,
-    height: 100,
-    marginTop: 150,
-    borderRadius: 50,
+    width: 117,
+    height: 117,
+    borderRadius: 100,
+    marginLeft: 1100,
   },
   footerText: {
     color: '#fff',

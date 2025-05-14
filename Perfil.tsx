@@ -76,7 +76,7 @@ const Perfil = () => {
   if (!usuario || !preferencias) {
     return (
       <View style={styles.center}>
-        <Text style={styles.alertText}>Você ainda não completou o perfil.</Text>
+        <Text style={styles.alertText}>Você ainda não completou seu perfil.</Text>
         <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.button}>
           <Text style={styles.buttonText}>Responder agora</Text>
         </TouchableOpacity>
@@ -145,11 +145,28 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   center: {
-    flex: 1,
-    justifyContent: 'center',
+    height: Dimensions.get('window').height / 2.7,
+    width: 1200,
+    backgroundColor: 'rgba(0, 0, 0, 0.1)',
+    paddingHorizontal: 37,
+    borderTopRightRadius: 10,
+    borderTopLeftRadius: 10,
+    borderBottomRightRadius: 10,
+    borderBottomLeftRadius: 10,
+    marginTop: 200,
+    marginLeft: 370,
+    borderWidth: 1,
+    borderColor: 'rgba(200, 200, 200, 0.5)',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    shadowOpacity: 0.29,
+    shadowRadius: 3.65,
+    elevation: 7,
     alignItems: 'center',
-    padding: 20,
-    
+    justifyContent: 'center',
   },
   title: {
     color: '#fff',
@@ -161,7 +178,7 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
   },
   alertText: {
-    color: '#ccc',
+    color: 'black',
     fontSize: 18,
     marginBottom: 20,
     textAlign: 'center',
