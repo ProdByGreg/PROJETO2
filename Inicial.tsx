@@ -33,6 +33,9 @@ export default function Login() {
               </Text>
             </View>
 
+
+
+
             <View style={style.boxMid}>
               <Text style={style.sectionTitle}>Por que descobrir seu estilo?</Text>
               <Text style={style.sectionText}>

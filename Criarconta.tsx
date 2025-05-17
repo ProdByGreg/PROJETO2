@@ -220,14 +220,14 @@ export default function Cadastrar() {
             {loading ? (
               <ActivityIndicator color="#fff" />
             ) : (
-              <Text style={style.textButton}>Criar Conta.</Text>
+              <Text style={style.textButton}>Criar Conta</Text>
             )}
           </TouchableOpacity>
           <TouchableOpacity style={style.button} onPress={() => navigation.navigate('Login')}>
             {loading ? (
               <ActivityIndicator color="#fff" />
             ) : (
-              <Text style={style.textButton}>Ja tenho conta.</Text>
+              <Text style={style.textButton}>Ja tenho conta</Text>
             )}
           </TouchableOpacity>
         </View>
@@ -258,7 +258,7 @@ export const style = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.8)',
     padding: 20,
     borderRadius: 10,
-    marginTop: 460,
+    marginTop: 650,
     marginBottom: 20,
     borderWidth: 1,
     borderColor: 'rgba(200, 200, 200, 0.5)',
@@ -315,6 +315,7 @@ export const style = StyleSheet.create({
     shadowOpacity: 0.29,
     shadowRadius: 3.65,
     elevation: 7,
+    alignItems: 'center',
     justifyContent: 'center',
   },
   text: {
@@ -344,7 +345,7 @@ export const style = StyleSheet.create({
       height: 35,
       alignItems: 'center',
       justifyContent: 'center',
-      borderRadius: 15,
+      borderRadius: 5,
       borderColor: 'rgba(200, 200, 200, 0.5)',
       shadowColor: "#000",
       shadowOffset: {
@@ -364,7 +365,7 @@ export const style = StyleSheet.create({
     height: 35,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 15,
+    borderRadius: 5,
     flexDirection: 'row',
 },
   button: {
