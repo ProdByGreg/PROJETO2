@@ -97,6 +97,7 @@ const Perfil = () => {
             const valorFormatado = Array.isArray(valor) ? valor.join(', ') : String(valor);
 
             return (
+
               <View key={chave} style={styles.preferenceCard}>
                 <Text style={styles.cardTitle}>{rotulo}</Text>
                 <Text style={styles.cardContent}>{valorFormatado}</Text>
@@ -112,12 +113,27 @@ const Perfil = () => {
           </Text>
         </View>
 
+        <View style={styles.buttonBox}>
+
         <TouchableOpacity
           onPress={() => navigation.navigate('Home')}
           style={styles.button}
         >
           <Text style={styles.buttonText}>Voltar para Home</Text>
         </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('EstiloUsuario')}
+          style={styles.button}
+        >
+          <Text style={styles.buttonText}>Ver estilo</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Home')}
+          style={styles.button}
+        >
+          <Text style={styles.buttonText}>Refazer teste</Text>
+        </TouchableOpacity>
+        </View>
       </View>
     </ScrollView>
   );
@@ -191,19 +207,23 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   grid: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
+    width: '100%',
+  },
+
+  buttonBox:{
+    flexDirection: 'row',
+    gap: 10,
   },
 
 
 
 
-
-
   preferenceCard: {
-    height: '40%',
-    width: '30%',
+    height: '10%',
+    width: '100%',
     paddingHorizontal: 37,
     backgroundColor: 'rgba(0, 0, 0, 0.8)',
     borderTopRightRadius: 10,
@@ -272,8 +292,13 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 30,
     borderRadius: 8,
-    marginTop: 40,
-    marginBottom: 100,
+    marginTop: 30,
+    marginBottom: 20,
+    height: 50,
+    width: 200,
+    justifyContent: 'center',
+    alignItems: 'center',
+
   },
   buttonText: {
     color: 'white',
@@ -281,7 +306,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   alertText: {
-    color: '#fff',
+    color: 'black',
     fontSize: 18,
     marginBottom: 20,
     textAlign: 'center',

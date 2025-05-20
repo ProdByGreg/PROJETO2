@@ -47,7 +47,7 @@ const perguntasBase = [
 
     opcoesMasculino: 
     ['INFORMAL, ESPONTÂNEO, ALEGRE', 'CONSERVADOR, SÉRIO, ORGANIZADO', 'EXIGENTE, REFINADO, BEM-SUCEDIDO', 'MASCULINO, TRANQUILO, GENTIL',
-       'ELEGANTE, IMPONENTE, SENSUAL', 'SOFISTICADO, MODERNO, FIRME', 'EXÓTICO, AVENTUREIRO, INOVADOR'] },
+       'ELEGANTE, IMPONENTE, ESPORTIVO', 'SOFISTICADO, MODERNO, FIRME', 'EXÓTICO, AVENTUREIRO, INOVADOR'] },
   
   
   
@@ -57,12 +57,12 @@ const perguntasBase = [
   { id: 5, pergunta: 'QUAL O SEU TIPO DE ROUPA FAVORITA?', 
 
     opcoesFeminino: 
-    ['CONFORTÁVEIS, SOLTAS, PRÁTICAS', 'ROUPAS DISCRETAS, CLÁSSICAS', 'PEÇAS REFINADAS, SEM MODISMOS',
-       'ROUPAS DELICADAS, CORES SUAVES', 'LOOKS AJUSTADOS QUE VALORIZAM O CORPO', 'PEÇAS ESTRUTURADAS, MODERNAS', 'FORMAS E PEÇAS MARCANTES'], 
+    ['CONFORTÁVEIS, SOLTAS, PRÁTICAS', 'DISCRETAS E CLÁSSICAS', 'PEÇAS REFINADAS, SEM MODISMOS',
+       'ROUPAS DELICADAS, CORES SUAVES', 'ESPORTIVAS E AJUSTADAS QUE VALORIZAM O CORPO', 'PEÇAS ESTRUTURADAS, MODERNAS', 'ESPORTIVAS'], 
        
     opcoesMasculino: 
-    ['CONFORTÁVEIS, SOLTAS, PRÁTICAS', 'ROUPAS DISCRETAS, CLÁSSICAS', 'PEÇAS REFINADAS, SEM MODISMOS', 'ROUPAS SIMPLES E TRANQUILAS',
-         'LOOKS AJUSTADOS QUE VALORIZAM O CORPO', 'PEÇAS ESTRUTURADAS, MODERNAS', 'FORMAS E PEÇAS MARCANTES'] },
+    ['CONFORTÁVEIS, SOLTAS, PRÁTICAS', 'DISCRETAS E CLÁSSICAS', 'PEÇAS REFINADAS, SEM MODISMOS', 'ROUPAS SIMPLES E TRANQUILAS',
+         'ESPORTIVAS E AJUSTADAS QUE VALORIZAM O CORPO', 'PEÇAS ESTRUTURADAS, MODERNAS', 'ESPORTIVAS'] },
   
   
   
@@ -95,7 +95,7 @@ const perguntasBase = [
     { id: 8, pergunta: 'QUAIS ESTAMPAS TÊM MAIS A SUA CARA?', 
 
     opcoes: 
-    ['LISTRAS E XADREZ', 'RISCA DE GIZ', 'ESTAMPAS ABSTRATAS', 'FLORAIS E DELICADAS', 'ANIMAL PRINT', 'ESTAMPAS EXAGERADAS', 'MISTURA DE ESTAMPAS'] },
+    ['LISTRAS E XADREZ', 'RISCA DE GIZ', 'ESTAMPAS ABSTRATAS', 'FLORAIS E DELICADAS', 'ANIMAL PRINT', 'ESTAMPAS EXAGERADAS', 'SEM ESTAMPA'] },
   
   
   
@@ -106,7 +106,7 @@ const perguntasBase = [
     opcoesFeminino: 
     ['CONFORTÁVEL', 'CLÁSSICO', 'SOFISTICADO', 'SALTO ALTO E FINO', 'FEMININO', 'DESIGN MODERNO', 'DIFERENTE E VINTAGE'], 
     opcoesMasculino: 
-    ['CONFORTÁVEL', 'CLÁSSICO', 'SOFISTICADO', 'SOCIAL', 'MASCULINO', 'DESIGN MODERNO', 'DIFERENTE E VINTAGE'] },
+    ['CONFORTÁVEL', 'CLÁSSICO', 'SOFISTICADO', 'SOCIAL', 'MASCULINO E ESPORTIVO', 'DESIGN MODERNO', 'DIFERENTE E VINTAGE'] },
   
   
   
@@ -125,43 +125,81 @@ const perguntasBase = [
     { id: 11, pergunta: 'QUAL GRUPO DE PEÇAS VOCÊ MAIS GOSTA?', 
     opcoesFeminino: ['JEANS E CAMISETA', 'SAIAS E SCARPINS CLÁSSICOS', 'PEÇAS DE ALFAIATARIA', 'VESTIDO FLUIDO', 'LOOKS SENSUAIS',
        'JEANS DESTROYED E CASACOS VOLUMOSOS', 'SEM PEÇAS CHAVES EXCLUSIVAS'], 
-    opcoesMasculino: ['JEANS E CAMISETA', 'CALÇAS E SAPATOS SOCIAIS', 'PEÇAS DE ALFAIATARIA', 'ROUPAS LEVES E FLUIDAS', 'LOOKS SENSUAIS',
+    opcoesMasculino: ['JEANS E CAMISETA', 'CALÇAS E SAPATOS SOCIAIS', 'PEÇAS DE ALFAIATARIA', 'ROUPAS LEVES E FLUIDAS', 'ROUPAS PARA TREINAR / ACADEMIA',
         'JEANS DESTROYED E CASACOS VOLUMOSOS', 'SEM PEÇAS CHAVES EXCLUSIVAS'] }
 ];
 
+
+
+
+
+
+
 const determinarEstiloFinal = (respostas: Record<string, string>) => {
-  const todasRespostas = Object.values(respostas).join(' ').toUpperCase();
+  const estiloPontuacao: Record<string, number> = {
+    'Estilo Esportivo': 0,
+    'Estilo Clássico': 0,
+    'Estilo Sofisticado': 0,
+    'Estilo Romântico': 0,
+    'Estilo Streetwear': 0,
+    'Estilo Criativo': 0,
+    'Estilo Casual': 0,
+  };
 
-  if (todasRespostas.includes('CONFORTÁVEL') || todasRespostas.includes('PRÁTICO') || todasRespostas.includes('ESPORTIVO')) {
-    return 'Estilo Casual';
+  const palavrasChave: Record<string, string[]> = {
+    'Estilo Esportivo': [
+      'CONFORTÁVEL', 'PRÁTICO', 'ESPORTIVO', 'ACADEMIA', 'TREINO',
+      'TÊNIS DE CORRIDA', 'ROUPAS PARA TREINAR',
+    ],
+    'Estilo Clássico': [
+      'CLÁSSICO', 'TRADICIONAL', 'DISCRETO', 'ALFAIATARIA', 'CALÇAS E SAPATOS SOCIAIS',
+      'SCARPINS CLÁSSICOS', 'RISCA DE GIZ'
+    ],
+    'Estilo Sofisticado': [
+      'SOFISTICADO', 'REFINADO', 'MODERNO', 'ESTRUTURADO', 'PEÇAS REFINADAS',
+      'DESIGN MODERNO', 'PEÇAS DE ALFAIATARIA'
+    ],
+    'Estilo Romântico': [
+      'DELICADO', 'FEMININO', 'ROMÂNTICO', 'FLORAIS', 'CORES SUAVES',
+      'VESTIDO FLUIDO', 'SALTO ALTO E FINO'
+    ],
+    'Estilo Streetwear': [
+      'IMPACTANTE', 'URBANO', 'JEANS DESTROYED', 'CASACOS VOLUMOSOS',
+      'GRANDES E MARCANTES', 'LOOKS SENSUAIS'
+    ],
+    'Estilo Criativo': [
+      'CRIATIVO', 'INOVADOR', 'EXÓTICO', 'ESTAMPAS EXAGERADAS',
+      'DIVERTIDOS', 'MISTURA DE ESTAMPAS', 'DIFERENTE', 'DESIGN ARROJADO'
+    ],
+    'Estilo Casual': [
+      'INFORMAL', 'BÁSICO', 'JEANS E CAMISETA', 'LOOKS SEM DETALHES',
+      'SIMPLES', 'ROUPAS SIMPLES E TRANQUILAS', 'ESPORTIVOS E SIMPLES'
+    ]
+  };
+
+  const respostasConcatenadas = Object.values(respostas).join(' ').toUpperCase();
+
+  for (const [estilo, palavras] of Object.entries(palavrasChave)) {
+    palavras.forEach(palavra => {
+      if (respostasConcatenadas.includes(palavra)) {
+        estiloPontuacao[estilo]++;
+      }
+    });
   }
 
-  if (todasRespostas.includes('CLÁSSICO') || todasRespostas.includes('TRADICIONAL') || todasRespostas.includes('DISCRETO') || todasRespostas.includes('ALFAIATARIA')) {
-    return 'Estilo Clássico';
-  }
+  const estiloFinal = Object.entries(estiloPontuacao)
+    .sort((a, b) => b[1] - a[1])[0][0];
 
-  if (todasRespostas.includes('SOFISTICADO') || todasRespostas.includes('REFINADO') || todasRespostas.includes('MODERNO') || todasRespostas.includes('ESTRUTURADO')) {
-    return 'Estilo Sofisticado';
-  }
-
-  if (todasRespostas.includes('DELICADO') || todasRespostas.includes('FEMININO') || todasRespostas.includes('ROMÂNTICO') || todasRespostas.includes('FLORAIS')) {
-    return 'Estilo Romântico';
-  }
-
-  if (todasRespostas.includes('SENSUAL') || todasRespostas.includes('VALORIZAM O CORPO') || todasRespostas.includes('SALTO ALTO') || todasRespostas.includes('LOOKS SENSUAIS')) {
-    return 'Estilo Sexy';
-  }
-
-  if (todasRespostas.includes('IMPACTANTE') || todasRespostas.includes('URBANO') || todasRespostas.includes('JEANS DESTROYED') || todasRespostas.includes('CASACOS VOLUMOSOS')) {
-    return 'Estilo Urbano';
-  }
-
-  if (todasRespostas.includes('CRIATIVO') || todasRespostas.includes('INOVADOR') || todasRespostas.includes('EXÓTICO') || todasRespostas.includes('ESTAMPAS EXAGERADAS') || todasRespostas.includes('MISTURA DE ESTAMPAS')) {
-    return 'Estilo Criativo';
-  }
-
-  return 'Estilo Indefinido';
+  return estiloPontuacao[estiloFinal] === 0 ? 'Estilo Indefinido' : estiloFinal;
 };
+
+
+
+
+
+
+
+
 
 const Home = () => {
   const navigation = useNavigation();

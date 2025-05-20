@@ -6,6 +6,8 @@ import { themas } from "./src/global/themes";
 import { useNavigation } from '@react-navigation/native';
 
 const logo = require('./src/assets/DripOrDrown.jpg');
+const estilos = require('./src/assets/Criativo1.jpg');
+
 
 interface Preferencias {
   coresPreferidas?: string;
@@ -92,53 +94,73 @@ const EstiloUsuario = () => {
     }
   };
 
-  const calcularEstilo = (preferencias: Preferencias): string => {
-    const {
-      coresPreferidas = '',
-      estiloRoupa = '',
-      identidadeVisual = '',
-      personalidade = ''
-    } = preferencias;
 
-    const todasRespostas = (
-      coresPreferidas + ' ' +
-      estiloRoupa + ' ' +
-      identidadeVisual + ' ' +
-      personalidade
-    ).toUpperCase();
 
-    console.log('🔵 Todas as respostas combinadas:', todasRespostas);
 
-    if (todasRespostas.includes('CONFORTÁVEL') || todasRespostas.includes('PRÁTICO') || todasRespostas.includes('SALTO ALTO') || todasRespostas.includes('LOOKS DESPOJADOS')) {
-      return 'Estilo Casual';
+
+
+  const calcularEstilo = (respostas: Record<string, string>) => {
+    const estiloPontuacao: Record<string, number> = {
+      'Estilo Esportivo': 0,
+      'Estilo Clássico': 0,
+      'Estilo Sofisticado': 0,
+      'Estilo Romântico': 0,
+      'Estilo Streetwear': 0,
+      'Estilo Criativo': 0,
+      'Estilo Casual': 0,
+    };
+  
+    const palavrasChave: Record<string, string[]> = {
+      'Estilo Esportivo': [
+        'CONFORTÁVEL', 'PRÁTICO', 'ESPORTIVO', 'ACADEMIA', 'TREINO',
+        'TÊNIS DE CORRIDA', 'ROUPAS PARA TREINAR',
+      ],
+      'Estilo Clássico': [
+        'CLÁSSICO', 'TRADICIONAL', 'DISCRETO', 'ALFAIATARIA', 'CALÇAS E SAPATOS SOCIAIS',
+        'SCARPINS CLÁSSICOS', 'RISCA DE GIZ'
+      ],
+      'Estilo Sofisticado': [
+        'SOFISTICADO', 'REFINADO', 'MODERNO', 'ESTRUTURADO', 'PEÇAS REFINADAS',
+        'DESIGN MODERNO', 'PEÇAS DE ALFAIATARIA'
+      ],
+      'Estilo Romântico': [
+        'DELICADO', 'FEMININO', 'ROMÂNTICO', 'FLORAIS', 'CORES SUAVES',
+        'VESTIDO FLUIDO', 'SALTO ALTO E FINO'
+      ],
+      'Estilo Streetwear': [
+        'IMPACTANTE', 'URBANO', 'JEANS DESTROYED', 'CASACOS VOLUMOSOS',
+        'GRANDES E MARCANTES', 'LOOKS SENSUAIS'
+      ],
+      'Estilo Criativo': [
+        'CRIATIVO', 'INOVADOR', 'EXÓTICO', 'ESTAMPAS EXAGERADAS',
+        'DIVERTIDOS', 'MISTURA DE ESTAMPAS', 'DIFERENTE', 'DESIGN ARROJADO'
+      ],
+      'Estilo Casual': [
+        'INFORMAL', 'BÁSICO', 'JEANS E CAMISETA', 'LOOKS SEM DETALHES',
+        'SIMPLES', 'ROUPAS SIMPLES E TRANQUILAS', 'ESPORTIVOS E SIMPLES'
+      ]
+    };
+  
+    const respostasConcatenadas = Object.values(respostas).join(' ').toUpperCase();
+  
+    for (const [estilo, palavras] of Object.entries(palavrasChave)) {
+      palavras.forEach(palavra => {
+        if (respostasConcatenadas.includes(palavra)) {
+          estiloPontuacao[estilo]++;
+        }
+      });
     }
-
-    if (todasRespostas.includes('CLÁSSICO') || todasRespostas.includes('TRADICIONAL') || todasRespostas.includes('DISCRETO') || todasRespostas.includes('ALFAIATARIA')) {
-      return 'Estilo Clássico';
-    }
-
-    if (todasRespostas.includes('SOFISTICADO') || todasRespostas.includes('REFINADO') || todasRespostas.includes('MODERNO') || todasRespostas.includes('ESTRUTURADO')) {
-      return 'Estilo Sofisticado';
-    }
-
-    if (todasRespostas.includes('DELICADO') || todasRespostas.includes('FEMININO') || todasRespostas.includes('ROMÂNTICO') || todasRespostas.includes('FLORAIS')) {
-      return 'Estilo Romântico';
-    }
-
-    if (todasRespostas.includes('SENSUAL') || todasRespostas.includes('VALORIZAM O CORPO') || todasRespostas.includes('ESPORTIVO') || todasRespostas.includes('LOOKS SENSUAIS')) {
-      return 'Estilo Esportivo';
-    }
-
-    if (todasRespostas.includes('IMPACTANTE') || todasRespostas.includes('URBANO') || todasRespostas.includes('JEANS DESTROYED') || todasRespostas.includes('CASACOS VOLUMOSOS')) {
-      return 'Estilo Streetwear';
-    }
-
-    if (todasRespostas.includes('CRIATIVO') || todasRespostas.includes('INOVADOR') || todasRespostas.includes('EXÓTICO') || todasRespostas.includes('ESTAMPAS EXAGERADAS') || todasRespostas.includes('MISTURA DE ESTAMPAS')) {
-      return 'Estilo Criativo';
-    }
-
-    return 'Estilo Indefinido';
+  
+    const estiloFinal = Object.entries(estiloPontuacao)
+      .sort((a, b) => b[1] - a[1])[0][0];
+  
+    return estiloPontuacao[estiloFinal] === 0 ? 'Estilo Indefinido' : estiloFinal;
   };
+  
+
+
+
+
 
   return (
     
@@ -176,7 +198,9 @@ const EstiloUsuario = () => {
         </View>
       )}
 
-      <View style={styles.boxBottom}></View>
+      <View style={styles.boxBottom}>
+      <Image source={estilos} style={styles.estilos} resizeMode="contain" />
+      </View>
     </ScrollView>
   );
 };
@@ -334,6 +358,10 @@ const styles = StyleSheet.create({
     height: 100,
     marginTop: 800,
     borderRadius: 150,
+  },
+  estilos: {
+    width: 200,
+    height: 200,
   },
 });
 
