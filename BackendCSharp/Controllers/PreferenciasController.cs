@@ -18,19 +18,44 @@ public class PreferenciasController : ControllerBase
 
 
 
-    [HttpPost]
-    public async Task<IActionResult> SalvarPreferencia([FromBody] PreferenciasUsuario preferencia)
+[HttpPost]
+public async Task<IActionResult> SalvarOuAtualizarPreferencia([FromBody] PreferenciasUsuario preferencia)
+{
+    if (preferencia == null || preferencia.UserId == 0)
     {
-        if (preferencia == null || preferencia.UserId == 0)
-        {
-            return BadRequest(new { message = "Dados inválidos" });
-        }
-
-        _context.PreferenciasUsuario.Add(preferencia);
-        await _context.SaveChangesAsync();
-
-        return Ok(new { message = "Preferência salva com sucesso" });
+        return BadRequest(new { message = "Dados inválidos" });
     }
+
+    var preferenciaExistente = await _context.PreferenciasUsuario
+        .FirstOrDefaultAsync(p => p.UserId == preferencia.UserId);
+
+    if (preferenciaExistente != null)
+    {
+        // Substitui os campos manualmente
+        preferenciaExistente.Genero = preferencia.Genero;
+        preferenciaExistente.TamanhoDaRoupa = preferencia.TamanhoDaRoupa;
+        preferenciaExistente.CoresPreferidas = preferencia.CoresPreferidas;
+        preferenciaExistente.Personalidade = preferencia.Personalidade;
+        preferenciaExistente.EstiloRoupa = preferencia.EstiloRoupa;
+        preferenciaExistente.IdentidadeVisual = preferencia.IdentidadeVisual;
+        preferenciaExistente.DetalhesFavoritos = preferencia.DetalhesFavoritos;
+        preferenciaExistente.EstampasFavoritas = preferencia.EstampasFavoritas;
+        preferenciaExistente.SapatosFavoritos = preferencia.SapatosFavoritos;
+        preferenciaExistente.AcessoriosFavoritos = preferencia.AcessoriosFavoritos;
+        preferenciaExistente.PecasFavoritas = preferencia.PecasFavoritas;
+        preferenciaExistente.EstiloFinal = preferencia.EstiloFinal;
+
+        _context.PreferenciasUsuario.Update(preferenciaExistente);
+    }
+    else
+    {
+        _context.PreferenciasUsuario.Add(preferencia);
+    }
+
+    await _context.SaveChangesAsync();
+    return Ok(new { message = "Preferências salvas ou atualizadas com sucesso." });
+}
+
 
 
 
@@ -84,5 +109,34 @@ public async Task<IActionResult> GetPreferenciasPorUsuario(int userId)
 
     return Ok(preferencia);
 }
+
+
+
+
+
+
+
+
+
+[HttpDelete("{userId}")]
+public async Task<IActionResult> DeletarPreferencias(int userId)
+{
+    var preferencia = await _context.PreferenciasUsuario.FirstOrDefaultAsync(p => p.UserId == userId);
+    if (preferencia == null)
+    {
+        return NotFound(new { message = "Preferência não encontrada para exclusão." });
+    }
+
+    _context.PreferenciasUsuario.Remove(preferencia);
+    await _context.SaveChangesAsync();
+
+    return Ok(new { message = "Preferência deletada com sucesso." });
+}
+
+
+
+
+
+
 
 }

@@ -233,13 +233,21 @@ const Home = () => {
     }
   };
 
+
+
+
+
+
+
+
+
   const salvarPreferencias = async () => {
     try {
       const UserId = await AsyncStorage.getItem('userid');
       if (!UserId) return Alert.alert('Erro', 'Usuário não identificado.');
-
+  
       const estiloFinal = determinarEstiloFinal(respostas);
-
+  
       const preferenciasFormatadas = {
         UserId,
         Genero: respostas['DEFINA SEU GÊNERO:'],
@@ -255,20 +263,38 @@ const Home = () => {
         PecasFavoritas: respostas['QUAL GRUPO DE PEÇAS VOCÊ MAIS GOSTA?'],
         EstiloFinal: estiloFinal,
       };
-
+  
       const API_URL = process.env.API_URL || 'http://localhost:5009';
+  
+      // Tentar excluir preferências anteriores (se a API suportar)
+      await axios.delete(`${API_URL}/api/Preferencias/${UserId}`).catch(() => {});
+  
+      // Enviar nova preferência (substituindo anterior)
       const response = await axios.post(`${API_URL}/api/Preferencias`, preferenciasFormatadas);
-
+  
       if (response.status === 200 || response.status === 201) {
         setPreferenciasSalvas(true);
       } else {
         Alert.alert('Erro', 'Não foi possível salvar suas preferências.');
       }
+  
     } catch (error) {
       console.error('Erro ao salvar preferências:', error);
       Alert.alert('Erro', 'Ocorreu um erro ao salvar suas preferências.');
     }
   };
+  
+
+
+
+
+
+
+
+
+
+
+
 
   const perguntaAtual = perguntasBase[passo];
   let opcoes = perguntaAtual.opcoes;

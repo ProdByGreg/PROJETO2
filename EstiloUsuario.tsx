@@ -6,7 +6,6 @@ import { themas } from "./src/global/themes";
 import { useNavigation } from '@react-navigation/native';
 
 const logo = require('./src/assets/DripOrDrown.jpg');
-const estilos = require('./src/assets/Criativo1.jpg');
 
 
 interface Preferencias {
@@ -16,30 +15,83 @@ interface Preferencias {
   personalidade?: string;
 }
 
+
+const imagemEstilos: Record<string, any> = {
+  'Estilo Casual': [
+    require('./src/assets/Casual1.jpg'),
+    require('./src/assets/Casual2.jpg'),
+    require('./src/assets/Casual3.jpg'),
+    require('./src/assets/Casual4.jpg'),
+  ],
+  
+  'Estilo Clássico': [
+    require('./src/assets/Classico1.jpg'),
+    require('./src/assets/Classico2.jpg'),
+    require('./src/assets/Classico3.jpg'),
+    require('./src/assets/Classico4.jpg'),
+  ],
+  'Estilo Sofisticado': [
+    require('./src/assets/Sofisticado1.jpg'),
+    require('./src/assets/Sofisticado2.jpg'),
+    require('./src/assets/Sofisticado3.jpg'),
+    require('./src/assets/Sofisticado4.png'),
+  ],
+  'Estilo Romântico': [
+    require('./src/assets/Romantico1.jpg'),
+    require('./src/assets/Romantico2.jpg'),
+    require('./src/assets/Romantico3.jpg'),
+    require('./src/assets/Romantico4.jpg'),
+  ],
+  'Estilo Esportivo': [
+    require('./src/assets/Esportivo1.jpg'),
+    require('./src/assets/Esportivo2.jpg'),
+    require('./src/assets/Esportivo3.jpg'),
+    require('./src/assets/Esportivo4.jpg'),
+  ],
+  'Estilo Streetwear': [
+    require('./src/assets/Streetwear1.jpg'),
+    require('./src/assets/Streetwear2.jpg'),
+    require('./src/assets/Streetwear3.jpg'),
+    require('./src/assets/Streetwear4.jpeg'),
+  ],
+  'Estilo Criativo': [
+    require('./src/assets/Criativo1.jpg'),
+    require('./src/assets/Criativo2.jpg'),
+    require('./src/assets/Criativo3.jpg'),
+    require('./src/assets/Criativo4.jpg'),
+  ],
+  'Estilo Indefinido': [
+    require('./src/assets/Criativo1.jpg'),
+    require('./src/assets/Streetwear2.jpg'),
+    require('./src/assets/Casual4.jpg'),
+    require('./src/assets/Sofisticado1.jpg'),
+  ],
+};
+
 const descricoesEstilo: Record<string, string> = {
   'Estilo Casual': 
-    'O estilo casual é marcado pelo conforto e praticidade. \n\nIdeal para o dia a dia, ele transmite uma imagem acessível, descontraída e natural. \nRoupas como jeans, camisetas, tênis e peças leves são predominantes nesse visual. \n\nTer esse estilo mostra que você valoriza a liberdade, a simplicidade e a funcionalidade no vestir. \nEncontrar-se no estilo casual permite expressar uma atitude descomplicada e segura, facilitando o convívio social e a adaptação a diversas situações informais. \n\n🌟Ao desenvolver seu próprio estilo, você começa a se libertar das imposições de beleza e a se valorizar do seu jeito. Isso fortalece sua autoestima de forma saudável e realista.',
+    '🌟O estilo casual é marcado pelo conforto e praticidade. \n\n🌟Ideal para o dia a dia, ele transmite uma imagem acessível, descontraída e natural. \nRoupas como jeans, camisetas, tênis e peças leves são predominantes nesse visual. \n\nTer esse estilo mostra que você valoriza a liberdade, a simplicidade e a funcionalidade no vestir. \n🌟Encontrar-se no estilo casual permite expressar uma atitude descomplicada e segura, facilitando o convívio social e a adaptação a diversas situações informais. \n\n🌟Ao desenvolver seu próprio estilo, você começa a se libertar das imposições de beleza e a se valorizar do seu jeito. Isso fortalece sua autoestima de forma saudável e realista.',
 
   'Estilo Clássico': 
-    'O estilo clássico transmite elegância, sobriedade e confiança. \n\nEle é composto por peças atemporais, de cores neutras e cortes retos, como camisas, calças de alfaiataria e blazers. \nPessoas com esse estilo costumam valorizar a tradição, a organização e a consistência visual. Adotar esse estilo reflete maturidade, profissionalismo e sofisticação. \n\nTer um estilo bem definido como o clássico ajuda a manter uma imagem respeitável e coerente, especialmente em ambientes mais formais ou corporativos.\n\n🌟Ao desenvolver seu próprio estilo, você começa a se libertar das imposições de beleza e a se valorizar do seu jeito. Isso fortalece sua autoestima de forma saudável e realista.',
+    '🧩O estilo clássico transmite elegância, sobriedade e confiança. \n\n🌟Ele é composto por peças atemporais, de cores neutras e cortes retos, como camisas, calças de alfaiataria e blazers. \nPessoas com esse estilo costumam valorizar a tradição, a organização e a consistência visual. Adotar esse estilo reflete maturidade, profissionalismo e sofisticação. \n\n🌟Ter um estilo bem definido como o clássico ajuda a manter uma imagem respeitável e coerente, especialmente em ambientes mais formais ou corporativos.\n\n🌟Ao desenvolver seu próprio estilo, você começa a se libertar das imposições de beleza e a se valorizar do seu jeito. Isso fortalece sua autoestima de forma saudável e realista.',
 
   'Estilo Sofisticado': 
-    'O estilo sofisticado une elegância moderna com atenção aos detalhes.\n\n É caracterizado por peças refinadas, tecidos nobres e acessórios discretos, porém de alta qualidade. \nEsse estilo transmite poder, bom gosto e confiança. \nEle mostra que você se preocupa com a estética e com a apresentação pessoal em alto nível. \n\nTer esse estilo bem definido reforça sua autoridade, sua autoestima e sua presença em qualquer ambiente.\n\n🌟Ao desenvolver seu próprio estilo, você começa a se libertar das imposições de beleza e a se valorizar do seu jeito. Isso fortalece sua autoestima de forma saudável e realista.',
+    '💸O estilo sofisticado une elegância moderna com atenção aos detalhes.\n\n 🌟É caracterizado por peças refinadas, tecidos nobres e acessórios discretos, porém de alta qualidade. \nEsse estilo transmite poder, bom gosto e confiança. \nEle mostra que você se preocupa com a estética e com a apresentação pessoal em alto nível. \n\n🌟Ter esse estilo bem definido reforça sua autoridade, sua autoestima e sua presença em qualquer ambiente.\n\n🌟Ao desenvolver seu próprio estilo, você começa a se libertar das imposições de beleza e a se valorizar do seu jeito. Isso fortalece sua autoestima de forma saudável e realista.',
 
   'Estilo Romântico': 
-    'O estilo romântico é delicado, feminino e acolhedor. \n\nPeças com rendas, babados, laços e estampas florais fazem parte dessa identidade visual. \nCores suaves como rosa, lilás e branco são predominantes. \nEsse estilo revela uma personalidade sensível, afetuosa e sonhadora. \n\nTer um estilo romântico é importante para destacar a doçura e a ternura no visual, ajudando a transmitir suavidade e empatia nas relações interpessoais.\n\n🌟Ao desenvolver seu próprio estilo, você começa a se libertar das imposições de beleza e a se valorizar do seu jeito. Isso fortalece sua autoestima de forma saudável e realista.',
+    '🌟O estilo romântico é delicado, feminino e acolhedor. \n\n🌟Peças com rendas, babados, laços e estampas florais fazem parte dessa identidade visual. \nCores suaves como rosa, lilás e branco são predominantes. \nEsse estilo revela uma personalidade sensível, afetuosa e sonhadora. \n\n🌟Ter um estilo romântico é importante para destacar a doçura e a ternura no visual, ajudando a transmitir suavidade e empatia nas relações interpessoais.\n\n🌟Ao desenvolver seu próprio estilo, você começa a se libertar das imposições de beleza e a se valorizar do seu jeito. Isso fortalece sua autoestima de forma saudável e realista.',
 
   'Estilo Esportivo': 
-    '💪 O estilo esportivo (ou esportivo natural) foca no conforto e na praticidade, com roupas leves, funcionais e dinâmicas, como leggings, tênis, moletons e camisetas. \n\nEle é ideal para pessoas ativas, com estilo de vida agitado e que prezam por liberdade de movimento. \nAdotar esse estilo demonstra energia, informalidade e espírito jovem. \n\nTer esse estilo como base ajuda a manter o bem-estar e uma aparência alinhada à rotina de quem está sempre em movimento.\n\n🌟Ao desenvolver seu próprio estilo, você começa a se libertar das imposições de beleza e a se valorizar do seu jeito. Isso fortalece sua autoestima de forma saudável e realista.',
+    '💪 O estilo esportivo (ou esportivo natural) foca no conforto e na praticidade, com roupas leves, funcionais e dinâmicas, como leggings, tênis, moletons e camisetas. \n\n🌟Ele é ideal para pessoas ativas, com estilo de vida agitado e que prezam por liberdade de movimento. \nAdotar esse estilo demonstra energia, informalidade e espírito jovem. \n\n🌟Ter esse estilo como base ajuda a manter o bem-estar e uma aparência alinhada à rotina de quem está sempre em movimento.\n\n🌟Ao desenvolver seu próprio estilo, você começa a se libertar das imposições de beleza e a se valorizar do seu jeito. Isso fortalece sua autoestima de forma saudável e realista.',
 
   'Estilo Streetwear': 
-    'O streetwear é um estilo urbano e contemporâneo, com raízes na cultura de rua, no skate, no hip-hop e na moda jovem. \n\nEle mistura ousadia com conforto, utilizando peças como camisetas oversized, jeans rasgados, tênis robustos e acessórios marcantes. \n\nTer esse estilo mostra autenticidade, rebeldia e atitude. É uma forma de se expressar artisticamente e de se posicionar culturalmente. \nAssumir o streetwear como estilo fortalece sua individualidade e sua conexão com movimentos modernos.\n\n🌟Ao desenvolver seu próprio estilo, você começa a se libertar das imposições de beleza e a se valorizar do seu jeito. Isso fortalece sua autoestima de forma saudável e realista.',
+    '💸O streetwear é um estilo urbano e contemporâneo, com raízes na cultura de rua, no skate, no hip-hop e na moda jovem. \n\n🌟Ele mistura ousadia com conforto, utilizando peças como camisetas oversized, jeans rasgados, tênis robustos e acessórios marcantes. \n\nTer esse estilo mostra autenticidade, rebeldia e atitude. É uma forma de se expressar artisticamente e de se posicionar culturalmente. \n🌟Assumir o streetwear como estilo fortalece sua individualidade e sua conexão com movimentos modernos.\n\n🌟Ao desenvolver seu próprio estilo, você começa a se libertar das imposições de beleza e a se valorizar do seu jeito. Isso fortalece sua autoestima de forma saudável e realista.',
 
   'Estilo Criativo': 
-    'O estilo criativo é marcado pela originalidade e pela liberdade de expressão. \n\nEle mistura cores, texturas, estampas e formas inusitadas. \n\nNão há regras fixas — o importante é surpreender e inovar. Quem adota esse estilo valoriza a autenticidade, a experimentação e o impacto visual. \n\nTer um estilo criativo é uma maneira poderosa de mostrar sua personalidade única, além de comunicar coragem e inventividade. \nEsse estilo reforça sua presença em qualquer ambiente com muita expressão e ousadia.\n\n🌟Ao desenvolver seu próprio estilo, você começa a se libertar das imposições de beleza e a se valorizar do seu jeito. Isso fortalece sua autoestima de forma saudável e realista.',
+    '🧠O estilo criativo é marcado pela originalidade e pela liberdade de expressão. \n\n🌟Ele mistura cores, texturas, estampas e formas inusitadas. \n\nNão há regras fixas — o importante é surpreender e inovar. Quem adota esse estilo valoriza a autenticidade, a experimentação e o impacto visual. \n\n🌟Ter um estilo criativo é uma maneira poderosa de mostrar sua personalidade única, além de comunicar coragem e inventividade. \nEsse estilo reforça sua presença em qualquer ambiente com muita expressão e ousadia.\n\n🌟Ao desenvolver seu próprio estilo, você começa a se libertar das imposições de beleza e a se valorizar do seu jeito. Isso fortalece sua autoestima de forma saudável e realista.',
 
   'Estilo Indefinido': 
-    'Ainda não foi possível identificar um estilo predominante com base nas suas respostas. \n\nIsso não é um problema — muitas pessoas estão em fase de descoberta e transição. \nTer um estilo definido é importante porque ele ajuda a refletir sua personalidade, aumentar sua autoconfiança e facilitar a construção de uma imagem coerente. \n\nCom o tempo e o autoconhecimento, é possível alinhar suas escolhas com o visual que mais representa quem você é.\n\n🌟Ao desenvolver seu próprio estilo, você começa a se libertar das imposições de beleza e a se valorizar do seu jeito. Isso fortalece sua autoestima de forma saudável e realista.'
+    'Ainda não foi possível identificar um estilo predominante com base nas suas respostas. \n\n🌟Isso não é um problema — muitas pessoas estão em fase de descoberta e transição. \nTer um estilo definido é importante porque ele ajuda a refletir sua personalidade, aumentar sua autoconfiança e facilitar a construção de uma imagem coerente. \n\n🌟Com o tempo e o autoconhecimento, é possível alinhar suas escolhas com o visual que mais representa quem você é.\n\n🌟Ao desenvolver seu próprio estilo, você começa a se libertar das imposições de beleza e a se valorizar do seu jeito. Isso fortalece sua autoestima de forma saudável e realista.'
 };
 
 
@@ -165,16 +217,18 @@ const EstiloUsuario = () => {
   return (
     
     <ScrollView contentContainerStyle={styles.scrollContainer}>
+
+
       <Image source={logo} style={styles.logo} resizeMode="contain" />
-<View style={styles.boxTop}>  
+
+
+      <View style={styles.boxTop}>  
   
               <Text style={styles.heading}>
-                Bem-vindo ao <Text style={styles.sectionTitle}>DripOrDrown</Text>
+                Seu estilo <Text style={styles.sectionTitle}>DripOrDrown</Text>
               </Text>
-              <Text style={styles.subheading}>
-                Onde seu estilo encontra sua essência.
-              </Text>
-            </View>
+
+      </View>
 
       <View style={styles.boxMid}>
         {estilo ? (
@@ -190,6 +244,25 @@ const EstiloUsuario = () => {
         )}
       </View>
 
+
+      {estilo && (
+  <View style={styles.boxBottom}>
+    <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+      {imagemEstilos[estilo]?.map((imgSource, index) => (
+        <Image
+          key={index}
+          source={imgSource}
+          style={styles.estilos}
+          resizeMode="cover"
+        />
+      ))}
+    </ScrollView>
+  </View>
+)}
+
+
+
+
       {estilo && (
         <View style={styles.boxMid2}>
           <Text style={styles.descricao}>
@@ -198,9 +271,25 @@ const EstiloUsuario = () => {
         </View>
       )}
 
-      <View style={styles.boxBottom}>
-      <Image source={estilos} style={styles.estilos} resizeMode="contain" />
-      </View>
+
+
+<View style={styles.boxBottom2}>  
+
+              <Text style={styles.heading}>
+                Não gostou do resultado? Refaça o <Text style={styles.sectionTitle}>teste.</Text>
+              </Text>
+  
+<TouchableOpacity
+                style={styles.button}
+                onPress={() => navigation.navigate('Home')}
+              >
+                <Text style={styles.buttonText}>REFAZER O TESTE</Text>
+              </TouchableOpacity>
+  
+</View>
+
+
+
     </ScrollView>
   );
 };
@@ -208,7 +297,7 @@ const EstiloUsuario = () => {
 const styles = StyleSheet.create({
   scrollContainer: {
     flexGrow: 1,
-    height: Dimensions.get('window').height / 7,
+    height: Dimensions.get('window').height / 5,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -272,12 +361,12 @@ const styles = StyleSheet.create({
   },
   boxTop: {
     height: Dimensions.get('window').height / 6,
-    width: 1200,
+    width: '100%',
     backgroundColor: 'rgba(0, 0, 0, 0.8)',
     paddingHorizontal: 37,
     borderRadius: 10,
     marginBottom: 30,
-    marginTop: 60,
+    marginTop: 30,
     borderWidth: 1,
     borderColor: 'rgba(200, 200, 200, 0.5)',
     shadowColor: "#000",
@@ -334,7 +423,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   boxBottom: {
-    height: Dimensions.get('window').height / 4,
+    height: Dimensions.get('window').height / 3,
     width: 1200,
     paddingHorizontal: 37,
     backgroundColor: 'rgba(0, 0, 0, 0.8)',
@@ -352,17 +441,66 @@ const styles = StyleSheet.create({
     shadowRadius: 3.65,
     elevation: 7,
     justifyContent: 'center',
+    alignItems: 'center',
+  },
+  boxBottom2: {
+    height: Dimensions.get('window').height / 6,
+    width: '100%',
+    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+    paddingHorizontal: 37,
+    borderTopRightRadius: 10,
+    borderTopLeftRadius: 10,
+    borderBottomRightRadius: 10,
+    borderBottomLeftRadius: 10,
+    marginBottom: 30,
+    marginTop: 10,
+    borderWidth: 1,
+    borderColor: 'rgba(200, 200, 200, 0.5)',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.29,
+    shadowRadius: 3.65,
+    elevation: 7,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   logo: {
     width: 100,
     height: 100,
-    marginTop: 800,
+    marginTop: 1000,
     borderRadius: 150,
   },
   estilos: {
-    width: 200,
-    height: 200,
+    width: 260,
+    height: 295,
+    marginRight: 10,
+    borderRadius: 10,
+    marginTop: 10,
+    
   },
+  button: {
+    width: 550,
+    height: 35,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: themas.Colors.gg,
+    borderRadius: 5,
+    borderColor: 'rgba(200, 200, 200, 0.5)',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.29,
+    shadowRadius: 3.65,
+    elevation: 7,
+    marginTop: 50,
+  },
+
+  
 });
 
 export default EstiloUsuario;

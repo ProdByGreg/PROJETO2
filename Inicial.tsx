@@ -184,7 +184,7 @@ export const style = StyleSheet.create({
 
   boxTop: {
     height: Dimensions.get('window').height / 6,
-    width: 1200,
+    width: '100%',
     backgroundColor: 'rgba(0, 0, 0, 0.8)',
     paddingHorizontal: 37,
     borderTopRightRadius: 10,

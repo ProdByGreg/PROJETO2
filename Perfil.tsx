@@ -119,19 +119,19 @@ const Perfil = () => {
           onPress={() => navigation.navigate('Home')}
           style={styles.button}
         >
-          <Text style={styles.buttonText}>Voltar para Home</Text>
+          <Text style={styles.buttonText}>VOLTAR</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => navigation.navigate('EstiloUsuario')}
           style={styles.button}
         >
-          <Text style={styles.buttonText}>Ver estilo</Text>
+          <Text style={styles.buttonText}>VER ESTILO</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => navigation.navigate('Home')}
           style={styles.button}
         >
-          <Text style={styles.buttonText}>Refazer teste</Text>
+          <Text style={styles.buttonText}>REFAZER TESTE</Text>
         </TouchableOpacity>
         </View>
       </View>
@@ -284,8 +284,9 @@ const styles = StyleSheet.create({
   },
   finalText: {
     color: '#fff',
-    fontSize: 16,
+    fontSize: 20,
     textAlign: 'center',
+    fontWeight: 'bold',
   },
   button: {
     backgroundColor: themas.Colors.gg,
