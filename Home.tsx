@@ -58,11 +58,11 @@ const perguntasBase = [
 
     opcoesFeminino: 
     ['CONFORTÁVEIS, SOLTAS, PRÁTICAS', 'DISCRETAS E CLÁSSICAS', 'PEÇAS REFINADAS, SEM MODISMOS',
-       'ROUPAS DELICADAS, CORES SUAVES', 'ESPORTIVAS E AJUSTADAS QUE VALORIZAM O CORPO', 'PEÇAS ESTRUTURADAS, MODERNAS', 'ESPORTIVAS'], 
+       'ROUPAS DELICADAS, CORES SUAVES', 'AJUSTADAS QUE VALORIZAM O CORPO', 'PEÇAS ESTRUTURADAS, MODERNAS', 'ESPORTIVAS'], 
        
     opcoesMasculino: 
     ['CONFORTÁVEIS, SOLTAS, PRÁTICAS', 'DISCRETAS E CLÁSSICAS', 'PEÇAS REFINADAS, SEM MODISMOS', 'ROUPAS SIMPLES E TRANQUILAS',
-         'ESPORTIVAS E AJUSTADAS QUE VALORIZAM O CORPO', 'PEÇAS ESTRUTURADAS, MODERNAS', 'ESPORTIVAS'] },
+         'AJUSTADAS QUE VALORIZAM O CORPO', 'PEÇAS ESTRUTURADAS, MODERNAS', 'ESPORTIVAS'] },
   
   
   
@@ -75,7 +75,7 @@ const perguntasBase = [
        'SENSUAL E PROVOCANTE', 'URBANO E IMPACTANTE', 'DIFERENTE E CRIATIVO'], 
 
      opcoesMasculino: 
-     ['BÁSICO CONFORTÁVEL E PRÁTICO', 'FORMAL TRADICIONAL E ATEMPORAL', 'CLÁSSICO SOFISTICADO E ATUAL', 'SIMPLES E ROMÂNTICO', 'SENSUAL E PROVOCANTE',
+     ['BÁSICO CONFORTÁVEL E PRÁTICO', 'FORMAL TRADICIONAL E ATEMPORAL', 'CLÁSSICO SOFISTICADO E ATUAL', 'SIMPLES E ROMÂNTICO', 'ATLÉTICO E DINAMICO',
        'URBANO E IMPACTANTE', 'DIFERENTE E CRIATIVO'] },
   
   
@@ -149,7 +149,7 @@ const determinarEstiloFinal = (respostas: Record<string, string>) => {
   const palavrasChave: Record<string, string[]> = {
     'Estilo Esportivo': [
       'CONFORTÁVEL', 'PRÁTICO', 'ESPORTIVO', 'ACADEMIA', 'TREINO',
-      'TÊNIS DE CORRIDA', 'ROUPAS PARA TREINAR',
+       'ROUPAS PARA TREINAR', 'ATLETICO', 'DINAMICO'
     ],
     'Estilo Clássico': [
       'CLÁSSICO', 'TRADICIONAL', 'DISCRETO', 'ALFAIATARIA', 'CALÇAS E SAPATOS SOCIAIS',
@@ -161,11 +161,11 @@ const determinarEstiloFinal = (respostas: Record<string, string>) => {
     ],
     'Estilo Romântico': [
       'DELICADO', 'FEMININO', 'ROMÂNTICO', 'FLORAIS', 'CORES SUAVES',
-      'VESTIDO FLUIDO', 'SALTO ALTO E FINO'
+      'VESTIDO FLUIDO', 'SALTO ALTO E FINO', 'SENSUAL', 'PROVOCANTE'
     ],
     'Estilo Streetwear': [
       'IMPACTANTE', 'URBANO', 'JEANS DESTROYED', 'CASACOS VOLUMOSOS',
-      'GRANDES E MARCANTES', 'LOOKS SENSUAIS'
+      'GRANDES E MARCANTES', ''
     ],
     'Estilo Criativo': [
       'CRIATIVO', 'INOVADOR', 'EXÓTICO', 'ESTAMPAS EXAGERADAS',
@@ -266,10 +266,8 @@ const Home = () => {
   
       const API_URL = process.env.API_URL || 'http://localhost:5009';
   
-      // Tentar excluir preferências anteriores (se a API suportar)
       await axios.delete(`${API_URL}/api/Preferencias/${UserId}`).catch(() => {});
   
-      // Enviar nova preferência (substituindo anterior)
       const response = await axios.post(`${API_URL}/api/Preferencias`, preferenciasFormatadas);
   
       if (response.status === 200 || response.status === 201) {
