@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   ScrollView,
+  SafeAreaView,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
@@ -61,35 +62,58 @@ const Perfil = () => {
 
   if (loading) {
     return (
-      <View style={styles.center}>
-        <ActivityIndicator size="large"/>
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color={themas.Colors.gg} />
+        <Text style={styles.loadingText}>Carregando seu perfil...</Text>
       </View>
     );
   }
 
   if (!usuario || !preferencias) {
     return (
-      <View style={styles.center}>
-        <Text style={styles.alertText}>Você ainda não completou seu perfil.</Text>
-        <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.button}>
-          <Text style={styles.buttonText}>Responder agora</Text>
+      <View style={styles.emptyContainer}>
+        <Text style={styles.emptyTitle}>Perfil Incompleto</Text>
+        <Text style={styles.emptyText}>Você ainda não completou seu perfil.</Text>
+        <TouchableOpacity 
+          onPress={() => navigation.navigate('Home')} 
+          style={styles.primaryButton}
+        >
+          <Text style={styles.buttonText}>RESPONDER AGORA</Text>
         </TouchableOpacity>
       </View>
     );
   }
 
   return (
-    <ScrollView contentContainerStyle={styles.scrollContainer}>
-      <View style={styles.container}>
-        <View style={styles.boxTop}>
-          <Text style={styles.name}>{usuario.nome}</Text>
-          <Text style={styles.detail}>{usuario.email}</Text>
-          <Text style={styles.detail}>{usuario.telefone}</Text>
-          <Text style={styles.detail}>{usuario.cpf}</Text>
+    <SafeAreaView style={styles.safeArea}>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        {/* Cabeçalho */}
+        <View style={styles.profileHeader}>
+          <View style={styles.profileCard}>
+            <Text style={styles.profileName}>{usuario.nome}</Text>
+            <View style={styles.detailItem}>
+              <Text style={styles.detailLabel}>Email:</Text>
+              <Text style={styles.detailValue}>{usuario.email}</Text>
+            </View>
+            {usuario.telefone && (
+              <View style={styles.detailItem}>
+                <Text style={styles.detailLabel}>Telefone:</Text>
+                <Text style={styles.detailValue}>{usuario.telefone}</Text>
+              </View>
+            )}
+            {usuario.cpf && (
+              <View style={styles.detailItem}>
+                <Text style={styles.detailLabel}>CPF:</Text>
+                <Text style={styles.detailValue}>{usuario.cpf}</Text>
+              </View>
+            )}
+          </View>
         </View>
 
-        <Text style={styles.sectionTitle}>Preferências</Text>
-        <View style={styles.grid}>
+        {/* Seção de Preferências */}
+        <Text style={styles.sectionTitle}>SUAS PREFERÊNCIAS</Text>
+        
+        <View style={styles.preferencesContainer}>
           {Object.entries(preferencias).map(([chave, valor]) => {
             if (chave.toLowerCase() === 'id' || chave.toLowerCase() === 'userid' || chave === 'estiloFinal') return null;
 
@@ -97,220 +121,213 @@ const Perfil = () => {
             const valorFormatado = Array.isArray(valor) ? valor.join(', ') : String(valor);
 
             return (
-
-              <View key={chave} style={styles.preferenceCard}>
-                <Text style={styles.cardTitle}>{rotulo}</Text>
-                <Text style={styles.cardContent}>{valorFormatado}</Text>
+              <View key={chave} style={styles.preferenceItem}>
+                <Text style={styles.preferenceLabel}>{rotulo}</Text>
+                <Text style={styles.preferenceValue}>{valorFormatado}</Text>
               </View>
             );
           })}
         </View>
 
-        <Text style={styles.sectionTitle2}>Estilo Final</Text>
-        <View style={styles.finalBox}>
-          <Text style={styles.finalText}>
-            {preferencias.estiloFinal || 'Estilo não definido'}
+        {/* Seção de Estilo Final */}
+        <Text style={styles.sectionTitle}>SEU ESTILO</Text>
+        <View style={styles.styleContainer}>
+          <Text style={styles.styleText}>
+            {preferencias.estiloFinal || 'Estilo ainda não definido'}
           </Text>
         </View>
 
-        <View style={styles.buttonBox}>
-
-        <TouchableOpacity
-          onPress={() => navigation.navigate('Home')}
-          style={styles.button}
-        >
-          <Text style={styles.buttonText}>VOLTAR</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('EstiloUsuario')}
-          style={styles.button}
-        >
-          <Text style={styles.buttonText}>VER ESTILO</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('Home')}
-          style={styles.button}
-        >
-          <Text style={styles.buttonText}>REFAZER TESTE</Text>
-        </TouchableOpacity>
+        {/* Rodapé com Ações */}
+        <View style={styles.actionsContainer}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Home')}
+            style={styles.secondaryButton}
+          >
+            <Text style={styles.buttonText}>VOLTAR</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('EstiloUsuario')}
+            style={styles.primaryButton}
+          >
+            <Text style={styles.buttonText}>VER ESTILO</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Home')}
+            style={styles.secondaryButton}
+          >
+            <Text style={styles.buttonText}>REFAZER TESTE</Text>
+          </TouchableOpacity>
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#f8f9fa',
+  },
   scrollContainer: {
     flexGrow: 1,
-    height: Dimensions.get('window').height / 2,
+    height: Dimensions.get('window').height / 7,
   },
-  container: {
-    alignItems: 'center',
-  },
-  boxTop: {
-    height: Dimensions.get('window').height / 6,
-    width: '100%',
-    backgroundColor: 'rgba(0, 0, 0, 0.8)',
-    paddingHorizontal: 37,
-    borderTopRightRadius: 10,
-    borderTopLeftRadius: 10,
-    borderBottomRightRadius: 10,
-    borderBottomLeftRadius: 10,
-    marginBottom: 30,
-    borderWidth: 1,
-    borderColor: 'rgba(200, 200, 200, 0.5)',
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowOpacity: 0.29,
-    shadowRadius: 3.65,
-    elevation: 7,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  center: {
+  loadingContainer: {
     flex: 1,
-    alignItems: 'center',
     justifyContent: 'center',
-  },
-  profileHeader: {
     alignItems: 'center',
-    marginVertical: 30,
+    backgroundColor: '#f8f9fa',
   },
-  name: {
-    color: themas.Colors.gg,
-    fontSize: 28,
+  loadingText: {
+    marginTop: 20,
+    fontSize: 16,
+    color: '#666',
+  },
+  emptyContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 30,
+    backgroundColor: '#f8f9fa',
+  },
+  emptyTitle: {
+    fontSize: 24,
     fontWeight: 'bold',
+    color: '#333',
     marginBottom: 10,
   },
-  detail: {
-    color: '#fff',
+  emptyText: {
     fontSize: 16,
-    marginBottom: 3,
+    color: '#666',
+    textAlign: 'center',
+    marginBottom: 30,
+  },
+  profileHeader: {
+    paddingHorizontal: 20,
+    marginTop: 20,
+  },
+  profileCard: {
+    backgroundColor: '#1a1a1a',
+    borderRadius: 12,
+    padding: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+    elevation: 8,
+  },
+  profileName: {
+    color: themas.Colors.gg,
+    fontSize: 24,
+    fontWeight: '800',
+    marginBottom: 15,
+    textAlign: 'center',
+  },
+  detailItem: {
+    flexDirection: 'row',
+    marginBottom: 8,
+  },
+  detailLabel: {
+    color: '#fff',
+    fontWeight: '600',
+    width: 80,
+  },
+  detailValue: {
+    color: '#fff',
+    flex: 1,
   },
   sectionTitle: {
     color: themas.Colors.gg,
-    fontSize: 50,
-    fontWeight: 'bold',
-    alignSelf: 'center',
+    fontSize: 20,
+    fontWeight: '800',
     marginTop: 30,
-    marginBottom: 10,
+    marginBottom: 15,
+    paddingHorizontal: 20,
+    textTransform: 'uppercase',
+    letterSpacing: 1,
   },
-  sectionTitle2: {
-    color: themas.Colors.gg,
-    fontSize: 50,
-    fontWeight: 'bold',
-    alignSelf: 'center',
-    marginTop: 300,
-    marginBottom: 10,
+  preferencesContainer: {
+    paddingHorizontal: 20,
   },
-  grid: {
-    flexDirection: 'column',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    width: '100%',
+  preferenceItem: {
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    padding: 15,
+    marginBottom: 12,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
-
-  buttonBox:{
-    flexDirection: 'row',
-    gap: 10,
-  },
-
-
-
-
-  preferenceCard: {
-    height: '10%',
-    width: '100%',
-    paddingHorizontal: 37,
-    backgroundColor: 'rgba(0, 0, 0, 0.8)',
-    borderTopRightRadius: 10,
-    borderTopLeftRadius: 10,
-    borderBottomRightRadius: 10,
-    borderBottomLeftRadius: 10,
-    marginTop: 10,
-    borderWidth: 1,
-    borderColor: 'rgba(200, 200, 200, 0.5)',
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowOpacity: 0.29,
-    shadowRadius: 3.65,
-    elevation: 7,
-    justifyContent: 'center',
-  },
-
-
-
-
-
-  
-  cardTitle: {
+  preferenceLabel: {
     color: themas.Colors.gg,
     fontSize: 14,
+    fontWeight: '700',
     marginBottom: 5,
-    fontWeight: 'bold',
   },
-  cardContent: {
-    color: '#fff',
+  preferenceValue: {
+    color: '#333',
     fontSize: 15,
-    
+    lineHeight: 22,
   },
-  finalBox: {
-    height: '8%',
-    width: '100%',
-    paddingHorizontal: 37,
-    backgroundColor: 'rgba(0, 0, 0, 0.8)',
-    borderTopRightRadius: 10,
-    borderTopLeftRadius: 10,
-    borderBottomRightRadius: 10,
-    borderBottomLeftRadius: 10,
+  styleContainer: {
+    backgroundColor: '#1a1a1a',
+    borderRadius: 10,
+    padding: 20,
+    marginHorizontal: 20,
     marginTop: 10,
-    borderWidth: 1,
-    borderColor: 'rgba(200, 200, 200, 0.5)',
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowOpacity: 0.29,
-    shadowRadius: 3.65,
-    elevation: 7,
-    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+    elevation: 8,
   },
-  finalText: {
+  styleText: {
     color: '#fff',
     fontSize: 20,
+    fontWeight: '700',
     textAlign: 'center',
-    fontWeight: 'bold',
   },
-  button: {
-    backgroundColor: themas.Colors.gg,
-    paddingVertical: 12,
-    paddingHorizontal: 30,
-    borderRadius: 8,
-    marginTop: 30,
-    marginBottom: 20,
-    height: 50,
-    width: 200,
+  actionsContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
     justifyContent: 'center',
-    alignItems: 'center',
-
+    paddingHorizontal: 20,
+    marginTop: 30,
+    gap: 15,
+  },
+  primaryButton: {
+    backgroundColor: themas.Colors.gg,
+    paddingVertical: 15,
+    paddingHorizontal: 25,
+    borderRadius: 30,
+    minWidth: 160,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 6,
+  },
+  secondaryButton: {
+    backgroundColor: '#333',
+    paddingVertical: 15,
+    paddingHorizontal: 25,
+    borderRadius: 30,
+    minWidth: 160,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 6,
   },
   buttonText: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 16,
-  },
-  alertText: {
-    color: 'black',
-    fontSize: 18,
-    marginBottom: 20,
+    color: '#fff',
+    fontWeight: '700',
+    fontSize: 14,
     textAlign: 'center',
+    textTransform: 'uppercase',
+    letterSpacing: 1,
   },
 });
 

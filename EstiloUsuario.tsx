@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions, Image, } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions, Image, SafeAreaView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { themas } from "./src/global/themes";
@@ -7,14 +7,12 @@ import { useNavigation } from '@react-navigation/native';
 
 const logo = require('./src/assets/DripOrDrown.jpg');
 
-
 interface Preferencias {
   coresPreferidas?: string;
   estiloRoupa?: string;
   identidadeVisual?: string;
   personalidade?: string;
 }
-
 
 const imagemEstilos: Record<string, any> = {
   'Estilo Casual': [
@@ -27,7 +25,6 @@ const imagemEstilos: Record<string, any> = {
     require('./src/assets/Casual7.jpg'),
     require('./src/assets/Casual8.jpg'),
   ],
-  
   'Estilo Clássico': [
     require('./src/assets/Classico1.jpg'),
     require('./src/assets/Classico2.jpg'),
@@ -126,7 +123,6 @@ const descricoesEstilo: Record<string, string> = {
     'Ainda não foi possível identificar um estilo predominante com base nas suas respostas. \n\n🌟Isso não é um problema — muitas pessoas estão em fase de descoberta e transição. \nTer um estilo definido é importante porque ele ajuda a refletir sua personalidade, aumentar sua autoconfiança e facilitar a construção de uma imagem coerente. \n\n🌟Com o tempo e o autoconhecimento, é possível alinhar suas escolhas com o visual que mais representa quem você é.\n\n🌟Ao desenvolver seu próprio estilo, você começa a se libertar das imposições de beleza e a se valorizar do seu jeito. Isso fortalece sua autoestima de forma saudável e realista.'
 };
 
-
 const detalhesEstilo: Record<string, string> = {
   'Estilo Casual': 
     '👖 O estilo casual é leve, confortável e prático. \n\n🧢Ideal para o dia a dia, ele inclui peças como jeans, camisetas, tênis e jaquetas leves. \n\n😌 O foco é o bem-estar e a funcionalidade, sem abrir mão do estilo. \n\n🧺 Looks casuais são ótimos para quem gosta de simplicidade, com uma pegada descomplicada e autêntica. \n\n👟 Perfeito para rotinas corridas ou momentos relax, sem perder o toque pessoal.',
@@ -152,8 +148,6 @@ const detalhesEstilo: Record<string, string> = {
   'Estilo Indefinido': 
     '❓ Ainda não foi possível identificar um estilo predominante com base nas suas escolhas. \n\n🔄 Isso pode significar que você está em uma fase de transição ou descobrindo novos gostos. \n\n🧭 Com o tempo, autoconhecimento e experimentação, seu estilo pode se definir naturalmente. \n\n🧶 Misturar influências é uma forma legítima de construir algo único. \n\n💫 Continue explorando — seu estilo pessoal está em evolução constante!'
 };
-
-
 
 const EstiloUsuario = () => {
   const [estilo, setEstilo] = useState<string | null>(null);
@@ -205,11 +199,6 @@ const EstiloUsuario = () => {
       return null;
     }
   };
-
-
-
-
-
 
   const calcularEstilo = (respostas: Record<string, string>) => {
     const estiloPontuacao: Record<string, number> = {
@@ -268,194 +257,99 @@ const EstiloUsuario = () => {
   
     return estiloPontuacao[estiloFinal] === 0 ? 'Estilo Indefinido' : estiloFinal;
   };
-  
-
-
-
-
 
   return (
-    
-    <ScrollView contentContainerStyle={styles.scrollContainer}>
+    <SafeAreaView style={styles.safeArea}>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
 
-
-      <Image source={logo} style={styles.logo} resizeMode="contain" />
-
-
-      <View style={styles.boxTop}>  
-  
-              <Text style={styles.heading}>
-                Seu estilo <Text style={styles.sectionTitle}>DripOrDrown</Text>
-              </Text>
-
-      </View>
-
-      <View style={styles.boxMid}>
-        {estilo ? (
-          <>
-            <Text style={styles.title}>Seu estilo é:</Text>
-            <Text style={styles.estilo}>{estilo}</Text>
-            <TouchableOpacity style={styles.seeButton} onPress={() => navigation.navigate('Perfil')}>
-              <Text style={styles.buttonText}>VER PERFIL</Text>
-            </TouchableOpacity>
-          </>
-        ) : (
-          <Text style={styles.title}>Estilo a definir...</Text>
-        )}
-      </View>
-
-
-      {estilo && (
-        <View style={styles.boxBottom}>
-  <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-    {imagemEstilos[estilo]?.slice(0, 4).map((imgSource, index) => (
-      <Image
-        key={index}
-        source={imgSource}
-        style={styles.estilos}
-        resizeMode="cover"
-      />
-    ))}
-  </ScrollView>
-</View>
-
-)}
-
-
-
-
-      {estilo && (
-        <View style={styles.boxMid2}>
-          <Text style={styles.descricao}>
-            {descricoesEstilo[estilo] || 'Descrição não disponível.'}
+        <View style={styles.boxTop}>
+          <Image source={logo} style={styles.logo} resizeMode="contain" />
+          <Text style={styles.headerTitle}>
+            Seu estilo <Text style={styles.highlight}>DripOrDrown</Text>
           </Text>
         </View>
-      )}
 
-
-
-
-{estilo && (
-  <View style={styles.boxBottom}>
-  <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-    {imagemEstilos[estilo]?.slice(4, 8).map((imgSource, index) => (
-      <Image
-        key={index}
-        source={imgSource}
-        style={styles.estilos}
-        resizeMode="cover"
-      />
-    ))}
-  </ScrollView>
-</View>
-
-)}
-
-
-
-
-      {estilo && (
-        <View style={styles.boxMid3}>
-          <Text style={styles.descricao}>
-            {detalhesEstilo[estilo] || 'Detalhes não disponível.'}
-          </Text>
-        </View>
-      )}
-
-
-
-
-
-<View style={styles.boxBottom2}>  
-
-              <Text style={styles.heading}>
-                Não gostou do resultado? Refaça o <Text style={styles.sectionTitle}>teste.</Text>
-              </Text>
-  
-<TouchableOpacity
-                style={styles.button}
-                onPress={() => navigation.navigate('Home')}
+        <View style={styles.resultContainer}>
+          {estilo ? (
+            <>
+              <Text style={styles.subtitle}>Seu estilo é:</Text>
+              <Text style={styles.styleName}>{estilo}</Text>
+              
+              <View style={styles.imageGallery}>
+                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                  {imagemEstilos[estilo]?.slice(0, 4).map((imgSource, index) => (
+                    <Image
+                      key={index}
+                      source={imgSource}
+                      style={styles.styleImage}
+                      resizeMode="cover"
+                    />
+                  ))}
+                </ScrollView>
+              </View>
+              
+              <View style={styles.boxMid}>
+                <Text style={styles.descriptionText}>
+                  {descricoesEstilo[estilo] || 'Descrição não disponível.'}
+                </Text>
+              </View>
+              
+              <View style={styles.imageGallery}>
+                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                  {imagemEstilos[estilo]?.slice(4, 8).map((imgSource, index) => (
+                    <Image
+                      key={index}
+                      source={imgSource}
+                      style={styles.styleImage}
+                      resizeMode="cover"
+                    />
+                  ))}
+                </ScrollView>
+              </View>
+              
+              <View style={styles.boxMid2}>
+                <Text style={styles.detailsText}>
+                  {detalhesEstilo[estilo] || 'Detalhes não disponível.'}
+                </Text>
+              </View>
+              
+              <TouchableOpacity 
+                style={styles.profileButton}
+                onPress={() => navigation.navigate('Perfil')}
               >
-                <Text style={styles.buttonText}>REFAZER O TESTE</Text>
+                <Text style={styles.buttonText}>VER MEU PERFIL</Text>
               </TouchableOpacity>
-  
-</View>
+            </>
+          ) : (
+            <Text style={styles.loadingText}>Analisando suas preferências...</Text>
+          )}
+        </View>
 
-
-
-    </ScrollView>
+        <View style={styles.boxBottom}>
+          <Text style={styles.footerText}>
+            Não gostou do resultado? Refaça o <Text style={styles.highlight}>teste</Text>
+          </Text>
+          <TouchableOpacity
+            style={styles.retryButton}
+            onPress={() => navigation.navigate('Home')}
+          >
+            <Text style={styles.buttonText}>REFAZER O TESTE</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#f8f9fa',
+    height: '100%',
+  },
   scrollContainer: {
     flexGrow: 1,
-    height: Dimensions.get('window').height / 5,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 24,
-    color: '#fff',
-    fontWeight: 'bold',
-    marginBottom: 20
-  },
-  estilo: {
-    fontSize: 32,
-    color: themas.Colors.gg,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  descricao: {
-    fontSize: 20,
-    color: 'black',
-    paddingHorizontal: 20,
-  },
-  seeButton: {
-    width: 550,
-    height: 35,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: themas.Colors.gg,
-    borderRadius: 5,
-    borderColor: 'rgba(200, 200, 200, 0.5)',
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.29,
-    shadowRadius: 3.65,
-    elevation: 7,
-    marginTop: 30,
-  },
-  heading: {
-    color: '#fff',
-    fontSize: 32,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  subheading: {
-    color: '#fff',
-    fontSize: 22,
-    marginTop: 10,
-    textAlign: 'center',
-  },
-  sectionTitle: {
-    color: themas.Colors.gg,
-    fontSize: 32,
-    fontWeight: 'bold',
-    marginBottom: 15,
-  },
-  sectionText: {
-    color: 'black',
-    fontSize: 20,
-    marginBottom: 10,
-  },
-  buttonText: {
-    color: '#fff',
-    textAlign: 'center',
-    fontWeight: 'bold'
+    height: Dimensions.get('window').height / 7,
   },
   boxTop: {
     height: Dimensions.get('window').height / 6,
@@ -463,112 +357,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.8)',
     paddingHorizontal: 37,
     marginBottom: 30,
-    marginTop: 30,
-    borderWidth: 1,
-    borderColor: 'rgba(200, 200, 200, 0.5)',
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowOpacity: 0.29,
-    shadowRadius: 3.65,
-    elevation: 7,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  boxMid: {
-    height: Dimensions.get('window').height / 2.2,
-    width: 1200,
-    backgroundColor: 'rgba(0, 0, 0, 0.1)',
-    paddingHorizontal: 37,
-    borderRadius: 10,
-    marginBottom: 50,
-    marginTop: 10,
-    borderWidth: 1,
-    borderColor: 'rgba(200, 200, 200, 0.5)',
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 5,
-    },
-    shadowOpacity: 0.29,
-    shadowRadius: 3.65,
-    elevation: 7,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  boxMid2: {
-    height: Dimensions.get('window').height / 2.3,
-    width: 1200,
-    backgroundColor: 'rgba(0, 0, 0, 0.1)',
-    paddingHorizontal: 37,
-    borderRadius: 10,
-    marginBottom: 50,
-    marginTop: 10,
-    borderWidth: 1,
-    borderColor: 'rgba(200, 200, 200, 0.5)',
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 5,
-    },
-    shadowOpacity: 0.29,
-    shadowRadius: 3.65,
-    elevation: 7,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  boxMid3: {
-    height: Dimensions.get('window').height / 2,
-    width: 1200,
-    backgroundColor: 'rgba(0, 0, 0, 0.1)',
-    paddingHorizontal: 37,
-    borderRadius: 10,
-    marginBottom: 50,
-    marginTop: 10,
-    borderWidth: 1,
-    borderColor: 'rgba(200, 200, 200, 0.5)',
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 5,
-    },
-    shadowOpacity: 0.29,
-    shadowRadius: 3.65,
-    elevation: 7,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  boxBottom: {
-    height: Dimensions.get('window').height / 2,
-    width: '100%',
-    paddingHorizontal: 37,
-    backgroundColor: 'rgba(0, 0, 0, 0.8)',
-    borderRadius: 10,
-    marginBottom: 100,
-    marginTop: 10,
-    borderWidth: 1,
-    borderColor: 'rgba(200, 200, 200, 0.5)',
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowOpacity: 0.29,
-    shadowRadius: 3.65,
-    elevation: 7,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  boxBottom2: {
-    height: Dimensions.get('window').height / 6,
-    width: '100%',
-    backgroundColor: 'rgba(0, 0, 0, 0.8)',
-    paddingHorizontal: 37,
-
-    marginBottom: 30,
-    marginTop: 10,
     borderWidth: 1,
     borderColor: 'rgba(200, 200, 200, 0.5)',
     shadowColor: "#000",
@@ -583,20 +371,162 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   logo: {
-    width: 100,
-    height: 100,
-    marginTop: 2300,
-    borderRadius: 150,
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    marginBottom: 15,
   },
-  estilos: {
-    width: 460,
-    height: 450,
-    marginRight: 10,
-    borderRadius: 10,
+  headerTitle: {
+    color: '#fff',
+    fontSize: 28,
+    fontWeight: '700',
+    textAlign: 'center',
+  },
+  highlight: {
+    color: themas.Colors.gg,
+    fontWeight: '800',
+  },
+  resultContainer: {
+    paddingHorizontal: 20,
+    paddingTop: 30,
+    alignItems: 'center',
+  },
+  subtitle: {
+    fontSize: 22,
+    color: '#555',
+    marginBottom: 10,
+    fontWeight: '600',
+  },
+  styleName: {
+    fontSize: 32,
+    color: themas.Colors.gg,
+    fontWeight: '800',
+    marginBottom: 30,
+    textAlign: 'center',
+    textTransform: 'uppercase',
+  },
+  imageGallery: {
+    height: 220,
+    marginBottom: 25,
+  },
+  styleImage: {
+    width: 180,
+    height: 220,
+    borderRadius: 12,
+    marginRight: 15,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 6,
+  },
+  boxMid: {
+    height: Dimensions.get('window').height / 3.5,
+    width: '99%',
+    backgroundColor: 'rgba(0, 0, 0, 0)',
+    paddingHorizontal: 37,
+    borderTopRightRadius: 10,
+    borderTopLeftRadius: 10,
+    borderBottomRightRadius: 10,
+    borderBottomLeftRadius: 10,
+    marginBottom: 50,
     marginTop: 10,
-    
+    borderWidth: 1,
+    borderColor: 'rgba(200, 200, 200, 0.5)',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    shadowOpacity: 0.29,
+    shadowRadius: 3.65,
+    elevation: 7,
+    justifyContent: 'center',
   },
-  button: {
+  descriptionText: {
+    fontSize: 16,
+    lineHeight: 24,
+    color: '#444',
+  },
+  boxMid2: {
+    height: Dimensions.get('window').height / 3.5,
+    width: '99%',
+    backgroundColor: 'rgba(0, 0, 0, 0.1)',
+    paddingHorizontal: 37,
+    borderTopRightRadius: 10,
+    borderTopLeftRadius: 10,
+    borderBottomRightRadius: 10,
+    borderBottomLeftRadius: 10,
+    marginBottom: 50,
+    marginTop: 10,
+    borderWidth: 1,
+    borderColor: 'rgba(200, 200, 200, 0.5)',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    shadowOpacity: 0.29,
+    shadowRadius: 3.65,
+    elevation: 7,
+    justifyContent: 'center',
+  },
+  detailsText: {
+    fontSize: 16,
+    lineHeight: 24,
+    color: '#333',
+    fontStyle: 'italic',
+  },
+  profileButton: {
+    width: 550,
+    height: 35,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: themas.Colors.gg,
+    marginBottom: 20,
+    borderRadius: 5,
+    borderColor: 'rgba(200, 200, 200, 0.5)',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.29,
+    shadowRadius: 3.65,
+    elevation: 7,
+  },
+  loadingText: {
+    fontSize: 20,
+    color: '#666',
+    marginVertical: 50,
+  },
+  boxBottom: {
+    height: Dimensions.get('window').height / 8,
+    width: '100%',
+    paddingHorizontal: 37,
+    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+    marginBottom: 1500,
+    marginTop: 10,
+    borderWidth: 1,
+    borderColor: 'rgba(200, 200, 200, 0.5)',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.29,
+    shadowRadius: 3.65,
+    elevation: 7,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  footerText: {
+    color: '#fff',
+    fontSize: 20,
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  retryButton: {
     width: 550,
     height: 35,
     alignItems: 'center',
@@ -612,10 +542,14 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.29,
     shadowRadius: 3.65,
     elevation: 7,
-    marginTop: 50,
   },
-
-  
+  buttonText: {
+    color: '#fff',
+    fontWeight: '700',
+    fontSize: 16,
+    textTransform: 'uppercase',
+    letterSpacing: 1,
+  },
 });
 
 export default EstiloUsuario;
